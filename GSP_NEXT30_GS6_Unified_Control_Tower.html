@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V9.17 Header Max Ticker / Report 50-50</title>
+<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V9.22 – Fix GitHub Apps Script Upload Drive A</title>
 <style>
 :root{
   --dark:#035D30;--green:#035A28;--gold:#E2B624;--gold2:#FFFDE7;
@@ -4297,7 +4297,7 @@ function cSwitch(btn) {
     <button class="btn" id="def-report-open-frame" type="button">Tải form upload Drive</button>
     <button class="btn" id="def-report-open-tab" type="button">Mở form ở tab mới</button>
     <button class="btn grey" id="def-report-refresh" type="button">Làm mới danh sách</button>
-    <span class="small" id="def-report-status">Đang khởi tạo form upload Drive mặc định...</span>
+    <span class="small" id="def-report-status">Đang khởi tạo form upload Drive – GitHub fix V9.22...</span>
   </div>
   <div class="report-panel report-panel-v913">
     <div class="report-upload-box report-upload-frame-box">
@@ -4306,7 +4306,7 @@ function cSwitch(btn) {
         <span class="small" style="color:#64748b">Mật khẩu upload: nhập trong form Apps Script</span>
       </div>
       <div style="border:1px solid #A5D6A7;border-radius:8px;overflow:hidden;background:#fff">
-        <iframe id="def-report-upload-frame" title="GS6 Report Upload App" style="width:100%;height:640px;border:0;background:#fff" src="about:blank"></iframe>
+        <iframe id="def-report-upload-frame" title="GS6 Report Upload App" referrerpolicy="no-referrer" allow="clipboard-read; clipboard-write" style="width:100%;height:640px;border:0;background:#fff" src="about:blank"></iframe>
       </div>
       <div class="small" style="margin-top:8px;color:#64748b">Form được tải tự động từ cấu hình mặc định của dashboard. Không hiển thị link Drive/Web App trên giao diện vận hành.</div>
     </div>
@@ -5183,7 +5183,7 @@ function cSwitch(btn) {
     return fetchFirst(urls).catch(function(csvErr){ setText('def-live-log','CSV publish lỗi/CORS ('+csvErr.message+'). Đang thử GViz JSONP...'); return loadGvizFallback(sourceForGviz); }).then(function(ret){ var d=buildDataFromCSV(ret.text,'Google Sheet live - '+(ret.method||'CSV')); renderDefectData(d,'live'); try{ if(input&&input.value.trim()) localStorage.setItem('gs6_defect_source_url',normalizeCsvUrl(input.value.trim())); if(editInput&&editInput.value.trim()) localStorage.setItem('gs6_defect_edit_url',editInput.value.trim()); }catch(e){} setLiveOkSummary(d, ret.method||'CSV'); }).catch(function(err){ renderLiveError(err); setText('def-live-log','🔴 LIVE ERROR – Không dùng fallback. '+err.message+'. Hành động: dán Google Sheets Edit URL, Share = Anyone with link Viewer.'); setText('def-header-live-summary','🔴 LIVE ERROR – '+err.message); });
   }
 
-  // ═══════ REPORT UPLOAD MODULE – Drive via Apps Script hosted upload form (V9.13 no CORS fetch) ═══════
+  // ═══════ REPORT UPLOAD MODULE – Drive via Apps Script hosted upload form (V9.22 GitHub iframe fix – Option A) ═══════
   var REPORT_FOLDER_ID = '1vIxcaf-qpQNNllbtvKOhvozHQ4-WPRoP';
   var REPORT_FOLDER_URL = 'https://drive.google.com/drive/folders/1vIxcaf-qpQNNllbtvKOhvozHQ4-WPRoP?usp=sharing';
   var REPORT_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbx6qCo7FCuN3cR6ktx1uT3bu-FB09dUTPrCyXYgUcsKBb57uhzSeWkSKaylI5JemGPaPw/exec';
@@ -5202,22 +5202,38 @@ function cSwitch(btn) {
     }).join('');
   }
   function cleanWebAppUrl(url){ return String(url||'').trim().replace(/\?.*$/,''); }
-  function getReportWebAppUrl(){
-    var url=cleanWebAppUrl(REPORT_WEBAPP_URL);
-    try{ var override=cleanWebAppUrl(localStorage.getItem('gs6_report_webapp_url_override')||''); if(override) url=override; }catch(e){}
-    return url;
+  // V9.22 FIX GITHUB UPLOAD DRIVE:
+  // Khóa cứng Apps Script /exec mới. Không cho localStorage override URL cũ (/dev hoặc deployment cũ)
+  // vì GitHub Pages giữ localStorage theo domain và có thể làm iframe trỏ nhầm Web App → 403.
+  function clearReportWebAppOverride(){
+    try{
+      localStorage.removeItem('gs6_report_webapp_url_override');
+      localStorage.setItem('gs6_report_webapp_url_locked', REPORT_WEBAPP_URL);
+    }catch(e){}
   }
-  function saveReportWebAppUrl(){ return getReportWebAppUrl(); }
+  function getReportWebAppUrl(){
+    clearReportWebAppOverride();
+    return cleanWebAppUrl(REPORT_WEBAPP_URL);
+  }
+  function saveReportWebAppUrl(){ clearReportWebAppOverride(); return getReportWebAppUrl(); }
   function buildReportUploadUrl(){
     var url=getReportWebAppUrl(); if(!url) return '';
     var qs=new URLSearchParams({mode:'upload',_ts:String(Date.now())});
     return url + (url.indexOf('?')>=0?'&':'?') + qs.toString();
   }
   function openReportFrame(){
+    clearReportWebAppOverride();
     var src=buildReportUploadUrl();
     if(!src){ setText('def-report-status','⚠ Chưa có cấu hình Web App URL mặc định.'); return; }
-    var frame=$('def-report-upload-frame'); if(frame && frame.src!==src) frame.src=src;
-    setText('def-report-status','🟢 Form upload Drive đã sẵn sàng. Chọn file và nhập mật khẩu trong form bên trái.');
+    var frame=$('def-report-upload-frame');
+    if(frame){
+      frame.setAttribute('referrerpolicy','no-referrer');
+      frame.setAttribute('allow','clipboard-read; clipboard-write');
+      // Reset about:blank trước khi nạp để ép Chrome/GitHub Pages bỏ trạng thái iframe 403 cũ.
+      frame.src='about:blank';
+      setTimeout(function(){ frame.src=src; }, 80);
+    }
+    setText('def-report-status','🟢 V9.22 GitHub fix: đã khóa Apps Script /exec mới và xóa URL override cũ. Nếu vẫn thấy 403, kiểm tra Apps Script doGet() có ALLOWALL và deployment = Anyone/Anyone with Google account.');
   }
   function openReportTab(){
     var src=buildReportUploadUrl();
@@ -5239,6 +5255,7 @@ function cSwitch(btn) {
     setText('def-report-status','Đang làm mới danh sách báo cáo từ Drive...');
   }
   function setupReportUpload(){
+    clearReportWebAppOverride();
     renderReportList();
     var refresh=$('def-report-refresh'); if(refresh) refresh.onclick=refreshReportListFromAppsScript;
     var btnFrame=$('def-report-open-frame'); if(btnFrame) btnFrame.onclick=openReportFrame;
