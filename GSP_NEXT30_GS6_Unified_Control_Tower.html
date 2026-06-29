@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V9.22 – Fix GitHub Apps Script Upload Drive A</title>
+<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V9.22C – CL From ERP Source / CL From ERP Source</title>
 <style>
 :root{
   --dark:#035D30;--green:#035A28;--gold:#E2B624;--gold2:#FFFDE7;
@@ -479,46 +479,47 @@ setTimeout(syncStickyNavOffset, 250);
 <!-- ═══════════════ CHẤT LƯỢNG ═══════════════ -->
 <div id="p-cl" class="ct-pane">
   <div class="ds-bar">
-    &#128202; Nguồn: Google Sheets CSV &nbsp;|
-    <input id="url-cl" placeholder="Dán link CSV Google Sheets tab Chất Lượng…">
-    <button id="btn-load-cl">Tải dữ liệu</button>
-    <span id="st-cl"></span>
+    &#128202; Nguồn mặc định: dữ liệu Sai hỏng ERP từ Group 06 &nbsp;|
+    <input id="url-cl" placeholder="Tùy chọn: dán link CSV Chất lượng nếu cần nạp dữ liệu CAPA riêng…">
+    <button id="btn-load-cl">Tải CSV CL</button>
+    <button id="btn-sync-cl-defect" class="btn" type="button" style="padding:4px 10px;margin:0;font-size:11px">Đồng bộ từ Sai hỏng ERP</button>
+    <span id="st-cl">Đang chờ đồng bộ nguồn Sai hỏng ERP…</span>
   </div>
 
   <div class="grid4">
-    <div class="kpi-box"><div class="kpi-val" id="v-ppm-tui">–</div><div class="kpi-lbl">PPM Túi Giấy</div><div class="kpi-tgt">Target ≤ 500</div></div>
-    <div class="kpi-box"><div class="kpi-val" id="v-ppm-khay">–</div><div class="kpi-lbl">PPM Khay Giấy</div><div class="kpi-tgt">Target ≤ 600</div></div>
-    <div class="kpi-box"><div class="kpi-val" id="v-ppm-flexo">–</div><div class="kpi-lbl">PPM Flexo</div><div class="kpi-tgt">Target ≤ 400</div></div>
-    <div class="kpi-box"><div class="kpi-val" id="v-capa">–</div><div class="kpi-lbl">CAPA đúng hạn</div><div class="kpi-tgt">Target ≥ 90%</div></div>
+    <div class="kpi-box"><div class="kpi-val" id="v-ppm-tui">–</div><div class="kpi-lbl">Tỷ lệ SH Túi Giấy</div><div class="kpi-tgt">Nguồn BF/BD ERP</div></div>
+    <div class="kpi-box"><div class="kpi-val" id="v-ppm-khay">–</div><div class="kpi-lbl">Tỷ lệ SH Khay Giấy</div><div class="kpi-tgt">Nguồn BF/BD ERP</div></div>
+    <div class="kpi-box"><div class="kpi-val" id="v-ppm-flexo">–</div><div class="kpi-lbl">Tỷ lệ SH Flexo</div><div class="kpi-tgt">Nguồn BF/BD ERP</div></div>
+    <div class="kpi-box"><div class="kpi-val" id="v-capa">–</div><div class="kpi-lbl">Giá trị sai hỏng</div><div class="kpi-tgt">BG chống trùng AS + LTT</div></div>
   </div>
 
   <div class="grid2" style="margin-top:14px">
     <div class="card">
-      <div class="card-title">Lỗi Hàng Đầu</div>
+      <div class="card-title">Top lỗi sai hỏng ERP – Pareto theo giá trị</div>
       <table id="tbl-defect">
-        <thead><tr><th>Mảng</th><th>Loại lỗi</th><th>Số lỗi</th><th>CAPA</th><th>RAG</th></tr></thead>
-        <tbody id="body-defect"><tr><td colspan="5" style="text-align:center;color:#999">Chưa có dữ liệu</td></tr></tbody>
+        <thead><tr><th>Rank</th><th>Loại lỗi BI</th><th>SL lỗi</th><th>Giá trị</th><th>Tỷ trọng / Lũy kế</th></tr></thead>
+        <tbody id="body-defect"><tr><td colspan="5" style="text-align:center;color:#999">Đang chờ đồng bộ dữ liệu Sai hỏng ERP</td></tr></tbody>
       </table>
     </div>
     <div class="card">
-      <div class="card-title">Cảnh Báo CAPA Quá Hạn</div>
-      <div id="capa-alerts"><div class="alert-box G">&#10003; Chưa có cảnh báo (chưa kết nối dữ liệu)</div></div>
+      <div class="card-title">Cảnh báo điều hành chất lượng</div>
+      <div id="capa-alerts"><div class="alert-box G">&#10003; Đang chờ dữ liệu Sai hỏng ERP</div></div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">Chi Tiết Lỗi &amp; CAPA</div>
+    <div class="card-title">Action table – mảng/máy cần xử lý từ nguồn Sai hỏng ERP</div>
     <div style="overflow-x:auto">
       <table id="tbl-cl">
         <thead><tr>
-          <th>Ngày</th><th>Mảng</th><th>Loại lỗi</th><th>Số lượng</th>
-          <th>Nguyên nhân</th><th>CAPA</th><th>Deadline</th><th>Owner</th><th>RAG</th>
+          <th>Nhóm</th><th>Đối tượng</th><th>LTT</th><th>SL cho phép</th>
+          <th>SL thực tế</th><th>Tỷ lệ TH</th><th>Vượt cho phép</th><th>Giá trị</th><th>RAG</th>
         </tr></thead>
-        <tbody id="body-cl"><tr><td colspan="9" style="text-align:center;color:#999;padding:18px">Bấm "Nạp dữ liệu mẫu" để xem thử</td></tr></tbody>
+        <tbody id="body-cl"><tr><td colspan="9" style="text-align:center;color:#999;padding:18px">Bấm “Đồng bộ từ Sai hỏng ERP” hoặc chờ dữ liệu LIVE tự nạp</td></tr></tbody>
       </table>
     </div>
     <div style="margin-top:10px">
-      <button class="btn" id="btn-demo-cl">&#128229; Nạp dữ liệu mẫu</button>
+      <button class="btn" id="btn-demo-cl">&#128260; Đồng bộ dữ liệu sai hỏng ERP</button>
       <button class="btn grey" id="btn-export-cl">&#11015; Xuất CSV</button>
     </div>
   </div>
@@ -869,47 +870,170 @@ function renderSX(rows) {
 }
 
 // ═══════ RENDER CHẤT LƯỢNG ═══════
+// ═══════ NGUỒN TĨNH CHO TAB CHẤT LƯỢNG TỪ SAI HỎNG ERP ═══════
+window.GS6_CL_DEFECT_SOURCE = {"updated":"21/06/2026 13:08","period":"2026-04-01 → 2026-06-19","kpi":{"ltt":213,"needSx":21390203.0,"baselineQty":980326.0,"allowedScaledQty":602494.15719,"actualProduction":14785467.0,"actualQty":748329.0,"diffQty":145834.84281,"value":247182847.0,"baselineRate":0.045830607591709156,"actualRate":0.050612469663623066,"diffRate":0.00478186207191391},"segments":[{"rank":1,"name":"Túi giấy","fullName":"Túi giấy","lttCount":111,"needSx":19692094.0,"baselineQty":946169.0,"allowedScaledQty":578298.22553,"baselineRate":0.048048165928925586,"actualProduction":13797910.0,"actualQty":720330.0,"actualRate":0.052205732607329663,"diffQty":142031.77447,"diffRate":0.004157566678404077,"value":146264775.0,"rag":"Vàng"},{"rank":2,"name":"Khay giấy","fullName":"Khay giấy","lttCount":19,"needSx":588987.0,"baselineQty":15760.0,"allowedScaledQty":11201.230910000002,"baselineRate":0.026757806199457713,"actualProduction":336944.0,"actualQty":23479.0,"actualRate":0.06968220238377891,"diffQty":12277.769090000002,"diffRate":0.0429243961843212,"value":70981982.0,"rag":"Đỏ"},{"rank":3,"name":"GS6 khác","fullName":"GS6 khác","lttCount":4,"needSx":13270.0,"baselineQty":28.0,"allowedScaledQty":32.5954,"baselineRate":0.0021100226073850793,"actualProduction":13030.0,"actualQty":383.0,"actualRate":0.029393706830391404,"diffQty":350.40459999999996,"diffRate":0.027283684223006324,"value":0.0,"rag":"Đỏ"},{"rank":4,"name":"Flexo cuộn 6 màu","fullName":"Flexo cuộn 6 màu","lttCount":79,"needSx":1095852.0,"baselineQty":18369.0,"allowedScaledQty":12962.10535,"baselineRate":0.01676230001861565,"actualProduction":637583.0,"actualQty":4137.0,"actualRate":0.0064885669787306125,"diffQty":-8825.105350000002,"diffRate":-0.01027373303988504,"value":29936090.0,"rag":"Xanh"}],"machines":[{"rank":1,"name":"QD450-9","fullName":"QD450-9","lttCount":24,"needSx":4439557.0,"baselineQty":206212.0,"allowedScaledQty":62047.83486999999,"baselineRate":0.046448778560563585,"actualProduction":3460053.0,"actualQty":180153.0,"actualRate":0.05206654348936274,"diffQty":118105.16513000001,"diffRate":0.005617764928799153,"value":54364805.0,"rag":"Đỏ"},{"rank":2,"name":"QL330-6","fullName":"QL330-6","lttCount":9,"needSx":5713319.0,"baselineQty":148319.0,"allowedScaledQty":137556.31012,"baselineRate":0.02596021681968047,"actualProduction":4943593.0,"actualQty":178593.0,"actualRate":0.036126153589100075,"diffQty":41036.68988,"diffRate":0.010165936769419605,"value":0.0,"rag":"Đỏ"},{"rank":3,"name":"QD360-2","fullName":"QD360-2","lttCount":18,"needSx":847667.0,"baselineQty":15281.0,"allowedScaledQty":9648.842349999999,"baselineRate":0.01802712621819653,"actualProduction":771644.0,"actualQty":37844.0,"actualRate":0.04904334122989358,"diffQty":28195.15765,"diffRate":0.03101621501169705,"value":20043193.0,"rag":"Đỏ"},{"rank":4,"name":"Máy nghiền số 1","fullName":"Máy nghiền số 1","lttCount":4,"needSx":108477.0,"baselineQty":37.0,"allowedScaledQty":27.172279999999997,"baselineRate":0.00034108612885680835,"actualProduction":77334.0,"actualQty":11847.0,"actualRate":0.15319264489099232,"diffQty":11819.827720000001,"diffRate":0.15285155876213552,"value":5007508.0,"rag":"Đỏ"},{"rank":5,"name":"QD450-17","fullName":"QD450-17","lttCount":1,"needSx":3800560.0,"baselineQty":146560.0,"allowedScaledQty":2391.1597,"baselineRate":0.038562738122802954,"actualProduction":62007.0,"actualQty":5907.0,"actualRate":0.09526343799893561,"diffQty":3515.8403,"diffRate":0.05670069987613265,"value":0.0,"rag":"Đỏ"},{"rank":6,"name":"Máy cắt via số 1","fullName":"Máy cắt via số 1","lttCount":3,"needSx":98862.0,"baselineQty":2862.0,"allowedScaledQty":2314.29133,"baselineRate":0.028949444680463676,"actualProduction":73825.0,"actualQty":4355.0,"actualRate":0.058990856755841516,"diffQty":2040.70867,"diffRate":0.03004141207537784,"value":60181363.0,"rag":"Đỏ"},{"rank":7,"name":"QX550-1","fullName":"QX550-1","lttCount":2,"needSx":199460.0,"baselineQty":11085.0,"allowedScaledQty":10555.96839,"baselineRate":0.05557505264213376,"actualProduction":187066.0,"actualQty":12241.0,"actualRate":0.0654367977077609,"diffQty":1685.03161,"diffRate":0.009861745065627134,"value":0.0,"rag":"Đỏ"},{"rank":8,"name":"Cắt V góc khay giấy số 1","fullName":"Cắt V góc khay giấy số 1","lttCount":2,"needSx":108000.0,"baselineQty":0.0,"allowedScaledQty":0.0,"baselineRate":0,"actualProduction":57221.0,"actualQty":1602.0,"actualRate":0.027996714492930917,"diffQty":1602.0,"diffRate":0.027996714492930917,"value":0.0,"rag":"Đỏ"},{"rank":9,"name":"Máy ép khay giấy HGHY Pulp Model ZJWD-957…","fullName":"Máy ép khay giấy HGHY Pulp Model ZJWD-9575S số 4","lttCount":1,"needSx":34500.0,"baselineQty":4500.0,"allowedScaledQty":2051.6087,"baselineRate":0.13043478260869565,"actualProduction":15729.0,"actualQty":2834.0,"actualRate":0.18017674359463412,"diffQty":782.3913,"diffRate":0.04974196098593847,"value":0.0,"rag":"Đỏ"},{"rank":10,"name":"Máy ép khay giấy HGHY Pulp Model ZJWD-957…","fullName":"Máy ép khay giấy HGHY Pulp Model ZJWD-9575S số 5","lttCount":1,"needSx":30000.0,"baselineQty":0.0,"allowedScaledQty":0.0,"baselineRate":0,"actualProduction":11483.0,"actualQty":513.0,"actualRate":0.04467473656709919,"diffQty":513.0,"diffRate":0.04467473656709919,"value":0.0,"rag":"Đỏ"}],"machineStability":[{"rank":1,"name":"QL330-6","fullName":"QL330-6","lttCount":9,"needSx":5713319.0,"baselineQty":148319.0,"allowedScaledQty":137556.31012,"baselineRate":0.02596021681968047,"actualProduction":4943593.0,"actualQty":178593.0,"actualRate":0.036126153589100075,"diffQty":41036.68988,"diffRate":0.010165936769419605,"value":0.0,"rag":"Đỏ"},{"rank":2,"name":"QD360-1","fullName":"QD360-1","lttCount":46,"needSx":4104853.0,"baselineQty":351392.0,"allowedScaledQty":289369.27833000006,"baselineRate":0.08560403990106345,"actualProduction":3792154.0,"actualQty":239554.0,"actualRate":0.06317095771954409,"diffQty":-49815.27832999999,"diffRate":-0.022433082181519362,"value":60548982.0,"rag":"Xanh"},{"rank":3,"name":"QD450-9","fullName":"QD450-9","lttCount":24,"needSx":4439557.0,"baselineQty":206212.0,"allowedScaledQty":62047.83486999999,"baselineRate":0.046448778560563585,"actualProduction":3460053.0,"actualQty":180153.0,"actualRate":0.05206654348936274,"diffQty":118105.16513000001,"diffRate":0.005617764928799153,"value":54364805.0,"rag":"Đỏ"},{"rank":4,"name":"QD360-2","fullName":"QD360-2","lttCount":18,"needSx":847667.0,"baselineQty":15281.0,"allowedScaledQty":9648.842349999999,"baselineRate":0.01802712621819653,"actualProduction":771644.0,"actualQty":37844.0,"actualRate":0.04904334122989358,"diffQty":28195.15765,"diffRate":0.03101621501169705,"value":20043193.0,"rag":"Đỏ"},{"rank":5,"name":"QX330-1","fullName":"QX330-1","lttCount":3,"needSx":283309.0,"baselineQty":38309.0,"allowedScaledQty":38002.55072000001,"baselineRate":0.13521984829285338,"actualProduction":277595.0,"actualQty":38295.0,"actualRate":0.13795277292458438,"diffQty":292.44927999999993,"diffRate":0.0027329246317309985,"value":0.0,"rag":"Vàng"},{"rank":6,"name":"YRK21450-1","fullName":"YRK21450-1","lttCount":32,"needSx":518936.0,"baselineQty":10536.0,"allowedScaledQty":7857.41812,"baselineRate":0.020303081690227695,"actualProduction":260032.0,"actualQty":1408.0,"actualRate":0.005414718188530642,"diffQty":-6449.41812,"diffRate":-0.014888363501697054,"value":298786.0,"rag":"Xanh"},{"rank":7,"name":"QX550-1","fullName":"QX550-1","lttCount":2,"needSx":199460.0,"baselineQty":11085.0,"allowedScaledQty":10555.96839,"baselineRate":0.05557505264213376,"actualProduction":187066.0,"actualQty":12241.0,"actualRate":0.0654367977077609,"diffQty":1685.03161,"diffRate":0.009861745065627134,"value":0.0,"rag":"Đỏ"},{"rank":8,"name":"YRK21450-2","fullName":"YRK21450-2","lttCount":14,"needSx":337021.0,"baselineQty":2601.0,"allowedScaledQty":1029.9428,"baselineRate":0.007717619970268915,"actualProduction":181337.0,"actualQty":494.0,"actualRate":0.002724209620761345,"diffQty":-535.9428,"diffRate":-0.00499341034950757,"value":1434793.0,"rag":"Xanh"},{"rank":9,"name":"QX450-2","fullName":"QX450-2","lttCount":1,"needSx":149900.0,"baselineQty":24900.0,"allowedScaledQty":24876.91061,"baselineRate":0.16611074049366245,"actualProduction":149761.0,"actualQty":24761.0,"actualRate":0.16533676992007265,"diffQty":-115.91061,"diffRate":-0.0007739705735897995,"value":0.0,"rag":"Xanh"},{"rank":10,"name":"YRK41450-1","fullName":"YRK41450-1","lttCount":16,"needSx":153349.0,"baselineQty":3393.0,"allowedScaledQty":2635.9636299999997,"baselineRate":0.022126000169547893,"actualProduction":114585.0,"actualQty":663.0,"actualRate":0.005786097656761356,"diffQty":-1972.96363,"diffRate":-0.01633990251278654,"value":2808417.0,"rag":"Xanh"},{"rank":11,"name":"YRK21450-3","fullName":"YRK21450-3","lttCount":13,"needSx":83789.0,"baselineQty":0.0,"allowedScaledQty":0.0,"baselineRate":0,"actualProduction":79383.0,"actualQty":213.0,"actualRate":0.00268319413476437,"diffQty":213.0,"diffRate":0.00268319413476437,"value":1175341.0,"rag":"Vàng"},{"rank":12,"name":"Máy nghiền số 1","fullName":"Máy nghiền số 1","lttCount":4,"needSx":108477.0,"baselineQty":37.0,"allowedScaledQty":27.172279999999997,"baselineRate":0.00034108612885680835,"actualProduction":77334.0,"actualQty":11847.0,"actualRate":0.15319264489099232,"diffQty":11819.827720000001,"diffRate":0.15285155876213552,"value":5007508.0,"rag":"Đỏ"}],"operations":[{"rank":1,"name":"Thao tác hoàn thiện thân túi QD trong","fullName":"Thao tác hoàn thiện thân túi QD trong","lttCount":85,"needSx":12070685.0,"baselineQty":653793.0,"allowedScaledQty":298287.23636000004,"baselineRate":0.054163703219825554,"actualProduction":6972036.0,"actualQty":405936.0,"actualRate":0.05822345151401972,"diffQty":107648.76363999998,"diffRate":0.004059748294194164,"value":134956980.0,"rag":"Vàng"},{"rank":2,"name":"Thao tác hoàn thiện thân túi DC","fullName":"Thao tác hoàn thiện thân túi DC","lttCount":9,"needSx":5713319.0,"baselineQty":148319.0,"allowedScaledQty":137556.31012,"baselineRate":0.02596021681968047,"actualProduction":4943593.0,"actualQty":178593.0,"actualRate":0.036126153589100075,"diffQty":41036.68988,"diffRate":0.010165936769419605,"value":0.0,"rag":"Đỏ"},{"rank":3,"name":"Thao tác nghiền NVL đen","fullName":"Thao tác nghiền NVL đen","lttCount":3,"needSx":76266.0,"baselineQty":26.0,"allowedScaledQty":16.5872,"baselineRate":0.00034091207090971074,"actualProduction":46338.0,"actualQty":8374.0,"actualRate":0.18071561137727135,"diffQty":8357.4128,"diffRate":0.18037469930636163,"value":0.0,"rag":"Đỏ"},{"rank":4,"name":"Thao tác cắt phẳng khay","fullName":"Thao tác cắt phẳng khay","lttCount":1,"needSx":56283.0,"baselineQty":283.0,"allowedScaledQty":264.04886,"baselineRate":0.0050281612565072934,"actualProduction":52514.0,"actualQty":4222.0,"actualRate":0.08039760825684579,"diffQty":3957.95114,"diffRate":0.0753694470003385,"value":60181363.0,"rag":"Đỏ"},{"rank":5,"name":"Thao tác nghiền NVL nâu","fullName":"Thao tác nghiền NVL nâu","lttCount":1,"needSx":32211.0,"baselineQty":11.0,"allowedScaledQty":10.58508,"baselineRate":0.0003414982459408277,"actualProduction":30996.0,"actualQty":3473.0,"actualRate":0.11204671570525229,"diffQty":3462.41492,"diffRate":0.11170521745931146,"value":5007508.0,"rag":"Đỏ"},{"rank":6,"name":"Thao tác hoàn thiện thân túi QX ngoài","fullName":"Thao tác hoàn thiện thân túi QX ngoài","lttCount":5,"needSx":540359.0,"baselineQty":70359.0,"allowedScaledQty":70027.52618999999,"baselineRate":0.13020788031660432,"actualProduction":534477.0,"actualQty":71852.0,"actualRate":0.13443422261388235,"diffQty":1824.4738100000002,"diffRate":0.00422634229727803,"value":0.0,"rag":"Vàng"},{"rank":7,"name":"Thao tác V-cutting khay+ Kiểm + Đóng gói …","fullName":"Thao tác V-cutting khay+ Kiểm + Đóng gói khay","lttCount":2,"needSx":108000.0,"baselineQty":0.0,"allowedScaledQty":0.0,"baselineRate":0,"actualProduction":57221.0,"actualQty":1602.0,"actualRate":0.027996714492930917,"diffQty":1602.0,"diffRate":0.027996714492930917,"value":0.0,"rag":"Đỏ"},{"rank":8,"name":"Thao tác ép khay đen+ Phun keo định vị dá…","fullName":"Thao tác ép khay đen+ Phun keo định vị dán tai","lttCount":1,"needSx":30000.0,"baselineQty":0.0,"allowedScaledQty":0.0,"baselineRate":0,"actualProduction":11483.0,"actualQty":513.0,"actualRate":0.04467473656709919,"diffQty":513.0,"diffRate":0.04467473656709919,"value":0.0,"rag":"Đỏ"},{"rank":9,"name":"Thao tác đóng gói sản phẩm","fullName":"Thao tác đóng gói sản phẩm","lttCount":2,"needSx":10959.0,"baselineQty":0.0,"allowedScaledQty":0.0,"baselineRate":0,"actualProduction":10365.0,"actualQty":277.0,"actualRate":0.02672455378678244,"diffQty":277.0,"diffRate":0.02672455378678244,"value":0.0,"rag":"Đỏ"},{"rank":10,"name":"Thao tác cắt phẳng khay lần 1","fullName":"Thao tác cắt phẳng khay lần 1","lttCount":1,"needSx":30000.0,"baselineQty":0.0,"allowedScaledQty":0.0,"baselineRate":0,"actualProduction":11311.0,"actualQty":133.0,"actualRate":0.011758465210856689,"diffQty":133.0,"diffRate":0.011758465210856689,"value":0.0,"rag":"Đỏ"}],"defects":[{"rank":1,"name":"Chỉnh máy, setting","fullName":"Chỉnh máy, setting","qty":389744.0,"value":158941694.0,"share":0.6430126359051119,"cum":0.6430126359051119},{"rank":2,"name":"Ép thủng lọt sáng","fullName":"Ép thủng lọt sáng","qty":4131.0,"value":55653952.0,"share":0.22515296945341842,"cum":0.8681656053585304},{"rank":3,"name":"Hở đáy túi","fullName":"Hở đáy túi","qty":27785.0,"value":11629732.0,"share":0.04704910612183377,"cum":0.9152147114803642},{"rank":4,"name":"Vỡ giấy,vỡ góc,vỡ lăn","fullName":"Vỡ giấy,vỡ góc,vỡ lăn","qty":1160.0,"value":8208025.0,"share":0.033206288784269886,"cum":0.948421000264634},{"rank":5,"name":"Rách xước, nốt, nhăn túi","fullName":"Rách xước, nốt, nhăn túi","qty":28310.0,"value":6644658.0,"share":0.026881549754138076,"cum":0.9753025500187721},{"rank":6,"name":"Bóc cuộn","fullName":"Bóc cuộn","qty":1176.7399999999998,"value":2346262.0,"share":0.009492009775257585,"cum":0.9847945597940297},{"rank":7,"name":"Đốm, bẩn, loang màu bề mặt khay","fullName":"Đốm, bẩn, loang màu bề mặt khay","qty":771.0,"value":1946567.0,"share":0.007875008414317682,"cum":0.9926695682083474},{"rank":8,"name":"Sai kích tước túi","fullName":"Sai kích tước túi","qty":2305.0,"value":883173.0,"share":0.0035729542349676067,"cum":0.996242522443315},{"rank":9,"name":"Bần, dính keo, tràn keo, túi","fullName":"Bần, dính keo, tràn keo, túi","qty":2455.0,"value":839333.0,"share":0.0033955956498874697,"cum":0.9996381180932025},{"rank":10,"name":"Nhăn hông túi,","fullName":"Nhăn hông túi,","qty":255.0,"value":89451.0,"share":0.00036188190679752144,"cum":1.0}],"operationT":[{"rank":1,"name":"Thao tác hoàn thiện thân túi QD trong","fullName":"Thao tác hoàn thiện thân túi QD trong","qty":405936.0,"value":134956980.0,"share":0.5459803608459934,"cum":0.5459803608459934},{"rank":2,"name":"Thao tác cắt phẳng khay","fullName":"Thao tác cắt phẳng khay","qty":3710.0,"value":60181363.0,"share":0.24346900980552263,"cum":0.7894493706515161},{"rank":3,"name":"Thao tác in Flexo cuộn +Phủ","fullName":"Thao tác in Flexo cuộn +Phủ","qty":763.0,"value":18829274.0,"share":0.07617548801838989,"cum":0.865624858669906},{"rank":4,"name":"Thao tá in Flexo cuộn mặt trước","fullName":"Thao tá in Flexo cuộn mặt trước","qty":3192.9999999999995,"value":11106816.0,"share":0.04493360334182088,"cum":0.9105584620117269},{"rank":5,"name":"Thao tác xoắn dây túi","fullName":"Thao tác xoắn dây túi","qty":746.0,"value":9014132.0,"share":0.03646746572184274,"cum":0.9470259277335696},{"rank":6,"name":"Thao tác ép khay nâu","fullName":"Thao tác ép khay nâu","qty":803.0,"value":5793111.0,"share":0.023436541290423763,"cum":0.9704624690239934},{"rank":7,"name":"Thao tác nghiền NVL nâu","fullName":"Thao tác nghiền NVL nâu","qty":1124.0,"value":5007508.0,"share":0.02025831509255171,"cum":0.9907207841165451},{"rank":8,"name":"Thao tác bế tròn","fullName":"Thao tác bế tròn","qty":1283.0,"value":2293663.0,"share":0.009279215883454891,"cum":1.0},{"rank":9,"name":"Thao tác đóng gói sản phẩm","fullName":"Thao tác đóng gói sản phẩm","qty":86.0,"value":0.0,"share":0.0,"cum":1.0},{"rank":10,"name":"Thao tác nghiền NVL đen","fullName":"Thao tác nghiền NVL đen","qty":8374.0,"value":0.0,"share":0.0,"cum":1.0}],"dataQuality":{"defect_qty_without_value":2149}};
+
+function fmtCLNum(x) {
+  var n = Number(x) || 0;
+  return Math.round(n).toLocaleString('vi-VN');
+}
+function fmtCLPct(x) {
+  return ((Number(x) || 0) * 100).toLocaleString('vi-VN', {minimumFractionDigits:2, maximumFractionDigits:2}) + '%';
+}
+function fmtCLMoney(x) {
+  var n = Number(x) || 0;
+  if (Math.abs(n) >= 1000000) return (n/1000000).toLocaleString('vi-VN', {minimumFractionDigits:1, maximumFractionDigits:1}) + ' tr';
+  return fmtCLNum(n);
+}
+function escCL(x) {
+  return String(x === null || x === undefined ? '' : x).replace(/[&<>"]/g, function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});
+}
+function ragShort(r) {
+  r = String(r || '').toLowerCase();
+  if (r.indexOf('đỏ') >= 0 || r === 'r') return 'R';
+  if (r.indexOf('vàng') >= 0 || r.indexOf('vang') >= 0 || r === 'y') return 'Y';
+  if (r.indexOf('xanh') >= 0 || r === 'g') return 'G';
+  return 'Y';
+}
+function ragVN(r) {
+  var m = ragShort(r);
+  return m === 'R' ? 'Đỏ' : (m === 'G' ? 'Xanh' : 'Vàng');
+}
+
+function getCurrentDefectSourceForCL() {
+  return window.GS6_DEFECT_LIVE_DATA || window.GS6_CL_DEFECT_SOURCE || window.GS6_DEFECT_DATA || null;
+}
+
+function renderQualityFromDefectData(d, sourceLabel) {
+  if (!d || !d.kpi) return;
+  var segs = d.segments || [];
+  function findSeg(names) {
+    for (var i=0;i<segs.length;i++) {
+      var n = String(segs[i].name || segs[i].fullName || '').toLowerCase();
+      for (var j=0;j<names.length;j++) if (n.indexOf(names[j]) >= 0) return segs[i];
+    }
+    return null;
+  }
+  var tui = findSeg(['túi','tui']);
+  var khay = findSeg(['khay']);
+  var flexo = findSeg(['flexo']);
+  var k = d.kpi || {};
+
+  var el;
+  el = document.getElementById('v-ppm-tui'); if (el) el.textContent = tui ? fmtCLPct(tui.actualRate) : '–';
+  el = document.getElementById('v-ppm-khay'); if (el) el.textContent = khay ? fmtCLPct(khay.actualRate) : '–';
+  el = document.getElementById('v-ppm-flexo'); if (el) el.textContent = flexo ? fmtCLPct(flexo.actualRate) : '–';
+  el = document.getElementById('v-capa'); if (el) el.textContent = fmtCLMoney(k.value || 0);
+
+  var st = document.getElementById('st-cl');
+  if (st) st.textContent = '✔ Đã đồng bộ Sai hỏng ERP: ' + fmtCLNum(k.ltt || 0) + ' LTT, ' + fmtCLNum(k.actualQty || 0) + ' lỗi, ' + fmtCLMoney(k.value || 0) + ' · Kỳ: ' + (d.period || 'Không rõ') + ' · ' + (sourceLabel || 'Nguồn nội bộ');
+
+  // Top lỗi BI theo giá trị
+  var bodyDef = document.getElementById('body-defect');
+  if (bodyDef) {
+    var topDefects = (d.defects || []).slice(0, 8);
+    bodyDef.innerHTML = topDefects.length ? topDefects.map(function(x) {
+      return '<tr>'
+        + '<td style="text-align:center;font-weight:900">' + escCL(x.rank || '') + '</td>'
+        + '<td><strong>' + escCL(x.fullName || x.name || '') + '</strong></td>'
+        + '<td style="text-align:right">' + fmtCLNum(x.qty || 0) + '</td>'
+        + '<td style="text-align:right;font-weight:900;color:#035D30">' + fmtCLMoney(x.value || 0) + '</td>'
+        + '<td>' + fmtCLPct(x.share || 0) + ' / ' + fmtCLPct(x.cum || 0) + '</td>'
+        + '</tr>';
+    }).join('') : '<tr><td colspan="5" style="text-align:center;color:#999">Chưa có dữ liệu lỗi BI</td></tr>';
+  }
+
+  // Cảnh báo điều hành
+  var alerts = document.getElementById('capa-alerts');
+  if (alerts) {
+    var redSegs = segs.filter(function(x){return ragShort(x.rag)==='R';});
+    var hotMachines = (d.machines || []).filter(function(x){return ragShort(x.rag)==='R';}).slice(0,4);
+    var html = '';
+    html += '<div class="alert-box ' + (redSegs.length ? 'R' : 'Y') + '"><strong>' + (redSegs.length ? '🔴' : '🟡') + ' Tổng sai hỏng thực tế ' + fmtCLPct(k.actualRate || 0) + '</strong> · Cho phép ' + fmtCLPct(k.baselineRate || 0) + ' · Vượt ' + fmtCLNum(k.diffQty || 0) + ' lỗi · Giá trị ' + fmtCLMoney(k.value || 0) + '.</div>';
+    if (khay && ragShort(khay.rag)==='R') html += '<div class="alert-box R">🔴 Khay giấy đỏ: tỷ lệ ' + fmtCLPct(khay.actualRate) + ', vượt ' + fmtCLNum(khay.diffQty) + ' lỗi, giá trị ' + fmtCLMoney(khay.value) + ' → cần QC/CN/SX khóa top lỗi và máy gây lỗi.</div>';
+    if (tui && ragShort(tui.rag)!=='G') html += '<div class="alert-box Y">🟡 Túi giấy: tỷ lệ ' + fmtCLPct(tui.actualRate) + ', vượt ' + fmtCLNum(tui.diffQty) + ' lỗi, giá trị ' + fmtCLMoney(tui.value) + ' → ưu tiên lỗi setting/chỉnh máy.</div>';
+    if (flexo && ragShort(flexo.rag)==='G') html += '<div class="alert-box G">✔ Flexo đang xanh theo tỷ lệ: ' + fmtCLPct(flexo.actualRate) + ', thấp hơn mức cho phép ' + fmtCLNum(Math.abs(flexo.diffQty || 0)) + ' lỗi. Vẫn cần giữ kiểm soát setup waste.</div>';
+    hotMachines.forEach(function(m){ html += '<div class="alert-box R">🔴 Máy ' + escCL(m.fullName || m.name) + ': tỷ lệ ' + fmtCLPct(m.actualRate) + ', vượt ' + fmtCLNum(m.diffQty) + ', giá trị ' + fmtCLMoney(m.value) + '.</div>'; });
+    alerts.innerHTML = html || '<div class="alert-box G">✔ Không có cảnh báo đỏ từ nguồn Sai hỏng ERP</div>';
+  }
+
+  // Action rows: 3 mảng chính + top máy đỏ
+  var bodyCL = document.getElementById('body-cl');
+  if (bodyCL) {
+    var rows = [];
+    ['Túi giấy','Khay giấy','Flexo cuộn 6 màu'].forEach(function(name){
+      var item = findSeg([name.toLowerCase().split(' ')[0]]);
+      if (item) rows.push(Object.assign({_group:'Mảng'}, item));
+    });
+    (d.machines || []).slice(0, 8).forEach(function(m){ rows.push(Object.assign({_group:'Máy'}, m)); });
+    bodyCL.innerHTML = rows.length ? rows.map(function(x){
+      var rs = ragShort(x.rag);
+      var diff = Number(x.diffQty || 0);
+      return '<tr>'
+        + '<td>' + escCL(x._group) + '</td>'
+        + '<td><strong>' + escCL(x.fullName || x.name || '') + '</strong></td>'
+        + '<td style="text-align:center">' + fmtCLNum(x.lttCount || 0) + '</td>'
+        + '<td style="text-align:right">' + fmtCLNum(x.allowedScaledQty || 0) + '</td>'
+        + '<td style="text-align:right;font-weight:900">' + fmtCLNum(x.actualQty || 0) + '</td>'
+        + '<td style="text-align:center">' + fmtCLPct(x.actualRate || 0) + '</td>'
+        + '<td style="text-align:right;color:' + (diff>0 ? '#C62828' : '#035D30') + ';font-weight:900">' + (diff>0 ? '+' : '') + fmtCLNum(diff) + '</td>'
+        + '<td style="text-align:right">' + fmtCLMoney(x.value || 0) + '</td>'
+        + '<td>' + ragCell(rs) + '</td>'
+        + '</tr>';
+    }).join('') : '<tr><td colspan="9" style="text-align:center;color:#999;padding:18px">Chưa có dữ liệu action table</td></tr>';
+  }
+}
+
+function renderCLFromDefectSource() {
+  var d = getCurrentDefectSourceForCL();
+  if (d) renderQualityFromDefectData(d, window.GS6_DEFECT_LIVE_DATA ? 'Google Sheet LIVE Group 06' : 'Nguồn tĩnh GS6_SaiHong_ERP_Dashboard_Data_V4');
+}
+
+// Giữ khả năng tải CSV CL cũ nếu cần, nhưng ưu tiên nguồn Sai hỏng ERP.
 function renderCL(rows) {
+  if (!rows || !rows.length) { renderCLFromDefectSource(); return; }
   var tbody = document.getElementById('body-cl');
-  tbody.innerHTML = '';
+  if (tbody) tbody.innerHTML = '';
   var ppm = {tui:[], khay:[], flexo:[]};
   var alerts = document.getElementById('capa-alerts');
-  alerts.innerHTML = '';
+  if (alerts) alerts.innerHTML = '';
   var today = new Date(); today.setHours(0,0,0,0);
   var overdue = 0;
-
   rows.forEach(function(r) {
     var m = (r['Mảng'] || '').toLowerCase();
     var dl = r['Deadline'] ? new Date(r['Deadline']) : null;
     var late = dl && dl < today && r['RAG'] !== 'G';
-    if (late) {
+    if (late && alerts) {
       overdue++;
-      alerts.innerHTML += '<div class="alert-box R">🔴 CAPA quá hạn: ' + (r['Loại lỗi']||'') + ' – ' + (r['Mảng']||'') + ' (' + (r['Deadline']||'') + ') → ' + (r['Owner']||'') + '</div>';
+      alerts.innerHTML += '<div class="alert-box R">🔴 CAPA quá hạn: ' + escCL(r['Loại lỗi']||'') + ' – ' + escCL(r['Mảng']||'') + ' (' + escCL(r['Deadline']||'') + ') → ' + escCL(r['Owner']||'') + '</div>';
     }
     var tr = document.createElement('tr');
-    tr.innerHTML = '<td>' + (r['Ngày']||r['Ngày phát sinh']||'') + '</td>'
-      + '<td>' + (r['Mảng']||'') + '</td>'
-      + '<td>' + (r['Loại lỗi']||'') + '</td>'
-      + '<td style="text-align:center">' + (r['Số lượng']||'') + '</td>'
-      + '<td>' + (r['Nguyên nhân gốc']||r['Nguyên nhân']||'') + '</td>'
-      + '<td>' + (r['Hành động CAPA']||r['CAPA']||'') + '</td>'
-      + '<td style="color:' + (late?'#C62828':'') + ';font-weight:' + (late?'700':'') + '">' + (r['Deadline']||'') + (late?' ⚠':'') + '</td>'
-      + '<td>' + (r['Owner']||'') + '</td>'
+    tr.innerHTML = '<td>CAPA</td>'
+      + '<td><strong>' + escCL(r['Mảng']||'') + '</strong><br>' + escCL(r['Loại lỗi']||'') + '</td>'
+      + '<td style="text-align:center">–</td>'
+      + '<td style="text-align:right">–</td>'
+      + '<td style="text-align:right">' + escCL(r['Số lượng']||'') + '</td>'
+      + '<td style="text-align:center">' + escCL(r['PPM']||'') + '</td>'
+      + '<td>' + escCL(r['Hành động CAPA']||r['CAPA']||'') + '</td>'
+      + '<td>' + escCL(r['Owner']||'') + '</td>'
       + '<td>' + ragCell(r['RAG']||'G') + '</td>';
-    tbody.appendChild(tr);
+    if (tbody) tbody.appendChild(tr);
     var p = parseFloat(r['PPM']) || 0;
     if (m.indexOf('túi') >= 0 || m.indexOf('tui') >= 0) ppm.tui.push(p);
     else if (m.indexOf('khay') >= 0) ppm.khay.push(p);
     else ppm.flexo.push(p);
   });
-
-  if (!overdue) alerts.innerHTML = '<div class="alert-box G">✔ Không có CAPA quá hạn</div>';
+  if (!overdue && alerts) alerts.innerHTML = '<div class="alert-box G">✔ Không có CAPA quá hạn theo CSV CL</div>';
   function avgPPM(arr) { return arr.length ? Math.round(arr.reduce(function(a,b){return a+b;},0)/arr.length).toString() : '–'; }
-  document.getElementById('v-ppm-tui').textContent   = avgPPM(ppm.tui);
-  document.getElementById('v-ppm-khay').textContent  = avgPPM(ppm.khay);
-  document.getElementById('v-ppm-flexo').textContent = avgPPM(ppm.flexo);
+  var el;
+  el=document.getElementById('v-ppm-tui'); if(el) el.textContent = avgPPM(ppm.tui);
+  el=document.getElementById('v-ppm-khay'); if(el) el.textContent = avgPPM(ppm.khay);
+  el=document.getElementById('v-ppm-flexo'); if(el) el.textContent = avgPPM(ppm.flexo);
+  el=document.getElementById('v-capa'); if(el) el.textContent = 'CSV';
+  var st=document.getElementById('st-cl'); if(st) st.textContent = '✔ Đã tải CSV CL: ' + rows.length + ' dòng';
 }
 
+// ═══════ RENDER COSTING ═══════
 // ═══════ RENDER COSTING ═══════
 function renderCost(rows) {
   var tbody = document.getElementById('body-cost');
@@ -1025,11 +1149,12 @@ function wire(id, fn) {
 wire('btn-load-pipeline', function() { loadCSV('pipeline', renderPipe); });
 wire('btn-load-sx',       function() { loadCSV('sx', renderSX); });
 wire('btn-load-cl',       function() { loadCSV('cl', renderCL); });
+wire('btn-sync-cl-defect', function() { renderCLFromDefectSource(); });
 wire('btn-load-cost',     function() { loadCSV('cost', renderCost); });
 
 wire('btn-demo-pipe',  function() { renderPipe(DEMO.pipe); });
 wire('btn-demo-sx',    function() { renderSX(DEMO.sx); });
-wire('btn-demo-cl',    function() { renderCL(DEMO.cl); });
+wire('btn-demo-cl',    function() { renderCLFromDefectSource(); });
 wire('btn-demo-cost',  function() { renderCost(DEMO.cost); });
 
 wire('btn-export-pipe', function() { exportCSV('tbl-pipe', 'pipeline'); });
@@ -1044,6 +1169,9 @@ var fg = document.getElementById('f-pipe-gd');
 if (qp) qp.addEventListener('input', filterPipe);
 if (fp) fp.addEventListener('change', filterPipe);
 if (fg) fg.addEventListener('change', filterPipe);
+
+// Auto đồng bộ tab 02/Chất lượng từ nguồn Sai hỏng ERP khi dashboard mở
+setTimeout(function(){ try { renderCLFromDefectSource(); } catch(e) { var st=document.getElementById('st-cl'); if(st) st.textContent='⚠ Chưa đồng bộ được nguồn sai hỏng: '+(e&&e.message?e.message:e); } }, 900);
 
 // Restore saved URLs
 ['pipeline','sx','cl','cost'].forEach(function(t) {
@@ -1475,11 +1603,12 @@ function wire(id, fn) {
 wire('btn-load-pipeline', function() { loadCSV('pipeline', renderPipe); });
 wire('btn-load-sx',       function() { loadCSV('sx', renderSX); });
 wire('btn-load-cl',       function() { loadCSV('cl', renderCL); });
+wire('btn-sync-cl-defect', function() { renderCLFromDefectSource(); });
 wire('btn-load-cost',     function() { loadCSV('cost', renderCost); });
 
 wire('btn-demo-pipe',  function() { renderPipe(DEMO.pipe); });
 wire('btn-demo-sx',    function() { renderSX(DEMO.sx); });
-wire('btn-demo-cl',    function() { renderCL(DEMO.cl); });
+wire('btn-demo-cl',    function() { renderCLFromDefectSource(); });
 wire('btn-demo-cost',  function() { renderCost(DEMO.cost); });
 
 wire('btn-export-pipe', function() { exportCSV('tbl-pipe', 'pipeline'); });
@@ -1494,6 +1623,9 @@ var fg = document.getElementById('f-pipe-gd');
 if (qp) qp.addEventListener('input', filterPipe);
 if (fp) fp.addEventListener('change', filterPipe);
 if (fg) fg.addEventListener('change', filterPipe);
+
+// Auto đồng bộ tab 02/Chất lượng từ nguồn Sai hỏng ERP khi dashboard mở
+setTimeout(function(){ try { renderCLFromDefectSource(); } catch(e) { var st=document.getElementById('st-cl'); if(st) st.textContent='⚠ Chưa đồng bộ được nguồn sai hỏng: '+(e&&e.message?e.message:e); } }, 900);
 
 // Restore saved URLs
 ['pipeline','sx','cl','cost'].forEach(function(t) {
@@ -4297,7 +4429,7 @@ function cSwitch(btn) {
     <button class="btn" id="def-report-open-frame" type="button">Tải form upload Drive</button>
     <button class="btn" id="def-report-open-tab" type="button">Mở form ở tab mới</button>
     <button class="btn grey" id="def-report-refresh" type="button">Làm mới danh sách</button>
-    <span class="small" id="def-report-status">Đang khởi tạo form upload Drive – GitHub fix V9.22...</span>
+    <span class="small" id="def-report-status">Đang khởi tạo form upload Drive – GitHub bridge fix V9.22B...</span>
   </div>
   <div class="report-panel report-panel-v913">
     <div class="report-upload-box report-upload-frame-box">
@@ -5117,6 +5249,7 @@ function cSwitch(btn) {
     ].join('');
     setHTML('def-kpis','<div class="def-kpi-row">'+row2+'</div><div class="def-kpi-row">'+row3+'</div>');
     populateFilters(d); bindAnalyticsFilters(); renderDefectVisualCharts(d);
+    try { if (window.renderQualityFromDefectData) window.renderQualityFromDefectData(d, 'Google Sheet LIVE Group 06'); } catch(e) {}
     setHTML('def-pareto-defects',paretoHtml(d.defects,'value',fmtNum));
     setHTML('def-pareto-operationT',paretoHtml(d.operationT,'value',fmtNum));
     setHTML('def-action-rows',(d.machines||[]).slice(0,8).map(function(x){ var low=norm(x.fullName), owner=low.indexOf('nghien')>=0?'Lâm + Hảo + Trường-QC':(low.indexOf('yrk')>=0||low.indexOf('in')>=0?'Hảo + Lâm + Trường-QC':'Lâm + Hảo + Cơ điện'), act=x.actualRate>x.baselineRate?'Gemba máy, kiểm tra setting/thao tác, mở CAPA theo Pareto lỗi':'Theo dõi duy trì, chuẩn hóa thông số tốt'; return '<tr><td>'+x.rank+'</td><td title="'+esc(x.fullName)+'"><b>'+esc(x.name)+'</b></td><td style="text-align:right">'+fmtNum(x.baselineQty)+'</td><td style="text-align:right">'+fmtPct(x.baselineRate)+'</td><td style="text-align:right">'+fmtNum(x.actualQty)+'</td><td style="text-align:right">'+fmtPct(x.actualRate)+'</td><td style="text-align:right;color:#991b1b;font-weight:700">'+fmtNum(x.diffQty)+'</td><td style="text-align:right;color:#991b1b;font-weight:700">'+fmtPct(x.diffRate)+'</td><td>'+owner+'</td><td>'+act+'</td></tr>'; }).join('')||'<tr><td colspan="10" style="text-align:center;color:#999">Chưa có dữ liệu action live</td></tr>');
@@ -5218,8 +5351,15 @@ function cSwitch(btn) {
   function saveReportWebAppUrl(){ clearReportWebAppOverride(); return getReportWebAppUrl(); }
   function buildReportUploadUrl(){
     var url=getReportWebAppUrl(); if(!url) return '';
-    var qs=new URLSearchParams({mode:'upload',_ts:String(Date.now())});
+    var qs=new URLSearchParams({mode:'upload',_ts:String(Date.now()),_gh:'bridge'});
     return url + (url.indexOf('?')>=0?'&':'?') + qs.toString();
+  }
+  function reportBridgeHtml(src){
+    var safeSrc = String(src||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return '<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
+      '<style>html,body{margin:0;height:100%;font-family:Times New Roman,serif;background:#fff;color:#035D30}.bar{position:sticky;top:0;z-index:2;background:#F3F8F1;border-bottom:1px solid #A5D6A7;padding:6px 10px;font-size:12px;display:flex;gap:8px;align-items:center;justify-content:space-between}.bar a{color:#035D30;font-weight:700}iframe{display:block;width:100%;height:calc(100vh - 34px);border:0;background:#fff}</style>' +
+      '</head><body><div class="bar"><span>GS6 Upload Drive – GitHub bridge mode</span><a target="_blank" rel="noopener" href="'+safeSrc+'">Mở tab mới</a></div>' +
+      '<iframe title="GS6 Report Upload App inner" referrerpolicy="no-referrer" allow="clipboard-read; clipboard-write" src="'+safeSrc+'"></iframe></body></html>';
   }
   function openReportFrame(){
     clearReportWebAppOverride();
@@ -5229,11 +5369,17 @@ function cSwitch(btn) {
     if(frame){
       frame.setAttribute('referrerpolicy','no-referrer');
       frame.setAttribute('allow','clipboard-read; clipboard-write');
-      // Reset about:blank trước khi nạp để ép Chrome/GitHub Pages bỏ trạng thái iframe 403 cũ.
+      frame.removeAttribute('sandbox');
+      // GITHUB STRONG FIX: không nhúng trực tiếp script.google.com từ trang GitHub.
+      // Nạp qua data-URL bridge để tránh cache trạng thái iframe 403 theo origin github.io.
+      frame.removeAttribute('srcdoc');
       frame.src='about:blank';
-      setTimeout(function(){ frame.src=src; }, 80);
+      setTimeout(function(){
+        var bridge = reportBridgeHtml(src);
+        frame.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(bridge);
+      }, 120);
     }
-    setText('def-report-status','🟢 V9.22 GitHub fix: đã khóa Apps Script /exec mới và xóa URL override cũ. Nếu vẫn thấy 403, kiểm tra Apps Script doGet() có ALLOWALL và deployment = Anyone/Anyone with Google account.');
+    setText('def-report-status','🟢 GitHub bridge mode đã nạp form upload qua data-URL trung gian. Nếu vẫn lỗi: mở tab mới; nếu tab mới OK thì lỗi do trình duyệt chặn iframe/cookie, không phải dữ liệu dashboard.');
   }
   function openReportTab(){
     var src=buildReportUploadUrl();
