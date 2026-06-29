@@ -1,3 +1,3 @@
 # gsp-next30-gs6-control-tower
 GS6 Unified Control Tower – GSP NEXT 30
-https://github.com/manhtranvan021981-sys/gsp-next30-gs6-control-tower.git
+https://manhtranvan021981-sys.github.io/gsp-next30-gs6-control-tower/GSP_NEXT30_GS6_Unified_Control_Tower.html
