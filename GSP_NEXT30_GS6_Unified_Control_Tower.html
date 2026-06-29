@@ -4041,7 +4041,7 @@ function cSwitch(btn) {
   #defect .defect-grid4{display:grid;grid-template-columns:repeat(4,minmax(160px,1fr));gap:14px;margin-bottom:14px}
   #defect{max-width:100%;overflow-x:hidden}
   #defect .defect-grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin:14px 0;min-width:0}
-  #defect .def-chart-row-main{display:grid;grid-template-columns:minmax(220px,.6fr) minmax(0,2.4fr);gap:14px;margin:14px 0;align-items:stretch}
+  #defect .def-chart-row-main{display:grid;grid-template-columns:minmax(360px,1fr) minmax(0,2fr);gap:14px;margin:14px 0;align-items:stretch}
   #defect .def-chart-full{margin:14px 0;min-width:0}
   #defect .def-chart-box{overflow:hidden;padding-top:4px;width:100%;max-width:100%}
   #defect .def-chart-box svg,#defect .combo-wrap svg,#defect .weekly-chart svg{width:100%;height:auto;max-width:100%;display:block}
@@ -4130,7 +4130,7 @@ function cSwitch(btn) {
  </style>
  <div class="def-exec-line">
   <div class="def-period-box"><span>Kỳ dữ liệu</span><strong id="def-period-line">Đang tải LIVE...</strong><div class="small" id="def-source-line" style="margin-top:4px;color:#64748b">Nguồn: Google Sheet live</div></div>
-  <div class="def-conclusion-box"><b>Kết luận điều hành:</b> Dashboard dùng ERP defect export, baseline theo LTT: AH/AK; thực tế điều hành lấy theo phiếu thống kê: BD/BE/BF. Quy tắc V9.7: AH/AG/AF cộng duy nhất theo Lệnh thao tác Q; BD, BE và BF cộng duy nhất theo Số thống kê AS. Khi lọc Mã thao tác cột S, cả baseline và thực tế đều tính lại trên cùng tập dữ liệu lọc.</div>
+  <div class="def-conclusion-box"><b>Kết luận điều hành:</b> Dashboard dùng ERP defect export, baseline theo LTT: AH/AK; thực tế điều hành lấy theo phiếu thống kê: BD/BE/BF. Quy tắc V9.21: AH/AG/AF cộng duy nhất theo Lệnh thao tác Q; BD, BE và BF cộng duy nhất theo Số thống kê AS. Riêng giá trị sai hỏng BG chống trùng theo cặp Số phiếu thống kê AS + Lệnh thao tác Q, tránh cộng lặp dòng lỗi nhưng vẫn cộng đủ nhiều phiếu thật trong cùng một LTT. Khi lọc Mã thao tác cột S, cả baseline và thực tế đều tính lại trên cùng tập dữ liệu lọc.</div>
  </div>
  <div class="def-filter-main">
   <label for="def-operation-code-filter">Mã thao tác - cột S</label>
@@ -4152,12 +4152,12 @@ function cSwitch(btn) {
  </div>
  <div class="def-chart-row-main">
   <div class="def-card">
-    <h2>AK baseline vs BF/BD thực tế theo mảng – Tổng</h2>
+    <h2>So sánh tổng: Baseline- Tỉ lệ sai hỏng cho phép (AK) Vs Tỉ lệ sai hỏng thực tế của 3 mảng (BF/BD)</h2>
     <div class="def-chart-note"><b>Chú thích:</b> Cột xanh/đỏ = <b>tỷ lệ sai hỏng thực tế BF/BD</b>; dây vàng = <b>tỷ lệ cho phép AK</b>. Cột đỏ nghĩa là thực tế vượt baseline, cần Gemba/CAPA.</div>
     <div class="def-chart-box" id="def-segment-combo-total"></div>
   </div>
   <div class="def-card">
-    <h2>AK baseline vs BF/BD thực tế theo tháng – 3 mảng</h2>
+    <h2>So sánh tổng theo tháng: Baseline- Tỉ lệ sai hỏng cho phép (AK) Vs Tỉ lệ sai hỏng thực tế của 3 mảng (BF/BD)</h2>
     <div class="def-filter-row">
       <label>Mảng</label><select id="def-monthly-segment-filter"><option value="">Tất cả 3 mảng</option></select>
       <label>Tháng</label><select id="def-month-filter"><option value="">Tất cả tháng</option></select>
@@ -4166,8 +4166,24 @@ function cSwitch(btn) {
     <div class="def-chart-box" id="def-segment-monthly-combo"></div>
   </div>
  </div>
+ <div class="def-chart-row-main def-value-row">
+  <div class="def-card">
+    <h2>So sánh tổng giá trị: Giá trị sai hỏng cho phép Vs Giá trị sai hỏng thực tế của 3 mảng</h2>
+    <div class="def-chart-note"><b>Chú thích:</b> Cột xanh/đỏ = <b>Giá trị sai hỏng thực tế BG</b>; dây vàng = <b>Giá trị sai hỏng cho phép = BG/BF × AI</b>. BG tính 1 lần duy nhất theo <b>cặp AS – Số phiếu thống kê + Q – Lệnh thao tác</b>; nếu BF = 0 hoặc trống thì giá trị cho phép = 0.</div>
+    <div class="def-chart-box" id="def-segment-value-total"></div>
+  </div>
+  <div class="def-card">
+    <h2>So sánh giá trị theo tháng: Giá trị sai hỏng cho phép Vs Giá trị sai hỏng thực tế của 3 mảng</h2>
+    <div class="def-filter-row">
+      <label>Mảng</label><select id="def-value-monthly-segment-filter"><option value="">Tất cả 3 mảng</option></select>
+      <label>Tháng</label><select id="def-value-month-filter"><option value="">Tất cả tháng</option></select>
+    </div>
+    <div class="def-chart-note"><b>Chú thích:</b> Lọc riêng theo <b>Mảng/Tháng</b> như vùng số lượng. Cột đỏ nghĩa là giá trị sai hỏng thực tế BG vượt giá trị cho phép theo công thức <b>BG/BF × AI</b>.</div>
+    <div class="def-chart-box" id="def-segment-monthly-value-combo"></div>
+  </div>
+ </div>
  <div class="def-card def-chart-full">
-  <h2>AK baseline vs BF/BD thực tế theo máy</h2>
+  <h2>Tổng hợp so sánh Baseline: Tỉ lệ sai hỏng cho phép theo lệnh (AK) Vs Tỉ lệ sai hỏng thực tế theo máy (BF/BD)</h2>
   <div class="def-filter-row">
     <label>Tháng</label><select id="def-machine-rate-month-filter"><option value="">Tất cả tháng</option></select>
     <label>Tuần</label><select id="def-machine-rate-week-filter"><option value="">Tất cả tuần</option></select>
@@ -4176,13 +4192,13 @@ function cSwitch(btn) {
   <div class="def-chart-box" id="def-machine-rate-combo"></div>
  </div>
  <div class="def-card">
-  <h2>Ổn định máy: cột = sản lượng SX BD, đường = AK cho phép và tỷ lệ thực tế BF/BD</h2>
+  <h2>Tổng hợp độ ổn định chất lượng theo máy: Sản lượng thực tế sản xuất (BD), tỉ lệ sai hỏng cho phép (AK), Tỉ lệ sai hỏng thực tế (BF/BD)</h2>
   <div class="small" style="margin-bottom:8px">Máy ổn định là máy có sản lượng lớn nhưng tỷ lệ BF/BD không vượt AK. Máy có sản lượng lớn và tỷ lệ BF/BD vượt AK là điểm đỏ ưu tiên Gemba.</div>
   <div class="def-filter-row">
     <label>Tháng</label><select id="def-machine-stability-month-filter"><option value="">Tất cả tháng</option></select>
     <label>Tuần</label><select id="def-machine-stability-week-filter"><option value="">Tất cả tuần</option></select>
   </div>
-  <div class="def-chart-note"><b>Chú thích:</b> Cột = <b>sản lượng SX thực tế BD</b>; dây xanh = <b>AK cho phép</b>; dây đỏ = <b>BF/BD thực tế</b>. Bảng dưới chân biểu đồ ghi đủ BD/AH/AK/BF/BF-BD để không phải đọc mỏi mắt trên hình.</div>
+  <div class="def-chart-note"><b>Chú thích:</b> Cột = <b>sản lượng SX thực tế BD</b>; dây xanh = <b>AK cho phép</b>; dây đỏ = <b>BF/BD thực tế</b>. Bảng dưới chân biểu đồ ghi đủ BD/BF/BF-BD/AI/AK/BG để không phải đọc mỏi mắt trên hình.</div>
   <div class="combo-wrap" id="def-machine-combo"></div>
   <div class="chart-data-table" id="def-machine-stability-table"></div>
  </div>
@@ -4203,7 +4219,7 @@ function cSwitch(btn) {
   </div>
   <div class="def-card">
    <h2>Sai hỏng theo máy – 3 tuần gần nhất</h2>
-   <div class="small" style="margin-bottom:8px">Biểu đồ cột theo <b>tên máy</b>, lọc được theo tuần và nhà máy gây lỗi BM. Xếp hạng theo <b>số lượng lỗi</b>.</div>
+   <div class="small" style="margin-bottom:8px">Biểu đồ cột theo <b>tên máy</b>, lọc được theo tuần và nhà máy gây lỗi BM. Xếp hạng theo <b>số lượng lỗi</b>. Cột GT dùng <b>BG unique AS</b>; nếu nguồn BG = 0 thì dashboard hiển thị GT = 0.</div>
    <div class="def-filter-row">
      <label>Tuần</label><select id="def-machine-week-select"></select>
      <label>Máy</label><select id="def-machine-filter"><option value="">Tất cả máy</option></select>
@@ -4227,7 +4243,7 @@ function cSwitch(btn) {
  </div>
  <div class="def-card">
   <h2>Bảng Thợ chính gây lỗi – cột BB – xếp theo số lượng lỗi</h2>
-  <div class="small" style="margin-bottom:8px">Mặc định lấy 3 tuần gần nhất theo Ngày TK. Khi chọn một tuần sẽ lấy tuần đó + 2 tuần trước. Thứ tự xếp từ <b>số lượng lỗi cao xuống thấp</b>.</div>
+  <div class="small" style="margin-bottom:8px">Mặc định lấy 3 tuần gần nhất theo Ngày TK. Khi chọn một tuần sẽ lấy tuần đó + 2 tuần trước. Thứ tự xếp từ <b>số lượng lỗi cao xuống thấp</b>; giá trị sai hỏng lấy theo <b>BG unique AS</b>.</div>
   <div class="def-filter-row">
     <label>Tuần</label><select id="def-worker-week-select"></select>
     <label>Nhà máy BM</label><select id="def-worker-factory-filter"><option value="">Tất cả nhà máy</option></select>
@@ -4240,7 +4256,7 @@ function cSwitch(btn) {
   </div>
   <div style="overflow-x:auto">
     <table>
-      <thead><tr><th>Rank</th><th>Tên thợ chính BB</th><th>SL lỗi</th><th>Giá trị sai hỏng</th><th>Nhà máy BM</th><th>Bộ phận BL</th><th>Top Tên sai lỗi BI</th><th>Số dòng ERP</th></tr></thead>
+      <thead><tr><th>Rank</th><th>Tên thợ chính BB</th><th>SL lỗi</th><th>Giá trị sai hỏng thực tế (BG)</th><th>Nhà máy BM</th><th>Bộ phận BL</th><th>Top Tên sai lỗi BI</th><th>Số dòng ERP</th></tr></thead>
       <tbody id="def-worker-table-body"><tr><td colspan="8" style="text-align:center;color:#999">Đang chờ dữ liệu live...</td></tr></tbody>
     </table>
   </div>
@@ -4268,7 +4284,9 @@ function cSwitch(btn) {
    <tr><td>AF / AG / AH / AK</td><td>Baseline theo LTT</td><td>AF = SX đạt theo LTT; AG = SX theo LTT; AH = sai hỏng cho phép; AK = AH/AG. Tất cả cộng unique theo Lệnh thao tác Q.</td><td>Ngân + Thành</td></tr>
    <tr><td>S</td><td>Mã thao tác</td><td>Bộ lọc chính của group 06. Khi chọn mã thao tác, toàn bộ KPI/biểu đồ tính lại theo mã đó.</td><td>Hảo + SX + Data</td></tr>
    <tr><td>T</td><td>Tên phân loại thao tác</td><td>Drill-down theo công đoạn/thao tác và Pareto theo thao tác.</td><td>Hảo + SX</td></tr>
-   <tr><td>BD / BE / BF</td><td>Thực tế theo phiếu thống kê</td><td>BD = Tổng SL SX thực tế; BE = Tổng SL SX đạt thực tế; BF = Tổng SL sai hỏng thực tế. Tất cả cộng unique theo Số thống kê AS.</td><td>SX + QC + Data</td></tr>
+   <tr><td>S/T → AU/AV → AX</td><td>Phân mảng dòng giá trị</td><td>Ưu tiên 1 Mã thao tác + Tên phân loại thao tác; ưu tiên 2 Mã máy/Tên máy sản xuất trên phiếu thống kê AU/AV, nếu trống fallback AD/AE; ưu tiên 3 AX - Bộ phận thực hiện; ưu tiên 4 GS6 khác. Không dùng Bộ phận gây lỗi để phân mảng.</td><td>SX + Data</td></tr>
+   <tr><td>BD / BE / BF / BG</td><td>Thực tế theo phiếu thống kê</td><td>BD = Tổng SL SX thực tế; BE = Tổng SL SX đạt thực tế; BF = Tổng SL sai hỏng thực tế, cộng unique theo Số thống kê AS. BG = Giá trị sai hỏng của cả phiếu thống kê, cộng unique theo cặp AS – Số thống kê + Q – Lệnh thao tác.</td><td>SX + QC + Data</td></tr>
+   <tr><td>AI</td><td>Sai hỏng cho phép theo tỷ lệ SX</td><td>Dùng cho biểu đồ giá trị sai hỏng cho phép: Giá trị cho phép = BG/BF × AI trên cùng cặp AS + Q. Nếu BF = 0 hoặc trống thì giá trị cho phép = 0.</td><td>SX + QC + Data</td></tr>
    <tr><td>BI / BJ / BQ</td><td>Tên lỗi / số lượng / giá trị</td><td>Pareto lỗi và COPQ.</td><td>QC + Finance</td></tr>
   </tbody></table>
   </div>
@@ -4306,7 +4324,7 @@ function cSwitch(btn) {
 
  <div class="def-card" id="def-live-source" style="margin-bottom:14px;border-left:4px solid #E2B624">
    <h2>Nguồn Google Sheet live – tự cập nhật</h2>
-   <div class="small" style="margin-bottom:8px"><b>Cơ chế live V9.13 – 100% Google Sheet:</b> CSV publish của Google thường bị Chrome chặn CORS khi dashboard mở từ ổ đĩa nội bộ. Vì vậy dashboard ưu tiên đọc bằng <b>Google Sheets Edit URL + GViz JSONP</b>. CSV publish chỉ giữ để đối chiếu; không dùng fallback tĩnh khi live lỗi. Bấm <b>Nạp dữ liệu ngay</b> phải nhập mật khẩu thao tác. <b>V9.2:</b> đã sửa parser để đọc được file ERP có header nhiều dòng trong dấu ngoặc kép.</div>
+   <div class="small" style="margin-bottom:8px"><b>Cơ chế live V9.13 – 100% Google Sheet:</b> CSV publish của Google thường bị Chrome chặn CORS khi dashboard mở từ ổ đĩa nội bộ. Vì vậy dashboard ưu tiên đọc bằng <b>Google Sheets Edit URL + GViz JSONP</b>. CSV publish chỉ giữ để đối chiếu; không dùng fallback tĩnh khi live lỗi. Bấm <b>Nạp dữ liệu ngay</b> phải nhập mật khẩu thao tác. <b>V9.21:</b> đã khóa logic phân mảng theo S/T → AU/AV → AX, không dùng bộ phận gây lỗi để quyết định mảng.</div>
    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:7px">
      <input id="def-source-url" value="https://docs.google.com/spreadsheets/d/1NTYFPqkcfDExkzAgTrVv52GQwm0zJyZtrDFW4G080xw/gviz/tq?tqx=out:csv&gid=0" style="flex:1;min-width:320px;border:1px solid #A5D6A7;border-radius:6px;padding:7px 10px;font-family:'Times New Roman',Times,serif;font-size:12px" placeholder="CSV publish link - có thể bị CORS nếu mở HTML local" />
      <button class="btn" id="def-load-now" type="button">Nạp dữ liệu ngay</button>
@@ -4342,6 +4360,7 @@ function cSwitch(btn) {
   function esc(x){ return String(x===null||x===undefined?'':x).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
   function fmtNum(x){ return Math.round(Number(x)||0).toLocaleString('vi-VN'); }
   function fmtPct(x){ return ((Number(x)||0)*100).toLocaleString('vi-VN',{minimumFractionDigits:2,maximumFractionDigits:2}) + '%'; }
+  function fmtMoneyShort(x){ x=Number(x)||0; var ax=Math.abs(x); if(ax>=1000000000) return (x/1000000000).toLocaleString('vi-VN',{maximumFractionDigits:1})+' tỷ'; if(ax>=1000000) return (x/1000000).toLocaleString('vi-VN',{maximumFractionDigits:1})+' tr'; return fmtNum(x); }
   function makeLiveOkSummary(d, method){
     var dq = d && d.dataQuality ? d.dataQuality : {};
     return '🟢 LIVE OK – Đã nạp ' + fmtNum(dq.rawRows||0) + ' dòng, ' + new Date().toLocaleString('vi-VN');
@@ -4462,10 +4481,11 @@ function cSwitch(btn) {
     var n=(headers&&headers.length)||0; if(n<60) return m;
     function fb(k,i){ if(i<n) m[k]=i; }
     fb('lcd',1); fb('ltt',16); fb('opCode',18); fb('opName',19);
+    fb('machineCodeLtt',29); fb('machineNameLtt',30);
     fb('machineCode',46); fb('machineName',47); fb('department',49);
     fb('dateTk',43); fb('statNo',44);
     fb('mainWorker',53); fb('defectCode',59); fb('defectName',60); fb('defectQty',61); fb('faultDept',63); fb('faultFactory',64);
-    fb('targetQty',31); fb('needSx',32); fb('allowedQty',33); fb('actualProductionLtt',37); fb('actualQtyLtt',39); fb('actualProduction',55); fb('actualOkQty',56); fb('actualQty',57); fb('diffQty',41); fb('defectValue',68);
+    fb('targetQty',31); fb('needSx',32); fb('allowedQty',33); fb('allowedScaledQty',34); fb('actualProductionLtt',37); fb('actualQtyLtt',39); fb('actualProduction',55); fb('actualOkQty',56); fb('actualQty',57); fb('diffQty',41); fb('statDefectValue',58); fb('defectValue',68);
     return m;
   }
   function isLikelyErpDataRow(r){
@@ -4490,6 +4510,8 @@ function cSwitch(btn) {
       statNo:findContains(['so thong ke'],'last'),
       opCode:first(findExact('Mã thao tác'),findContains(['ma thao tac'],'first')),
       opName:findContains(['ten phan loai thao tac'],'first'),
+      machineCodeLtt:first(findExact('Mã máy'),findContains(['ma may'],'first')),
+      machineNameLtt:first(findExact('Tên máy'),findContains(['ten may'],'first')),
       machineCode:findContains(['ma may'],'last'),
       machineName:findContains(['ten may'],'last'),
       department:first(findContains(['bo phan thuc hien'],'last'),findContains(['to san xuat'],'last')),
@@ -4498,7 +4520,8 @@ function cSwitch(btn) {
       mainWorker:first(findExact('Tên thợ chính'),findContains(['ten tho chinh'],'last'),findContains(['tho chinh'],'last')),
       targetQty:first(findContains(['so luong can dat theo dvt quy doi'],'first'),findContains(['so luong can dat'],'first')),
       needSx:first(findContains(['so luong can sx theo dvt quy doi'],'first'),findContains(['so luong can sx'],'first')),
-      allowedQty:first(findContains(['sai hong cho phep theo ti le sx'],'first'),findContains(['tong so luong sai hong cho phep'],'first'),findContains(['sl cho phep'],'last')),
+      allowedQty:first(findContains(['tong so luong sai hong cho phep'],'first'),findContains(['sl cho phep'],'last')),
+      allowedScaledQty:first(findContains(['sai hong cho phep theo ti le sx'],'first'),findContains(['so luong sai hong cho phep theo ti le sx'],'first')),
       actualProductionLtt:first(findContains(['tong so luong sx thong ke theo ltt'],'first'),findContains(['san luong sx thuc te'],'last'),findContains(['tong so luong sx'],'last')),
       actualQtyLtt:first(findContains(['tong so luong sai hong thuc te theo tk'],'first'),findContains(['sl sai hong thuc te'],'last'),findContains(['so luong sai hong thuc te'],'last')),
       actualProduction:first(findContains(['so luong tk san xuat'],'last'),findContains(['so luong thong ke san xuat'],'last')),
@@ -4508,19 +4531,24 @@ function cSwitch(btn) {
       defectCode:first(findExact('Mã sai lỗi'),findContains(['ma sai loi'],'last'),findContains(['ma loi'],'last')),
       defectName:first(findExact('Tên sai lỗi'),findContains(['ten sai loi'],'last')),
       defectQty:first(findContains(['so luong loi'],'last'),findContains(['sl loi'],'last')),
+      statDefectValue:first(findExact('Tổng giá trị sai lỗi'),findContains(['tong gia tri sai loi'],'last')),
       defectValue:first(findContains(['gia tri sai hong theo ti le sai hong'],'last'),findContains(['gia tri sai hong'],'last'),findContains(['tong gia tri sai loi'],'last'))
     };
   }
   function cell(r,i){ return i>=0 && i<r.length ? r[i] : ''; }
+  function pairKeyASLTT(it){ return (it && it.statNo ? it.statNo : ('ROW_AS_'+((it&&it.rowNo)||'')))+'||'+(it && it.ltt ? it.ltt : ('ROW_Q_'+((it&&it.rowNo)||''))); }
+  function valueKeyAS(it){ return (it && it.statNo ? it.statNo : ('ROW_AS_'+((it&&it.rowNo)||''))); }
   function emptyAgg(name){
     return {rank:0,name:shortName(name,42),fullName:name,
-      lttSet:{},statSet:{},_baselineKeySet:{},_actualKeySet:{},
-      lttCount:0,statCount:0,targetQty:0,needSx:0,baselineQty:0,allowedScaledQty:0,baselineRate:0,
-      actualProduction:0,actualOkQty:0,actualQty:0,diffQty:0,diffRate:0,actualRate:0,value:0,rag:'Xanh'};
+      lttSet:{},statSet:{},_baselineKeySet:{},_actualKeySet:{},_valueKeySet:{},
+      lttCount:0,statCount:0,valuePairCount:0,targetQty:0,needSx:0,baselineQty:0,allowedScaledQty:0,baselineRate:0,
+      actualProduction:0,actualOkQty:0,actualQty:0,diffQty:0,diffRate:0,actualRate:0,value:0,
+      actualDefectValue:0,allowedDefectValue:0,diffDefectValue:0,rag:'Xanh'};
   }
   function addMetric(a,it){
-    // V9.6: AH chỉ cộng 1 lần theo Lệnh thao tác Q.
-    // Thực tế điều hành dùng BD/BF cộng 1 lần theo Số thống kê AS.
+    // V9.21: AH chỉ cộng 1 lần theo Lệnh thao tác Q.
+    // Thực tế điều hành dùng BD/BE/BF/AI cộng 1 lần theo Số thống kê AS.
+    // Giá trị sai hỏng BG cộng 1 lần theo cặp AS + Q để loại dòng lỗi trùng nhưng không bỏ sót nhiều phiếu thật trong cùng LTT.
     // Không cộng AN theo AS vì AN là tổng sai hỏng theo LTT và bị lặp trên nhiều số thống kê.
     if(it.ltt) a.lttSet[it.ltt]=true;
     if(it.statNo) a.statSet[it.statNo]=true;
@@ -4530,7 +4558,6 @@ function cSwitch(btn) {
       a.targetQty+=it.targetQty||0;        // AF: Số lượng SX đạt/cần đạt theo LTT, unique Q
       a.needSx+=it.needSx||0;                // AG: Số lượng SX theo LTT, unique Q
       a.baselineQty+=it.allowedQty||0;       // AH: Tổng số lượng sai hỏng cho phép
-      a.allowedScaledQty+=it.allowedQty||0;
     }
     var statKey=it.statNo || ('ROW_STAT_'+(it.rowNo||''));
     if(statKey && !a._actualKeySet[statKey]){
@@ -4538,17 +4565,27 @@ function cSwitch(btn) {
       a.actualProduction+=it.actualProduction||0; // BD: Số lượng TK sản xuất, unique AS
       a.actualOkQty+=it.actualOkQty||0;           // BE: Số lượng SX đạt thực tế, unique AS
       a.actualQty+=it.actualQty||0;               // BF: Số lượng thống kê lỗi, unique AS
+      a.allowedScaledQty+=it.allowedScaledQty||0; // AI: Sai hỏng cho phép theo tỷ lệ SX, unique AS
+    }
+    var valueKey=pairKeyASLTT(it);
+    if(valueKey && !a._valueKeySet[valueKey]){
+      a._valueKeySet[valueKey]=true;
+      a.actualDefectValue+=it.actualDefectValue||0; // BG: Giá trị sai hỏng của cả phiếu thống kê, unique theo cặp AS + Lệnh thao tác Q
+      var bf=Number(it.actualQty)||0, bg=Number(it.actualDefectValue)||0, ai=Number(it.allowedScaledQty)||0;
+      a.allowedDefectValue += bf>0 ? (bg/bf*ai) : 0; // Giá trị cho phép = BG/BF*AI trên cùng cặp AS + Lệnh thao tác Q; BF=0/trống => 0
     }
   }
   function finalize(a){
     a.lttCount=Object.keys(a.lttSet||{}).length;
     a.statCount=Object.keys(a.statSet||{}).length;
-    delete a.lttSet; delete a.statSet; delete a._baselineKeySet; delete a._actualKeySet;
+    a.valuePairCount=Object.keys(a._valueKeySet||{}).length;
+    delete a.lttSet; delete a.statSet; delete a._baselineKeySet; delete a._actualKeySet; delete a._valueKeySet;
     a.baselineRate=a.needSx?a.baselineQty/a.needSx:0;   // AK tính lại theo AH/AG unique Q
     a.actualRate=a.actualProduction?a.actualQty/a.actualProduction:0; // Tỷ lệ thực tế = BF/BD sau chống trùng AS
     a.diffQty=(a.actualQty||0)-(a.baselineQty||0);       // Chênh lệch điều hành = BF - AH
     a.diffRate=a.actualRate-a.baselineRate;              // Chênh lệch tỷ lệ = BF/BD - AH/AG
-    a.rag=a.diffQty>0?'Đỏ':'Xanh';
+    a.diffDefectValue=(a.actualDefectValue||0)-(a.allowedDefectValue||0);
+    a.rag=(a.diffQty>0 || a.diffDefectValue>0)?'Đỏ':'Xanh';
     return a;
   }
   function rankSort(arr,key){ arr.sort(function(a,b){return (Number(b[key])||0)-(Number(a[key])||0);}); arr.forEach(function(x,i){x.rank=i+1; x.name=shortName(x.fullName,42);}); return arr; }
@@ -4560,8 +4597,28 @@ function cSwitch(btn) {
     arr.forEach(function(x,i){ x.rank=i+1; x.name=shortName(x.fullName,42); x.share=total?(Number(x[sortKey])||0)/total:0; cum+=x.share; x.cum=cum; });
     return arr.slice(0,limit);
   }
-  function segmentOfText(txt){ txt=norm(txt); if(txt.indexOf('khay')>=0 || txt.indexOf('pulp')>=0 || txt.indexOf('ep khay')>=0) return 'Khay giấy'; if(txt.indexOf('flexo')>=0 || txt.indexOf('cuon')>=0 || txt.indexOf('yrk')>=0) return 'Flexo cuộn 6 màu'; if(txt.indexOf('tui')>=0 || txt.indexOf('qd')>=0 || txt.indexOf('ql')>=0 || txt.indexOf('qx')>=0) return 'Túi giấy'; return 'GS6 khác'; }
-  function segmentOf(r,m){ return segmentOfText([cell(r,m.department),cell(r,m.opName),cell(r,m.machineName),cell(r,m.machineCode),cell(r,m.faultFactory),cell(r,m.faultDept)].join(' ')); }
+  function segmentOfText(txt){
+    txt=norm(txt);
+    if(!txt) return 'GS6 khác';
+    if(txt.indexOf('khay')>=0 || txt.indexOf('pulp')>=0 || txt.indexOf('ep khay')>=0 || txt.indexOf('epk')>=0) return 'Khay giấy';
+    if(txt.indexOf('flexo')>=0 || txt.indexOf('in flexo')>=0 || txt.indexOf('cuon')>=0 || txt.indexOf('yrk')>=0 || txt.indexOf('min')>=0) return 'Flexo cuộn 6 màu';
+    if(txt.indexOf('tui')>=0 || txt.indexOf('than tui')>=0 || txt.indexOf('day tui')>=0 || txt.indexOf('ql')>=0 || txt.indexOf('qd')>=0 || txt.indexOf('qx')>=0 || txt.indexOf('zd')>=0) return 'Túi giấy';
+    return 'GS6 khác';
+  }
+  function segmentOf(r,m){
+    // V9.21: Phân mảng theo dòng giá trị sản xuất, không dùng Bộ phận/Nhà máy gây lỗi để quyết định mảng.
+    // Ưu tiên 1: Mã thao tác + Tên phân loại thao tác.
+    // Ưu tiên 2: Máy sản xuất trên phiếu thống kê AU/AV; nếu trống mới fallback máy trên LTT AD/AE.
+    // Ưu tiên 3: AX - Bộ phận thực hiện.
+    // Ưu tiên 4: GS6 khác.
+    var s=segmentOfText([cell(r,m.opCode),cell(r,m.opName)].join(' '));
+    if(s!=='GS6 khác') return s;
+    s=segmentOfText([cell(r,m.machineCode),cell(r,m.machineName),cell(r,m.machineCodeLtt),cell(r,m.machineNameLtt)].join(' '));
+    if(s!=='GS6 khác') return s;
+    s=segmentOfText(cell(r,m.department));
+    if(s!=='GS6 khác') return s;
+    return 'GS6 khác';
+  }
 
   function buildDataFromCSV(text,sourceLabel){
     var rows=parseCSVRows(text), hi=findHeaderIndex(rows), headers=null, m=null, dataRows=[];
@@ -4591,23 +4648,25 @@ function cSwitch(btn) {
     dataRows.forEach(function(r,idx){
       var ltt=String(cell(r,m.ltt)||cell(r,m.lcd)||'').trim();
       var statNo=String(cell(r,m.statNo)||'').trim();
-      var machine=String(cell(r,m.machineName)||cell(r,m.machineCode)||'Không rõ máy').trim()||'Không rõ máy';
+      var machine=String(cell(r,m.machineName)||cell(r,m.machineNameLtt)||cell(r,m.machineCode)||cell(r,m.machineCodeLtt)||'Không rõ máy').trim()||'Không rõ máy';
       var opCode=String(cell(r,m.opCode)||'').trim();
       var opName=String(cell(r,m.opName)||'Không rõ thao tác').trim()||'Không rõ thao tác';
       var dt=parseDate(cell(r,m.dateTk)); if(dt) dates.push(dt);
       var wk=dt?weekInfo(dt):null;
       var segName=segmentOf(r,m);
       var allowedQty=num(cell(r,m.allowedQty));
+      var allowedScaledQty=(m.allowedScaledQty>=0)?num(cell(r,m.allowedScaledQty)):allowedQty; // AI: sai hỏng cho phép theo tỷ lệ SX
       var actualProductionLtt=(m.actualProductionLtt>=0)?num(cell(r,m.actualProductionLtt)):0;
       var actualQtyLtt=(m.actualQtyLtt>=0)?num(cell(r,m.actualQtyLtt)):0;
       var actualProduction=(m.actualProduction>=0)?num(cell(r,m.actualProduction)):actualProductionLtt; // BD ưu tiên, fallback AL
       var actualOkQty=(m.actualOkQty>=0)?num(cell(r,m.actualOkQty)):Math.max(0,actualProduction-actualQtyLtt); // BE: Số lượng SX đạt thực tế
       var actualQty=(m.actualQty>=0)?num(cell(r,m.actualQty)):actualQtyLtt; // BF ưu tiên, fallback AN
       var diffQty=(m.diffQty>=0)?num(cell(r,m.diffQty)):(actualQty-allowedQty);
-      var key=[ltt,statNo,machine,opCode,opName,actualProduction,actualOkQty,actualQty].join('|');
+      var statDefectValue=(m.statDefectValue>=0)?num(cell(r,m.statDefectValue)):0; // BG: giá trị sai hỏng của cả phiếu thống kê
+      var key=[ltt,statNo,machine,opCode,opName,actualProduction,actualOkQty,actualQty,statDefectValue,allowedScaledQty].join('|');
       if((actualProduction || actualQty || allowedQty) && !opSeen[key]){
         opSeen[key]=true;
-        var item={rowNo:hi+idx+2,ltt:ltt,statNo:statNo,targetQty:(m.targetQty>=0?num(cell(r,m.targetQty)):0),needSx:num(cell(r,m.needSx)),allowedQty:allowedQty,actualProduction:actualProduction,actualOkQty:actualOkQty,actualQty:actualQty,diffQty:diffQty,actualProductionLtt:actualProductionLtt,actualQtyLtt:actualQtyLtt};
+        var item={rowNo:hi+idx+2,ltt:ltt,statNo:statNo,targetQty:(m.targetQty>=0?num(cell(r,m.targetQty)):0),needSx:num(cell(r,m.needSx)),allowedQty:allowedQty,allowedScaledQty:allowedScaledQty,actualProduction:actualProduction,actualOkQty:actualOkQty,actualQty:actualQty,diffQty:diffQty,actualProductionLtt:actualProductionLtt,actualQtyLtt:actualQtyLtt,actualDefectValue:statDefectValue};
         if(!seg[segName]) seg[segName]=emptyAgg(segName);
         if(!mach[machine]) mach[machine]=emptyAgg(machine);
         if(!oper[opName]) oper[opName]=emptyAgg(opName);
@@ -4627,7 +4686,7 @@ function cSwitch(btn) {
         operTMap[opName].qty+=dq; operTMap[opName].value+=dv;
         if(seg[segName]) seg[segName].value+=dv; if(mach[machine]) mach[machine].value+=dv; if(oper[opName]) oper[opName].value+=dv;
       }
-      raw.push({rowNo:hi+idx+2,date:dt,dateText:dt?dateVN(dt):String(cell(r,m.dateTk)||''),weekKey:wk?wk.key:'Không rõ tuần',weekLabel:wk?wk.label:'Không rõ tuần',weekStart:wk?wk.start:0,monthKey:dt?monthKeyOf(dt):'',monthLabel:dt?monthLabelOfDate(dt):'Không rõ tháng',segment:segName,machine:machine,operationCode:opCode,operation:opName,defectCode:defectCode,defectName:defect,defectQty:dq,defectValue:dv,departmentFault:deptFault,factoryFault:factoryFault,mainWorker:worker,ltt:ltt,statNo:statNo,targetQty:(m.targetQty>=0?num(cell(r,m.targetQty)):0),needSx:num(cell(r,m.needSx)),allowedQty:allowedQty,actualProduction:actualProduction,actualOkQty:actualOkQty,actualQty:actualQty});
+      raw.push({rowNo:hi+idx+2,date:dt,dateText:dt?dateVN(dt):String(cell(r,m.dateTk)||''),weekKey:wk?wk.key:'Không rõ tuần',weekLabel:wk?wk.label:'Không rõ tuần',weekStart:wk?wk.start:0,monthKey:dt?monthKeyOf(dt):'',monthLabel:dt?monthLabelOfDate(dt):'Không rõ tháng',segment:segName,machine:machine,operationCode:opCode,operation:opName,defectCode:defectCode,defectName:defect,defectQty:dq,defectValue:dv,departmentFault:deptFault,factoryFault:factoryFault,mainWorker:worker,ltt:ltt,statNo:statNo,targetQty:(m.targetQty>=0?num(cell(r,m.targetQty)):0),needSx:num(cell(r,m.needSx)),allowedQty:allowedQty,allowedScaledQty:allowedScaledQty,actualProduction:actualProduction,actualOkQty:actualOkQty,actualQty:actualQty,actualDefectValue:statDefectValue});
     });
     var k=emptyAgg('Tổng GS6'); opItems.forEach(function(x){addMetric(k,x);}); finalize(k); k.ltt=k.lttCount; k.value=Object.keys(defMap).reduce(function(s,x){return s+(defMap[x].value||0);},0);
     dates.sort(function(a,b){return a-b;}); var period=dates.length?(dateVN(dates[0])+' → '+dateVN(dates[dates.length-1])):'Không rõ kỳ live';
@@ -4639,7 +4698,7 @@ function cSwitch(btn) {
   }
 
   function defBarRow(label,val,max,text,cls){ var pct=max?Math.max(0,Math.min(Math.abs(val)/max*100,100)):0; return '<div class="bar-row"><div title="'+esc(label)+'">'+esc(label)+'</div><div class="bar-bg"><div class="bar-fill '+(cls||'gold')+'" style="width:'+pct+'%"></div></div><div style="text-align:right;font-weight:700">'+text+'</div></div>'; }
-  function ratePairRow(x,maxRate){ return '<div class="rate-pair"><div class="rate-title" title="'+esc(x.fullName)+'">'+x.rank+'. '+esc(x.name)+'</div>'+defBarRow('Baseline AK',x.baselineRate,maxRate,fmtPct(x.baselineRate),'green')+defBarRow('Thực tế BF/BD',x.actualRate,maxRate,fmtPct(x.actualRate),x.actualRate>x.baselineRate?'red':'green')+'<div class="rate-note">BD '+fmtNum(x.actualProduction)+' · AH '+fmtNum(x.baselineQty)+' · BF '+fmtNum(x.actualQty)+' · Vượt '+fmtNum(x.diffQty)+'</div></div>'; }
+  function ratePairRow(x,maxRate){ return '<div class="rate-pair"><div class="rate-title" title="'+esc(x.fullName)+'">'+x.rank+'. '+esc(x.name)+'</div>'+defBarRow('Baseline AK',x.baselineRate,maxRate,fmtPct(x.baselineRate),'green')+defBarRow('Thực tế BF/BD',x.actualRate,maxRate,fmtPct(x.actualRate),x.actualRate>x.baselineRate?'red':'green')+'<div class="rate-note">BD '+fmtNum(x.actualProduction)+' · AI '+fmtNum(x.allowedScaledQty||0)+' · BF '+fmtNum(x.actualQty)+' · Vượt '+fmtNum(x.diffQty)+'</div></div>'; }
   function paretoHtml(arr,valKey,fmt){ arr=arr||[]; if(!arr.length) return '<div class="small">Chưa có dữ liệu pareto live.</div>'; var mx=Math.max.apply(null, arr.map(function(x){return Number(x[valKey])||0;})); return arr.slice(0,8).map(function(x){return defBarRow(x.rank+'. '+x.name,Number(x[valKey])||0,mx,fmt(Number(x[valKey])||0)+' / '+fmtPct(x.cum),'gold');}).join(''); }
   function renderCombo(rows){
     rows=(rows||[]).slice(0,14);
@@ -4666,7 +4725,7 @@ function cSwitch(btn) {
   }
 
 
-  function aggItemFromRaw(r){ return {rowNo:r.rowNo,ltt:r.ltt,statNo:r.statNo,targetQty:r.targetQty,needSx:r.needSx,allowedQty:r.allowedQty,actualProduction:r.actualProduction,actualOkQty:r.actualOkQty,actualQty:r.actualQty}; }
+  function aggItemFromRaw(r){ return {rowNo:r.rowNo,ltt:r.ltt,statNo:r.statNo,targetQty:r.targetQty,needSx:r.needSx,allowedQty:r.allowedQty,allowedScaledQty:r.allowedScaledQty,actualProduction:r.actualProduction,actualOkQty:r.actualOkQty,actualQty:r.actualQty,actualDefectValue:r.actualDefectValue}; }
   function aggregateMetricGroups(rows, groupFn){
     var map={};
     rows.forEach(function(r){
@@ -4705,7 +4764,7 @@ function cSwitch(btn) {
     for(var g=0;g<=4;g++){ var y=top+innerH*g/4; grid+='<line x1="'+left+'" y1="'+y+'" x2="'+(w-right)+'" y2="'+y+'" stroke="#E5E7EB"/>'; }
     rows.forEach(function(x,i){
       var xp=xPos(i), ar=Number(x.actualRate)||0, br=Number(x.baselineRate)||0, y=yRate(ar), bh=top+innerH-y, good=ar<=br, fill=good?'#035D30':'#dc2626';
-      var title=esc(x.fullName||x.name)+'&#10;Tỷ lệ thực tế BF/BD: '+fmtPct(ar)+'&#10;Tỷ lệ cho phép AK: '+fmtPct(br)+'&#10;BD SX thực tế: '+fmtNum(x.actualProduction)+'&#10;BF lỗi thực tế: '+fmtNum(x.actualQty)+'&#10;AH sai hỏng cho phép: '+fmtNum(x.baselineQty);
+      var title=esc(x.fullName||x.name)+'&#10;Tỷ lệ thực tế BF/BD: '+fmtPct(ar)+'&#10;Tỷ lệ cho phép AK: '+fmtPct(br)+'&#10;BD SX thực tế: '+fmtNum(x.actualProduction)+'&#10;BF lỗi thực tế: '+fmtNum(x.actualQty)+'&#10;AI sai hỏng cho phép: '+fmtNum(x.allowedScaledQty||0);
       bars+='<rect x="'+(xp-barW/2)+'" y="'+y+'" width="'+barW+'" height="'+Math.max(0,bh)+'" rx="4" fill="'+fill+'" opacity="0.86"><title>'+title+'</title></rect>';
       var by=yRate(br), actualText=fmtPct(ar), baseText='AK '+fmtPct(br);
       var actualPref=[y-8,y-22,y+18,top+innerH-42-(i%2)*14,top+22+(i%3)*14];
@@ -4726,21 +4785,73 @@ function cSwitch(btn) {
     setHTML(id,svg);
   }
 
+  function renderValueComboChart(id, rows, opts){
+    opts=opts||{}; rows=(rows||[]).filter(function(x){return (x.actualDefectValue||x.allowedDefectValue);});
+    var limit=opts.limit||0; if(limit) rows=rows.slice(0,limit);
+    if(!rows.length){ setHTML(id,'<div class="small">Không có dữ liệu giá trị theo điều kiện lọc.</div>'); return; }
+    var w=Math.max(opts.minWidth||680, rows.length*(opts.stepW||86)+130), h=opts.height||330, left=66, right=58, top=50, bottom=96, innerW=w-left-right, innerH=h-top-bottom;
+    var maxVal=Math.max.apply(null, rows.map(function(x){return Math.max(Number(x.actualDefectValue)||0,Number(x.allowedDefectValue)||0);})); maxVal=Math.max(maxVal*1.22,1);
+    var step=innerW/rows.length, barW=Math.min(opts.barW||44,step*0.52), fsz=step<58?8.5:9.5;
+    function yVal(v){return top+innerH-((Number(v)||0)/maxVal*innerH);} function xPos(i){return left+step*i+step/2;}
+    function clamp(v,min,max){ return Math.max(min,Math.min(max,v)); }
+    function estimateBox(text,x,y,size){ var ww=String(text||'').length*size*0.56+8, hh=size+6; return {x1:x-ww/2,x2:x+ww/2,y1:y-hh+2,y2:y+4,w:ww,h:hh}; }
+    function hit(a,b){ return !(a.x2<b.x1 || a.x1>b.x2 || a.y2<b.y1 || a.y1>b.y2); }
+    var placed=[];
+    function place(text,x,preferred,size){
+      var candidates=[]; function add(y){ candidates.push(clamp(y,16,top+innerH-8)); }
+      preferred.forEach(add);
+      for(var lane=0; lane<9; lane++){ add(top+20+lane*14); add(top+innerH-16-lane*14); }
+      for(var c=0;c<candidates.length;c++){ var y=candidates[c], box=estimateBox(text,x,y,size), ok=true; if(box.x1<left-24 || box.x2>w-right+24) ok=false; for(var j=0;j<placed.length && ok;j++){ if(hit(box,placed[j])) ok=false; } if(ok){ placed.push(box); return y; } }
+      var fallback=clamp(preferred[0]||top+20,16,top+innerH-8); placed.push(estimateBox(text,x,fallback,size)); return fallback;
+    }
+    var grid='', bars='', labels='', line='', dots='', valueLabels='', baseLabels='', leaders='';
+    for(var g=0;g<=4;g++){ var y=top+innerH*g/4; grid+='<line x1="'+left+'" y1="'+y+'" x2="'+(w-right)+'" y2="'+y+'" stroke="#E5E7EB"/>'; }
+    rows.forEach(function(x,i){
+      var xp=xPos(i), av=Number(x.actualDefectValue)||0, pv=Number(x.allowedDefectValue)||0, y=yVal(av), bh=top+innerH-y, good=av<=pv, fill=good?'#035D30':'#dc2626';
+      var title=esc(x.fullName||x.name)+'&#10;Giá trị sai hỏng thực tế BG: '+fmtNum(av)+'&#10;Giá trị sai hỏng cho phép BG/BF*AI: '+fmtNum(pv)+'&#10;BF lỗi thực tế: '+fmtNum(x.actualQty)+'&#10;AI sai hỏng cho phép: '+fmtNum(x.allowedScaledQty||x.baselineQty);
+      bars+='<rect x="'+(xp-barW/2)+'" y="'+y+'" width="'+barW+'" height="'+Math.max(0,bh)+'" rx="4" fill="'+fill+'" opacity="0.86"><title>'+title+'</title></rect>';
+      var py=yVal(pv), actualText=fmtMoneyShort(av), baseText='CP '+fmtMoneyShort(pv);
+      var actualPref=[y-8,y-22,y+18,top+innerH-42-(i%2)*14,top+22+(i%3)*14];
+      var basePref=[py+18,py-12,top+innerH-18-(i%2)*14,top+44+(i%3)*14];
+      if(Math.abs(y-py)<24){ actualPref=[y-22,top+innerH-46-(i%3)*14,top+24+(i%3)*14,y+20]; basePref=[py+20,top+innerH-16-((i+1)%3)*14,top+66+((i+1)%3)*14,py-18]; }
+      var ay=place(actualText,xp,actualPref,fsz), byLabel=place(baseText,xp,basePref,fsz-0.4);
+      if(Math.abs(ay-y)>20){ leaders+='<line x1="'+xp+'" y1="'+y+'" x2="'+xp+'" y2="'+(ay+3)+'" stroke="'+fill+'" stroke-width="0.7" opacity="0.45"/>'; }
+      if(Math.abs(byLabel-py)>20){ leaders+='<line x1="'+xp+'" y1="'+py+'" x2="'+xp+'" y2="'+(byLabel+3)+'" stroke="#E2B624" stroke-width="0.7" opacity="0.55"/>'; }
+      valueLabels+='<text x="'+xp+'" y="'+ay+'" font-size="'+fsz+'" text-anchor="middle" fill="'+fill+'" font-weight="700">'+actualText+'</text>';
+      line+=(i?' ':'')+xp+','+py;
+      dots+='<circle cx="'+xp+'" cy="'+py+'" r="3.5" fill="#E2B624" stroke="#7B4A0E" stroke-width="1"><title>'+title+'</title></circle>';
+      baseLabels+='<text x="'+xp+'" y="'+byLabel+'" font-size="'+(fsz-0.4)+'" text-anchor="middle" fill="#7B4A0E">'+baseText+'</text>';
+      labels+='<text x="'+xp+'" y="'+(top+innerH+18)+'" font-size="10" text-anchor="end" transform="rotate(-40 '+xp+' '+(top+innerH+18)+')">'+esc(shortName(x.name||x.fullName,opts.labelLen||22))+'</text>';
+    });
+    var legend='<text x="'+left+'" y="18" font-size="11" fill="#64748b">Cột = giá trị sai hỏng thực tế BG</text><text x="'+(left+230)+'" y="18" font-size="11" fill="#7B4A0E">Dây vàng = giá trị cho phép BG/BF×AI</text><text x="'+(left+500)+'" y="18" fill="#991b1b" font-size="11">Cột đỏ = vượt giá trị cho phép</text>';
+    var axis='<text x="8" y="'+(top+innerH+4)+'" font-size="10" fill="#64748b">0</text><text x="8" y="'+(top+8)+'" font-size="10" fill="#64748b">'+fmtMoneyShort(maxVal)+'</text>';
+    var svg='<svg width="100%" height="'+h+'" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid meet" role="img" aria-label="'+esc(opts.title||'Giá trị sai hỏng BG vs cho phép')+'"><rect width="'+w+'" height="'+h+'" fill="#fff"/>'+grid+legend+bars+leaders+valueLabels+'<polyline points="'+line+'" fill="none" stroke="#E2B624" stroke-width="3"/>'+dots+baseLabels+labels+axis+'</svg>';
+    setHTML(id,svg);
+  }
+
   function mainSegmentRank(seg){ var order={'Túi giấy':1,'Khay giấy':2,'Flexo cuộn 6 màu':3,'GS6 khác':4}; return order[seg]||9; }
   function renderDefectVisualCharts(d){
     if(!d) return;
-    renderRateComboChart('def-segment-combo-total',(d.segments||[]).slice().sort(function(a,b){return mainSegmentRank(a.fullName)-mainSegmentRank(b.fullName);}),{minWidth:360,height:285,stepW:82,labelLen:18,title:'Theo mảng tổng'});
     var raw=d.raw||[], mainSegs=['Túi giấy','Khay giấy','Flexo cuộn 6 màu'];
+    var segmentTotalRows=(d.segments||[]).filter(function(x){return mainSegs.indexOf(x.fullName)>=0;}).slice().sort(function(a,b){return mainSegmentRank(a.fullName)-mainSegmentRank(b.fullName);});
+    renderRateComboChart('def-segment-combo-total',segmentTotalRows,{minWidth:540,height:428,stepW:126,barW:58,labelLen:20,title:'Theo mảng tổng'});
+    renderValueComboChart('def-segment-value-total',segmentTotalRows,{minWidth:540,height:345,stepW:126,barW:58,labelLen:20,title:'Giá trị theo mảng tổng'});
     var segSel=($('def-monthly-segment-filter')||{}).value||'', monSel=($('def-month-filter')||{}).value||'';
     var rows=raw.filter(function(r){ if(!r.monthKey) return false; if(segSel) return r.segment===segSel; return mainSegs.indexOf(r.segment)>=0; });
     if(monSel) rows=rows.filter(function(r){return r.monthKey===monSel;});
-    var monthGroups=aggregateMetricGroups(rows,function(r){
-      if(segSel && !monSel) return {key:r.monthKey,name:r.monthLabel,fullName:r.monthLabel,sortKey:r.monthKey};
-      if(!segSel && monSel) return {key:r.segment,name:r.segment,fullName:r.segment,sortKey:String(mainSegmentRank(r.segment))};
-      if(segSel && monSel) return {key:r.monthKey+'|'+r.segment,name:r.monthLabel+' · '+r.segment,fullName:r.monthLabel+' · '+r.segment,sortKey:r.monthKey+'|'+mainSegmentRank(r.segment)};
+    function monthSegmentGrouper(segFilter,monFilter){ return function(r){
+      if(segFilter && !monFilter) return {key:r.monthKey,name:r.monthLabel,fullName:r.monthLabel,sortKey:r.monthKey};
+      if(!segFilter && monFilter) return {key:r.segment,name:r.segment,fullName:r.segment,sortKey:String(mainSegmentRank(r.segment))};
+      if(segFilter && monFilter) return {key:r.monthKey+'|'+r.segment,name:r.monthLabel+' · '+r.segment,fullName:r.monthLabel+' · '+r.segment,sortKey:r.monthKey+'|'+mainSegmentRank(r.segment)};
       return {key:r.monthKey+'|'+r.segment,name:r.monthLabel+' · '+r.segment.replace(' cuộn 6 màu',''),fullName:r.monthLabel+' · '+r.segment,sortKey:r.monthKey+'|'+mainSegmentRank(r.segment)};
-    });
+    }; }
+    var monthGroups=aggregateMetricGroups(rows,monthSegmentGrouper(segSel,monSel));
     renderRateComboChart('def-segment-monthly-combo',monthGroups,{minWidth:760,height:320,stepW:74,labelLen:22,title:'Theo tháng và mảng'});
+    var valueSegSel=($('def-value-monthly-segment-filter')||{}).value||'', valueMonSel=($('def-value-month-filter')||{}).value||'';
+    var valueRows=raw.filter(function(r){ if(!r.monthKey) return false; if(valueSegSel) return r.segment===valueSegSel; return mainSegs.indexOf(r.segment)>=0; });
+    if(valueMonSel) valueRows=valueRows.filter(function(r){return r.monthKey===valueMonSel;});
+    var valueMonthGroups=aggregateMetricGroups(valueRows,monthSegmentGrouper(valueSegSel,valueMonSel));
+    renderValueComboChart('def-segment-monthly-value-combo',valueMonthGroups,{minWidth:760,height:330,stepW:74,labelLen:22,title:'Giá trị theo tháng và mảng'});
 
     updateLinkedWeekOptions(d,'def-machine-rate-month-filter','def-machine-rate-week-filter','Tất cả tuần');
     var machRows=machineRowsByPeriod(raw,'def-machine-rate-month-filter','def-machine-rate-week-filter');
@@ -4791,22 +4902,44 @@ function cSwitch(btn) {
   function renderMachineStabilityTable(id, rows){
     rows=(rows||[]).slice(0,16);
     if(!rows.length){ setHTML(id,'<div class="small">Không có dữ liệu bảng theo điều kiện lọc.</div>'); return; }
-    var html='<table><thead><tr><th>#</th><th>Máy</th><th>BD SX thực tế</th><th>AH cho phép</th><th>AK baseline</th><th>BF lỗi thực tế</th><th>BF/BD thực tế</th><th>Chênh SL</th><th>RAG</th></tr></thead><tbody>';
-    rows.forEach(function(x,i){ var red=(Number(x.actualRate)||0)>(Number(x.baselineRate)||0); html+='<tr><td style="text-align:right">'+(i+1)+'</td><td title="'+esc(x.fullName)+'"><b>'+esc(shortName(x.fullName,38))+'</b></td><td>'+fmtNum(x.actualProduction)+'</td><td>'+fmtNum(x.baselineQty)+'</td><td>'+fmtPct(x.baselineRate)+'</td><td>'+fmtNum(x.actualQty)+'</td><td style="font-weight:900;color:'+(red?'#dc2626':'#035D30')+'">'+fmtPct(x.actualRate)+'</td><td style="font-weight:900;color:'+(Number(x.diffQty)>0?'#dc2626':'#035D30')+'">'+fmtNum(x.diffQty)+'</td><td style="text-align:left">'+(red?'🔴 Vượt AK':'🟢 Trong AK')+'</td></tr>'; });
+    var html='<table><thead><tr><th>Máy</th><th>SLSX thực tế (BD)</th><th>SL lỗi thực tế (BF)</th><th>Tỉ lệ lỗi thực tế (BF/BD)</th><th>SL sai hỏng cho phép (AI)</th><th>Tỉ lệ lỗi định mức (AK)</th><th>Chênh lệch ĐM-TT</th><th>Giá trị sai hỏng thực tế (BG)</th><th>RAG</th></tr></thead><tbody>';
+    rows.forEach(function(x){
+      var ai=Number(x.allowedScaledQty)||0, bf=Number(x.actualQty)||0, diff=ai-bf;
+      var rateRed=(Number(x.actualRate)||0)>(Number(x.baselineRate)||0);
+      var qtyRed=diff<0;
+      var valRed=(Number(x.actualDefectValue)||0)>(Number(x.allowedDefectValue)||0);
+      var red=rateRed||qtyRed||valRed;
+      html+='<tr><td title="'+esc(x.fullName)+'"><b>'+esc(shortName(x.fullName,38))+'</b></td><td>'+fmtNum(x.actualProduction)+'</td><td>'+fmtNum(x.actualQty)+'</td><td style="font-weight:900;color:'+(rateRed?'#dc2626':'#035D30')+'">'+fmtPct(x.actualRate)+'</td><td>'+fmtNum(ai)+'</td><td>'+fmtPct(x.baselineRate)+'</td><td title="AI - BF" style="font-weight:900;color:'+(qtyRed?'#dc2626':'#035D30')+'">'+fmtNum(diff)+'</td><td style="font-weight:800">'+fmtNum(x.actualDefectValue)+'</td><td style="text-align:left">'+(red?'🔴 Vượt ĐM':'🟢 Trong ĐM')+'</td></tr>';
+    });
     html+='</tbody></table>'; setHTML(id,html);
   }
-
   function selectedWindowWeeks(d, selectId){ var weeks=d.weeks||[]; if(!weeks.length) return []; var sel=($(selectId)||{}).value || weeks[weeks.length-1].key; var idx=weeks.map(function(w){return w.key;}).indexOf(sel); if(idx<0) idx=weeks.length-1; return weeks.slice(Math.max(0,idx-2), idx+1); }
   function aggregateBy(rows, catKey, weeks){ var weekKeys=weeks.map(function(w){return w.key;}), map={}; rows.forEach(function(r){ if(weekKeys.indexOf(r.weekKey)<0) return; var cat=r[catKey] || 'Không rõ'; if(!map[cat]){ map[cat]={name:cat,total:0,byWeek:{}}; weekKeys.forEach(function(w){map[cat].byWeek[w]=0;}); } map[cat].byWeek[r.weekKey]+=r.defectQty||0; map[cat].total+=r.defectQty||0; }); return Object.keys(map).map(function(k){return map[k];}).sort(function(a,b){return b.total-a.total;}); }
-  function renderWeeklyBars(id, arr, weeks, maxCats){
-    maxCats=maxCats||10; arr=arr.slice(0,maxCats); if(!arr.length){ setHTML(id,'<div class="small">Không có dữ liệu theo điều kiện lọc.</div>'); return; }
+  function aggregateByMetricUnique(rows, catKey, weeks){
+    var weekKeys=weeks.map(function(w){return w.key;}), map={};
+    rows.forEach(function(r){
+      if(weekKeys.indexOf(r.weekKey)<0) return;
+      var cat=r[catKey] || 'Không rõ';
+      if(!map[cat]){ map[cat]={name:cat,total:0,valueTotal:0,byWeek:{},valueByWeek:{},_qtyKeys:{},_valueKeys:{}}; weekKeys.forEach(function(w){map[cat].byWeek[w]=0; map[cat].valueByWeek[w]=0; map[cat]._qtyKeys[w]={}; map[cat]._valueKeys[w]={};}); }
+      var o=map[cat], k=pairKeyASLTT(r), vk=valueKeyAS(r), qty=(Number(r.actualQty)||0) || (Number(r.defectQty)||0), val=Number(r.actualDefectValue)||0;
+      if(!o._qtyKeys[r.weekKey][k]){ o._qtyKeys[r.weekKey][k]=true; o.byWeek[r.weekKey]+=qty; o.total+=qty; }
+      if(!o._valueKeys[r.weekKey][vk]){ o._valueKeys[r.weekKey][vk]=true; o.valueByWeek[r.weekKey]+=val; o.valueTotal+=val; }
+    });
+    return Object.keys(map).map(function(k){var o=map[k]; delete o._qtyKeys; delete o._valueKeys; return o;}).sort(function(a,b){return b.total-a.total;});
+  }
+  function renderWeeklyBars(id, arr, weeks, maxCats, opts){
+    opts=opts||{}; maxCats=maxCats||10; arr=arr.slice(0,maxCats); if(!arr.length){ setHTML(id,'<div class="small">Không có dữ liệu theo điều kiện lọc.</div>'); return; }
     var max=Math.max.apply(null, arr.map(function(c){return Math.max.apply(null,weeks.map(function(w){return c.byWeek[w.key]||0;}));}));
     var html='<div class="weekly-chart">';
     html+='<div class="small" style="margin-bottom:8px"><b>Cửa sổ tuần:</b> '+weeks.map(function(w){return esc(w.label);}).join(' · ')+'</div>';
     arr.forEach(function(c,i){
-      html+='<div class="weekly-row"><div class="weekly-name" title="'+esc(c.name)+'">'+(i+1)+'. '+esc(shortName(c.name,36))+'<br/><span>Tổng: '+fmtNum(c.total)+'</span></div><div class="weekly-bars">';
+      var rowStyle=opts.compact?' style="grid-template-columns:190px minmax(180px,.5fr) minmax(220px,.5fr);"':'';
+      var barStyle=opts.compact?' style="min-width:220px"':'';
+      html+='<div class="weekly-row"'+rowStyle+'><div class="weekly-name" title="'+esc(c.name)+'">'+(i+1)+'. '+esc(shortName(c.name,34))+'<br/><span>Tổng SL: '+fmtNum(c.total)+(opts.showValue?' · GT: '+fmtNum(c.valueTotal||0):'')+'</span></div><div class="weekly-bars"'+barStyle+'>';
       weeks.forEach(function(w,wi){ var v=c.byWeek[w.key]||0, pct=max?v/max*100:0; html+='<div class="weekly-bar-line"><span class="weekly-label">'+esc(w.key.replace(/^\d+-/,''))+'</span><div class="weekly-bar-bg"><div class="weekly-bar-fill fill-'+wi+'" style="width:'+pct+'%"></div></div><b>'+fmtNum(v)+'</b></div>'; });
-      html+='</div></div>';
+      html+='</div>';
+      if(opts.showValue){ html+='<div class="weekly-value-col" style="display:grid;gap:5px;font-size:11px;color:#334155;min-width:220px">'; weeks.forEach(function(w){ var v=c.byWeek[w.key]||0, gt=(c.valueByWeek&&c.valueByWeek[w.key])||0; html+='<div style="white-space:nowrap;border-bottom:1px dashed #E5E7EB;padding:2px 0"><b>SL:</b> '+fmtNum(v)+' <span style="color:#94a3b8">|</span> <b>GT:</b> '+fmtNum(gt)+'</div>'; }); html+='</div>'; }
+      html+='</div>';
     });
     html+='</div>'; setHTML(id,html);
   }
@@ -4875,10 +5008,22 @@ function cSwitch(btn) {
     var wk=selectedWindowWeeks(d,'def-worker-week-select'), weekKeys=wk.map(function(w){return w.key;});
     var fac=($('def-worker-factory-filter')||{}).value||'', dept=($('def-worker-dept-filter')||{}).value||'';
     var map={};
-    rows.forEach(function(r){ if(weekKeys.length && weekKeys.indexOf(r.weekKey)<0) return; if(fac && r.factoryFault!==fac) return; if(dept && r.departmentFault!==dept) return; var k=r.mainWorker||'Không rõ thợ chính'; if(!map[k]) map[k]={worker:k,qty:0,value:0,rows:0,factory:{},dept:{},defect:{}}; var o=map[k]; o.qty+=r.defectQty||0; o.value+=r.defectValue||0; o.rows++; o.factory[r.factoryFault]=true; o.dept[r.departmentFault]=true; o.defect[r.defectName]=(o.defect[r.defectName]||0)+(r.defectQty||0); });
-    var arr=Object.keys(map).map(function(k){ var o=map[k]; var topDef=Object.keys(o.defect).sort(function(a,b){return o.defect[b]-o.defect[a];})[0]||''; o.topDefect=topDef; return o; }).sort(function(a,b){return b.qty-a.qty;}).slice(0,30);
+    rows.forEach(function(r){
+      if(weekKeys.length && weekKeys.indexOf(r.weekKey)<0) return;
+      if(fac && r.factoryFault!==fac) return;
+      if(dept && r.departmentFault!==dept) return;
+      var k=r.mainWorker||'Không rõ thợ chính';
+      if(!map[k]) map[k]={worker:k,qty:0,value:0,rows:0,factory:{},dept:{},defect:{},_valueKeys:{}};
+      var o=map[k];
+      o.qty+=r.defectQty||0;
+      var vk=valueKeyAS(r);
+      if(!o._valueKeys[vk]){ o._valueKeys[vk]=true; o.value+=Number(r.actualDefectValue)||0; }
+      o.rows++;
+      o.factory[r.factoryFault]=true; o.dept[r.departmentFault]=true; o.defect[r.defectName]=(o.defect[r.defectName]||0)+(r.defectQty||0);
+    });
+    var arr=Object.keys(map).map(function(k){ var o=map[k]; var topDef=Object.keys(o.defect).sort(function(a,b){return o.defect[b]-o.defect[a];})[0]||''; o.topDefect=topDef; delete o._valueKeys; return o; }).sort(function(a,b){return b.qty-a.qty;}).slice(0,30);
     if(!arr.length){ setHTML('def-worker-table-body','<tr><td colspan="8" style="text-align:center;color:#999">Không có dữ liệu theo điều kiện lọc.</td></tr>'); applyTableSearch('def-search-worker','def-worker-table-body'); return; }
-    setHTML('def-worker-table-body', arr.map(function(x,i){ return '<tr><td>'+(i+1)+'</td><td><b>'+esc(x.worker)+'</b></td><td style="text-align:right;font-weight:700;color:#991b1b">'+fmtNum(x.qty)+'</td><td style="text-align:right">'+fmtNum(x.value)+'</td><td>'+Object.keys(x.factory).map(esc).join('<br/>')+'</td><td>'+Object.keys(x.dept).map(esc).join('<br/>')+'</td><td>'+esc(shortName(x.topDefect,50))+'</td><td style="text-align:right">'+fmtNum(x.rows)+'</td></tr>'; }).join(''));
+    setHTML('def-worker-table-body', arr.map(function(x,i){ return '<tr><td>'+(i+1)+'</td><td><b>'+esc(x.worker)+'</b></td><td style="text-align:right;font-weight:700;color:#991b1b">'+fmtNum(x.qty)+'</td><td style="text-align:right;font-weight:800">'+fmtNum(x.value)+'</td><td>'+Object.keys(x.factory).map(esc).join('<br/>')+'</td><td>'+Object.keys(x.dept).map(esc).join('<br/>')+'</td><td>'+esc(shortName(x.topDefect,50))+'</td><td style="text-align:right">'+fmtNum(x.rows)+'</td></tr>'; }).join(''));
     applyTableSearch('def-search-worker','def-worker-table-body');
   }
   function renderWeeklyAnalytics(d){
@@ -4891,7 +5036,7 @@ function cSwitch(btn) {
     var machWeeks=selectedWindowWeeks(d,'def-machine-week-select');
     var f2=($('def-machine-factory-filter')||{}).value||'', mach=($('def-machine-filter')||{}).value||'';
     var machRows=raw.filter(function(r){ return (!f2 || r.factoryFault===f2) && (!mach || r.machine===mach); });
-    renderWeeklyBars('def-weekly-machine-chart', aggregateBy(machRows,'machine',machWeeks), machWeeks, mach?20:12);
+    renderWeeklyBars('def-weekly-machine-chart', aggregateByMetricUnique(machRows,'machine',machWeeks), machWeeks, mach?20:12, {showValue:true,compact:true});
 
     var pWeek=($('def-pareto-week-select')||{}).value || ((d.weeks||[]).length?d.weeks[d.weeks.length-1].key:'');
     var pFac=($('def-pareto-factory-filter')||{}).value||'', pDept=($('def-pareto-dept-filter')||{}).value||'';
@@ -4927,11 +5072,13 @@ function cSwitch(btn) {
     setWeekOptions('def-pareto-week-select',weeks,false);
     setWeekOptions('def-worker-week-select',weeks,false);
     setMonthOptions('def-month-filter',months,true);
+    setMonthOptions('def-value-month-filter',months,true);
     setMonthOptions('def-machine-rate-month-filter',months,true);
     setMonthOptions('def-machine-stability-month-filter',months,true);
     updateLinkedWeekOptions(d,'def-machine-rate-month-filter','def-machine-rate-week-filter','Tất cả tuần');
     updateLinkedWeekOptions(d,'def-machine-stability-month-filter','def-machine-stability-week-filter','Tất cả tuần');
     setSelectOptions('def-monthly-segment-filter',segments,'Tất cả 3 mảng');
+    setSelectOptions('def-value-monthly-segment-filter',segments,'Tất cả 3 mảng');
     setSelectOptions('def-dept-filter',depts,'Tất cả bộ phận gây lỗi');
     setSelectOptions('def-factory-filter',factories,'Tất cả nhà máy');
     setSelectOptions('def-machine-filter',machines,'Tất cả máy');
@@ -4942,7 +5089,7 @@ function cSwitch(btn) {
     setSelectOptions('def-worker-dept-filter',depts,'Tất cả bộ phận gây lỗi');
   }
   function bindAnalyticsFilters(){
-    ['def-week-select','def-dept-filter','def-factory-filter','def-machine-week-select','def-machine-filter','def-machine-factory-filter','def-pareto-week-select','def-pareto-factory-filter','def-pareto-dept-filter','def-worker-week-select','def-worker-factory-filter','def-worker-dept-filter','def-monthly-segment-filter','def-month-filter','def-machine-rate-month-filter','def-machine-rate-week-filter','def-machine-stability-month-filter','def-machine-stability-week-filter'].forEach(function(id){ var el=$(id); if(el && !el.__gs6Bound){ el.__gs6Bound=true; el.addEventListener('change',function(){ var d=window.GS6_DEFECT_LIVE_DATA; if(d){ if(id==='def-machine-rate-month-filter'){ updateLinkedWeekOptions(d,'def-machine-rate-month-filter','def-machine-rate-week-filter','Tất cả tuần'); } if(id==='def-machine-stability-month-filter'){ updateLinkedWeekOptions(d,'def-machine-stability-month-filter','def-machine-stability-week-filter','Tất cả tuần'); } renderDefectVisualCharts(d); renderWeeklyAnalytics(d); } }); } });
+    ['def-week-select','def-dept-filter','def-factory-filter','def-machine-week-select','def-machine-filter','def-machine-factory-filter','def-pareto-week-select','def-pareto-factory-filter','def-pareto-dept-filter','def-worker-week-select','def-worker-factory-filter','def-worker-dept-filter','def-monthly-segment-filter','def-month-filter','def-value-monthly-segment-filter','def-value-month-filter','def-machine-rate-month-filter','def-machine-rate-week-filter','def-machine-stability-month-filter','def-machine-stability-week-filter'].forEach(function(id){ var el=$(id); if(el && !el.__gs6Bound){ el.__gs6Bound=true; el.addEventListener('change',function(){ var d=window.GS6_DEFECT_LIVE_DATA; if(d){ if(id==='def-machine-rate-month-filter'){ updateLinkedWeekOptions(d,'def-machine-rate-month-filter','def-machine-rate-week-filter','Tất cả tuần'); } if(id==='def-machine-stability-month-filter'){ updateLinkedWeekOptions(d,'def-machine-stability-month-filter','def-machine-stability-week-filter','Tất cả tuần'); } renderDefectVisualCharts(d); renderWeeklyAnalytics(d); } }); } });
   }
   function renderDefectData(d,mode){
     if(!d || !d.kpi) return;
@@ -4965,7 +5112,7 @@ function cSwitch(btn) {
       metricHtml('TỔNG SL SX THỰC TẾ',fmtNum(k.actualProduction),'BD – cộng 1 lần theo Số thống kê AS'),
       metricHtml('TỔNG SL SX ĐẠT THỰC TẾ',fmtNum(k.actualOkQty),'BE – cộng 1 lần theo Số thống kê AS'),
       metricHtml('TỔNG SL SAI HỎNG THỰC TẾ',fmtNum(k.actualQty),'BF – cộng 1 lần theo Số thống kê AS'),
-      metricHtml('TL SAI HỎNG THỰC TẾ',fmtPct(k.actualRate),'Tỷ lệ = BF/BD sau loại trùng AS'),
+      metricHtml('TL SAI HỎNG THỰC TẾ',fmtPct(k.actualRate),'Tỷ lệ = BF/BD sau loại trùng AS; giá trị BG loại trùng theo cặp AS+Q'),
       metricHtml('CHÊNH LỆCH THỰC TẾ - CHO PHÉP',fmtNum(k.diffQty)+' / '+fmtPct(k.diffRate),'BF - AH và BF/BD - AH/AG trên cùng tập lọc')
     ].join('');
     setHTML('def-kpis','<div class="def-kpi-row">'+row2+'</div><div class="def-kpi-row">'+row3+'</div>');
@@ -4976,12 +5123,12 @@ function cSwitch(btn) {
     applyTableSearch('def-search-action','def-action-rows');
     bindTableSearchInputs();
     renderWeeklyAnalytics(d);
-    setText('def-data-status','🟢 LIVE – Google Sheet – Kỳ dữ liệu: '+d.period+' · Dòng ERP: '+fmtNum(d.dataQuality.rawRows)+' · LTT unique Q: '+fmtNum(k.lttCount||k.ltt)+' · Số TK unique AS: '+fmtNum(k.statCount||0)+' · Mã thao tác S: '+(d.selectedOperationCode?d.selectedOperationCode:'Tất cả')+' · Công thức V9.13: AF/AG/AH theo Q, BD/BE/BF theo AS, AN chỉ đối soát theo Q · Header row: '+d.dataQuality.headerRow+' · Cập nhật dashboard: '+(d.updated||new Date().toLocaleString('vi-VN')));
+    setText('def-data-status','🟢 LIVE – Google Sheet – Kỳ dữ liệu: '+d.period+' · Dòng ERP: '+fmtNum(d.dataQuality.rawRows)+' · LTT unique Q: '+fmtNum(k.lttCount||k.ltt)+' · Số TK unique AS: '+fmtNum(k.statCount||0)+' · Cặp giá trị unique AS+Q: '+fmtNum(k.valuePairCount||0)+' · Mã thao tác S: '+(d.selectedOperationCode?d.selectedOperationCode:'Tất cả')+' · Công thức V9.21: AF/AG/AH theo Q; BD/BE/BF/AI theo AS; BG theo cặp AS+Q; giá trị cho phép = BG/BF*AI, BF=0 => 0 · Header row: '+d.dataQuality.headerRow+' · Cập nhật dashboard: '+(d.updated||new Date().toLocaleString('vi-VN')));
   }
   function renderLiveError(err){
     window.GS6_DEFECT_LIVE_DATA=null; window.GS6_DEFECT_DATA=null;
     setHTML('def-kpis','<div class="metric" style="border-left-color:#dc2626"><div class="label">LIVE ERROR</div><div class="value" style="color:#dc2626">Không có dữ liệu điều hành</div><div class="hint">Dashboard đã tắt fallback. Cần sửa quyền/link Google Sheet rồi nạp lại.</div></div>');
-    ['def-segment-combo-total','def-segment-monthly-combo','def-machine-rate-combo','def-machine-combo','def-pareto-defects','def-pareto-operationT','def-weekly-dept-chart','def-weekly-machine-chart','def-week-pareto-chart','def-week-pareto-table','def-machine-stability-table'].forEach(function(id){ setHTML(id,'<div class="alert red"><b>LIVE ERROR:</b> Không render dữ liệu tĩnh/fallback. '+esc(err && err.message ? err.message : err || '')+'</div>'); });
+    ['def-segment-combo-total','def-segment-value-total','def-segment-monthly-combo','def-segment-monthly-value-combo','def-machine-rate-combo','def-machine-combo','def-pareto-defects','def-pareto-operationT','def-weekly-dept-chart','def-weekly-machine-chart','def-week-pareto-chart','def-week-pareto-table','def-machine-stability-table'].forEach(function(id){ setHTML(id,'<div class="alert red"><b>LIVE ERROR:</b> Không render dữ liệu tĩnh/fallback. '+esc(err && err.message ? err.message : err || '')+'</div>'); });
     setHTML('def-action-rows','<tr><td colspan="10" style="text-align:center;color:#991b1b;font-weight:700">LIVE ERROR – Không dùng dữ liệu fallback để điều hành.</td></tr>');
     setHTML('def-worker-table-body','<tr><td colspan="8" style="text-align:center;color:#991b1b;font-weight:700">LIVE ERROR – Chưa có dữ liệu thợ chính.</td></tr>');
     setText('def-data-status','🔴 LIVE ERROR – Không có dữ liệu điều hành. Dashboard không dùng fallback. Lý do: '+(err && err.message ? err.message : err || 'Không rõ lỗi'));
