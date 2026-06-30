@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V9.22D – All Machines By Period / CL From ERP Source</title>
+<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V9.22F – Stability Date Filter AR</title>
 <style>
 :root{
   --dark:#035D30;--green:#035A28;--gold:#E2B624;--gold2:#FFFDE7;
@@ -4334,8 +4334,9 @@ function cSwitch(btn) {
   <div class="def-filter-row">
     <label>Tháng</label><select id="def-machine-stability-month-filter"><option value="">Tất cả tháng</option></select>
     <label>Tuần</label><select id="def-machine-stability-week-filter"><option value="">Tất cả tuần</option></select>
+    <label>Ngày TK (AR)</label><select id="def-machine-stability-date-filter"><option value="">Tất cả ngày</option></select>
   </div>
-  <div class="def-chart-note"><b>Chú thích:</b> Cột = <b>sản lượng SX thực tế BD</b>; dây xanh = <b>AK cho phép</b>; dây đỏ = <b>BF/BD thực tế</b>. Bảng dưới chân biểu đồ ghi đủ BD/BF/BF-BD/AI/AK/BG để không phải đọc mỏi mắt trên hình.</div>
+  <div class="def-chart-note"><b>Chú thích:</b> Cột = <b>sản lượng SX thực tế BD</b>; dây xanh = <b>AK cho phép</b>; dây đỏ = <b>BF/BD thực tế</b>. Bộ lọc <b>Ngày TK – cột AR</b> chỉ hiển thị các ngày nằm trong tháng/tuần đang chọn. Bảng dưới chân biểu đồ ghi đủ BD/BF/BF-BD/AI/AK/BG để không phải đọc mỏi mắt trên hình.</div>
   <div class="combo-wrap" id="def-machine-combo"></div>
   <div class="def-chart-summary" id="def-machine-stability-summary"></div>
   <div class="chart-data-table" id="def-machine-stability-table"></div>
@@ -4541,6 +4542,7 @@ function cSwitch(btn) {
     var d=new Date(s); return isNaN(d)?null:d;
   }
   function dateVN(d){ return d ? String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear() : ''; }
+  function dateKeyOf(d){ return d ? d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0') : ''; }
   function mondayOf(d){ var x=new Date(d.getFullYear(),d.getMonth(),d.getDate()); var day=x.getDay()||7; x.setDate(x.getDate()-day+1); x.setHours(0,0,0,0); return x; }
   function isoWeek(d){
     var date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
@@ -4824,7 +4826,7 @@ function cSwitch(btn) {
         operTMap[opName].qty+=dq; operTMap[opName].value+=dv;
         if(seg[segName]) seg[segName].value+=dv; if(mach[machine]) mach[machine].value+=dv; if(oper[opName]) oper[opName].value+=dv;
       }
-      raw.push({rowNo:hi+idx+2,date:dt,dateText:dt?dateVN(dt):String(cell(r,m.dateTk)||''),weekKey:wk?wk.key:'Không rõ tuần',weekLabel:wk?wk.label:'Không rõ tuần',weekStart:wk?wk.start:0,monthKey:dt?monthKeyOf(dt):'',monthLabel:dt?monthLabelOfDate(dt):'Không rõ tháng',segment:segName,machine:machine,operationCode:opCode,operation:opName,defectCode:defectCode,defectName:defect,defectQty:dq,defectValue:dv,departmentFault:deptFault,factoryFault:factoryFault,mainWorker:worker,ltt:ltt,statNo:statNo,targetQty:(m.targetQty>=0?num(cell(r,m.targetQty)):0),needSx:num(cell(r,m.needSx)),allowedQty:allowedQty,allowedScaledQty:allowedScaledQty,actualProduction:actualProduction,actualOkQty:actualOkQty,actualQty:actualQty,actualDefectValue:statDefectValue});
+      raw.push({rowNo:hi+idx+2,date:dt,dateKey:dt?dateKeyOf(dt):'',dateText:dt?dateVN(dt):String(cell(r,m.dateTk)||''),weekKey:wk?wk.key:'Không rõ tuần',weekLabel:wk?wk.label:'Không rõ tuần',weekStart:wk?wk.start:0,monthKey:dt?monthKeyOf(dt):'',monthLabel:dt?monthLabelOfDate(dt):'Không rõ tháng',segment:segName,machine:machine,operationCode:opCode,operation:opName,defectCode:defectCode,defectName:defect,defectQty:dq,defectValue:dv,departmentFault:deptFault,factoryFault:factoryFault,mainWorker:worker,ltt:ltt,statNo:statNo,targetQty:(m.targetQty>=0?num(cell(r,m.targetQty)):0),needSx:num(cell(r,m.needSx)),allowedQty:allowedQty,allowedScaledQty:allowedScaledQty,actualProduction:actualProduction,actualOkQty:actualOkQty,actualQty:actualQty,actualDefectValue:statDefectValue});
     });
     var k=emptyAgg('Tổng GS6'); opItems.forEach(function(x){addMetric(k,x);}); finalize(k); k.ltt=k.lttCount; k.value=Object.keys(defMap).reduce(function(s,x){return s+(defMap[x].value||0);},0);
     dates.sort(function(a,b){return a-b;}); var period=dates.length?(dateVN(dates[0])+' → '+dateVN(dates[dates.length-1])):'Không rõ kỳ live';
@@ -5005,7 +5007,8 @@ function cSwitch(btn) {
     renderMachinePeriodSummary('def-machine-rate-summary', machGroups, 'máy sản xuất theo điều kiện lọc', 'Hiển thị đầy đủ, không cắt Top 16');
 
     updateLinkedWeekOptions(d,'def-machine-stability-month-filter','def-machine-stability-week-filter','Tất cả tuần');
-    var stRows=machineRowsByPeriod(raw,'def-machine-stability-month-filter','def-machine-stability-week-filter');
+    updateLinkedDateOptions(d,'def-machine-stability-month-filter','def-machine-stability-week-filter','def-machine-stability-date-filter','Tất cả ngày');
+    var stRows=machineRowsByPeriod(raw,'def-machine-stability-month-filter','def-machine-stability-week-filter','def-machine-stability-date-filter');
     var stGroups=machineAggByProduction(stRows);
     setHTML('def-machine-combo',renderCombo(stGroups));
     renderMachinePeriodSummary('def-machine-stability-summary', stGroups, 'máy sản xuất theo điều kiện lọc', 'Sắp xếp theo sản lượng BD giảm dần');
@@ -5018,9 +5021,12 @@ function cSwitch(btn) {
     rows=rows||[];
     var red=rows.filter(function(x){return (Number(x.actualRate)||0)>(Number(x.baselineRate)||0);}).length;
     var green=rows.length-red;
-    var month=selectedLabel(id.indexOf('stability')>=0?'def-machine-stability-month-filter':'def-machine-rate-month-filter') || 'Tất cả tháng';
-    var week=selectedLabel(id.indexOf('stability')>=0?'def-machine-stability-week-filter':'def-machine-rate-week-filter') || 'Tất cả tuần';
-    var html='<b>Phạm vi:</b> '+esc(month)+' · '+esc(week)+' &nbsp;|&nbsp; <b>Đang hiển thị:</b> '+fmtNum(rows.length)+' '+esc(label||'máy')+' &nbsp;|&nbsp; 🔴 '+fmtNum(red)+' vượt AK · 🟢 '+fmtNum(green)+' trong chuẩn';
+    var isStability=id.indexOf('stability')>=0;
+    var month=selectedLabel(isStability?'def-machine-stability-month-filter':'def-machine-rate-month-filter') || 'Tất cả tháng';
+    var week=selectedLabel(isStability?'def-machine-stability-week-filter':'def-machine-rate-week-filter') || 'Tất cả tuần';
+    var day=isStability ? (selectedLabel('def-machine-stability-date-filter') || 'Tất cả ngày') : '';
+    var scope=esc(month)+' · '+esc(week)+(isStability?' · '+esc(day):'');
+    var html='<b>Phạm vi:</b> '+scope+' &nbsp;|&nbsp; <b>Đang hiển thị:</b> '+fmtNum(rows.length)+' '+esc(label||'máy')+' &nbsp;|&nbsp; 🔴 '+fmtNum(red)+' vượt AK · 🟢 '+fmtNum(green)+' trong chuẩn';
     if(note) html+=' &nbsp;|&nbsp; '+esc(note);
     html+=' &nbsp;|&nbsp; <span style="color:#035D30;font-weight:900">Biểu đồ co giãn toàn khung, không dùng thanh trượt ngang.</span>';
     setHTML(id,html);
@@ -5034,7 +5040,7 @@ function cSwitch(btn) {
 
   function weeksForMonth(d, monthKey){
     var weeks=d.weeks||[]; if(!monthKey) return weeks;
-    var valid={}; (d.raw||[]).forEach(function(r){ if(r.monthKey===monthKey && r.weekKey) valid[r.weekKey]=true; });
+    var valid={}; (d.raw||[]).forEach(function(r){ if(r.monthKey===monthKey && r.weekKey && r.weekKey!=='Không rõ tuần') valid[r.weekKey]=true; });
     return weeks.filter(function(w){ return valid[w.key]; });
   }
   function updateLinkedWeekOptions(d, monthSelectId, weekSelectId, allText){
@@ -5049,9 +5055,31 @@ function cSwitch(btn) {
       var first=wkEl.querySelector('option[value=""]'); if(first) first.textContent=allText||'Tất cả tuần';
     }
   }
-  function machineRowsByPeriod(raw, monthId, weekId){
-    var month=($(monthId)||{}).value||'', week=($(weekId)||{}).value||'';
-    return (raw||[]).filter(function(r){ if(week) return r.weekKey===week; if(month) return r.monthKey===month; return true; });
+  function datesForPeriod(d, monthKey, weekKey){
+    var map={};
+    (d.raw||[]).forEach(function(r){
+      if(!r.dateKey) return;
+      if(monthKey && r.monthKey!==monthKey) return;
+      if(weekKey && r.weekKey!==weekKey) return;
+      map[r.dateKey]={key:r.dateKey,label:r.dateText||r.dateKey,start:r.date?+r.date:0};
+    });
+    return Object.keys(map).map(function(k){return map[k];}).sort(function(a,b){return a.start-b.start;});
+  }
+  function updateLinkedDateOptions(d, monthSelectId, weekSelectId, dateSelectId, allText){
+    var el=$(dateSelectId); if(!el) return;
+    var month=($(monthSelectId)||{}).value||'', week=($(weekSelectId)||{}).value||'';
+    var dates=datesForPeriod(d,month,week), cur=el.value||'';
+    el.innerHTML='<option value="">'+esc(allText||'Tất cả ngày')+'</option>'+dates.map(function(x){return '<option value="'+esc(x.key)+'">'+esc(x.label)+'</option>';}).join('');
+    if(cur && dates.some(function(x){return x.key===cur;})) el.value=cur; else el.value='';
+  }
+  function machineRowsByPeriod(raw, monthId, weekId, dateId){
+    var month=($(monthId)||{}).value||'', week=($(weekId)||{}).value||'', date=($(dateId)||{}).value||'';
+    return (raw||[]).filter(function(r){
+      if(month && r.monthKey!==month) return false;
+      if(week && r.weekKey!==week) return false;
+      if(date && r.dateKey!==date) return false;
+      return true;
+    });
   }
   function machineAggByProduction(rows){
     var groups=aggregateMetricGroups(rows,function(r){return {key:r.machine,name:r.machine,fullName:r.machine,sortKey:r.machine};});
@@ -5237,6 +5265,7 @@ function cSwitch(btn) {
     setMonthOptions('def-machine-stability-month-filter',months,true);
     updateLinkedWeekOptions(d,'def-machine-rate-month-filter','def-machine-rate-week-filter','Tất cả tuần');
     updateLinkedWeekOptions(d,'def-machine-stability-month-filter','def-machine-stability-week-filter','Tất cả tuần');
+    updateLinkedDateOptions(d,'def-machine-stability-month-filter','def-machine-stability-week-filter','def-machine-stability-date-filter','Tất cả ngày');
     setSelectOptions('def-monthly-segment-filter',segments,'Tất cả 3 mảng');
     setSelectOptions('def-value-monthly-segment-filter',segments,'Tất cả 3 mảng');
     setSelectOptions('def-dept-filter',depts,'Tất cả bộ phận gây lỗi');
@@ -5249,7 +5278,7 @@ function cSwitch(btn) {
     setSelectOptions('def-worker-dept-filter',depts,'Tất cả bộ phận gây lỗi');
   }
   function bindAnalyticsFilters(){
-    ['def-week-select','def-dept-filter','def-factory-filter','def-machine-week-select','def-machine-filter','def-machine-factory-filter','def-pareto-week-select','def-pareto-factory-filter','def-pareto-dept-filter','def-worker-week-select','def-worker-factory-filter','def-worker-dept-filter','def-monthly-segment-filter','def-month-filter','def-value-monthly-segment-filter','def-value-month-filter','def-machine-rate-month-filter','def-machine-rate-week-filter','def-machine-stability-month-filter','def-machine-stability-week-filter'].forEach(function(id){ var el=$(id); if(el && !el.__gs6Bound){ el.__gs6Bound=true; el.addEventListener('change',function(){ var d=window.GS6_DEFECT_LIVE_DATA; if(d){ if(id==='def-machine-rate-month-filter'){ updateLinkedWeekOptions(d,'def-machine-rate-month-filter','def-machine-rate-week-filter','Tất cả tuần'); } if(id==='def-machine-stability-month-filter'){ updateLinkedWeekOptions(d,'def-machine-stability-month-filter','def-machine-stability-week-filter','Tất cả tuần'); } renderDefectVisualCharts(d); renderWeeklyAnalytics(d); } }); } });
+    ['def-week-select','def-dept-filter','def-factory-filter','def-machine-week-select','def-machine-filter','def-machine-factory-filter','def-pareto-week-select','def-pareto-factory-filter','def-pareto-dept-filter','def-worker-week-select','def-worker-factory-filter','def-worker-dept-filter','def-monthly-segment-filter','def-month-filter','def-value-monthly-segment-filter','def-value-month-filter','def-machine-rate-month-filter','def-machine-rate-week-filter','def-machine-stability-month-filter','def-machine-stability-week-filter','def-machine-stability-date-filter'].forEach(function(id){ var el=$(id); if(el && !el.__gs6Bound){ el.__gs6Bound=true; el.addEventListener('change',function(){ var d=window.GS6_DEFECT_LIVE_DATA; if(d){ if(id==='def-machine-rate-month-filter'){ updateLinkedWeekOptions(d,'def-machine-rate-month-filter','def-machine-rate-week-filter','Tất cả tuần'); } if(id==='def-machine-stability-month-filter'){ updateLinkedWeekOptions(d,'def-machine-stability-month-filter','def-machine-stability-week-filter','Tất cả tuần'); updateLinkedDateOptions(d,'def-machine-stability-month-filter','def-machine-stability-week-filter','def-machine-stability-date-filter','Tất cả ngày'); } if(id==='def-machine-stability-week-filter'){ updateLinkedDateOptions(d,'def-machine-stability-month-filter','def-machine-stability-week-filter','def-machine-stability-date-filter','Tất cả ngày'); } renderDefectVisualCharts(d); renderWeeklyAnalytics(d); } }); } });
   }
   function renderDefectData(d,mode){
     if(!d || !d.kpi) return;
