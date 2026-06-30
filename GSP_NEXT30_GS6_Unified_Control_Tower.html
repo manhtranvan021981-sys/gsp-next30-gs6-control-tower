@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V9.22C – CL From ERP Source / CL From ERP Source</title>
+<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V9.22D – All Machines By Period / CL From ERP Source</title>
 <style>
 :root{
   --dark:#035D30;--green:#035A28;--gold:#E2B624;--gold2:#FFFDE7;
@@ -214,6 +214,7 @@ window.addEventListener('resize', syncStickyNavOffset);
 window.addEventListener('load', syncStickyNavOffset);
 setTimeout(syncStickyNavOffset, 250);
 </script>
+<!-- V9.22E: Fit all machine charts into frame, no horizontal scroll; adaptive label collision handling retained. -->
 </head>
 <body>
 <header class="top">
@@ -4175,8 +4176,11 @@ function cSwitch(btn) {
   #defect .defect-grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin:14px 0;min-width:0}
   #defect .def-chart-row-main{display:grid;grid-template-columns:minmax(360px,1fr) minmax(0,2fr);gap:14px;margin:14px 0;align-items:stretch}
   #defect .def-chart-full{margin:14px 0;min-width:0}
-  #defect .def-chart-box{overflow:hidden;padding-top:4px;width:100%;max-width:100%}
-  #defect .def-chart-box svg,#defect .combo-wrap svg,#defect .weekly-chart svg{width:100%;height:auto;max-width:100%;display:block}
+  #defect .def-chart-box{overflow-x:hidden;overflow-y:hidden;padding-top:4px;width:100%;max-width:100%}
+  #defect .def-chart-box svg,#defect .combo-wrap svg,#defect .weekly-chart svg{width:100%;height:auto;max-width:none;display:block}
+  #defect .def-svg-scroll-inner{min-width:0;width:100%}
+  #defect .def-fit-note{font-size:10.5px;color:#64748b;margin-top:4px;line-height:1.35}
+  #defect .def-chart-summary{font-size:12px;color:#64748b;margin-top:6px;line-height:1.45}
   #defect .def-chart-note{font-size:10.8px;color:#64748b;line-height:1.45;margin:-2px 0 8px}
   #defect .def-exec-line{display:grid;grid-template-columns:minmax(270px,360px) 1fr;gap:14px;align-items:stretch;margin-bottom:10px}
   #defect .def-period-box,#defect .def-conclusion-box{background:#fff;border:1px solid #D9D9D9;border-left:5px solid #E2B624;border-radius:10px;padding:12px 14px;box-shadow:0 4px 12px rgba(3,93,48,.08)}
@@ -4202,7 +4206,7 @@ function cSwitch(btn) {
   #defect .rate-pair{border-bottom:1px dashed #D9D9D9;padding:8px 0}
   #defect .rate-title{font-weight:900;color:#035D30;margin-bottom:4px;font-size:12.5px}
   #defect .rate-note{font-size:10.5px;color:#64748b;margin-top:2px}
-  #defect .combo-wrap{overflow:hidden;padding-top:4px;width:100%;max-width:100%}
+  #defect .combo-wrap{overflow-x:hidden;overflow-y:hidden;padding-top:4px;width:100%;max-width:100%}
   #defect svg text{font-family:'Times New Roman',Times,serif}
   #defect table{width:100%;border-collapse:collapse;font-size:12px}
   #defect th{background:#035D30;color:#fff;padding:8px;border:1px solid #035A28;text-align:left}
@@ -4229,11 +4233,11 @@ function cSwitch(btn) {
   #defect .def-table-search input{width:100%;min-width:220px;border:1px solid #A5D6A7;border-radius:6px;padding:7px 10px;font-family:'Times New Roman',Times,serif;font-size:12px;background:#fff}
   #defect .def-table-search .search-count{font-size:11px;color:#64748b;white-space:nowrap}
 
-  #defect .weekly-chart{overflow-x:auto}
+  #defect .weekly-chart{overflow-x:hidden}
   #defect .weekly-row{display:grid;grid-template-columns:220px 1fr;gap:10px;align-items:center;border-bottom:1px dashed #D9D9D9;padding:8px 0}
   #defect .weekly-name{font-size:12px;font-weight:900;color:#035D30;line-height:1.35}
   #defect .weekly-name span{font-size:10.5px;color:#64748b;font-weight:700}
-  #defect .weekly-bars{display:grid;gap:5px;min-width:420px}
+  #defect .weekly-bars{display:grid;gap:5px;min-width:0}
   #defect .weekly-bar-line{display:grid;grid-template-columns:52px 1fr 82px;gap:7px;align-items:center;font-size:11px;color:#64748b}
   #defect .weekly-label{font-weight:900;color:#035D30}
   #defect .weekly-bar-bg{height:16px;background:#E8F5E9;border:1px solid #C8E6C9;border-radius:999px;overflow:hidden}
@@ -4322,6 +4326,7 @@ function cSwitch(btn) {
   </div>
   <div class="def-chart-note"><b>Chú thích:</b> Cột = <b>tỷ lệ sai hỏng thực tế BF/BD theo máy</b>; màu đỏ là <b>vượt tỷ lệ cho phép</b>, màu xanh là <b>trong chuẩn</b>. Dây vàng = <b>AK baseline theo máy</b>. Nhãn giá trị được tự tách tầng để không chồng lấn.</div>
   <div class="def-chart-box" id="def-machine-rate-combo"></div>
+  <div class="def-chart-summary" id="def-machine-rate-summary"></div>
  </div>
  <div class="def-card">
   <h2>Tổng hợp độ ổn định chất lượng theo máy: Sản lượng thực tế sản xuất (BD), tỉ lệ sai hỏng cho phép (AK), Tỉ lệ sai hỏng thực tế (BF/BD)</h2>
@@ -4332,6 +4337,7 @@ function cSwitch(btn) {
   </div>
   <div class="def-chart-note"><b>Chú thích:</b> Cột = <b>sản lượng SX thực tế BD</b>; dây xanh = <b>AK cho phép</b>; dây đỏ = <b>BF/BD thực tế</b>. Bảng dưới chân biểu đồ ghi đủ BD/BF/BF-BD/AI/AK/BG để không phải đọc mỏi mắt trên hình.</div>
   <div class="combo-wrap" id="def-machine-combo"></div>
+  <div class="def-chart-summary" id="def-machine-stability-summary"></div>
   <div class="chart-data-table" id="def-machine-stability-table"></div>
  </div>
  <div class="defect-grid2">
@@ -4833,13 +4839,14 @@ function cSwitch(btn) {
   function ratePairRow(x,maxRate){ return '<div class="rate-pair"><div class="rate-title" title="'+esc(x.fullName)+'">'+x.rank+'. '+esc(x.name)+'</div>'+defBarRow('Baseline AK',x.baselineRate,maxRate,fmtPct(x.baselineRate),'green')+defBarRow('Thực tế BF/BD',x.actualRate,maxRate,fmtPct(x.actualRate),x.actualRate>x.baselineRate?'red':'green')+'<div class="rate-note">BD '+fmtNum(x.actualProduction)+' · AI '+fmtNum(x.allowedScaledQty||0)+' · BF '+fmtNum(x.actualQty)+' · Vượt '+fmtNum(x.diffQty)+'</div></div>'; }
   function paretoHtml(arr,valKey,fmt){ arr=arr||[]; if(!arr.length) return '<div class="small">Chưa có dữ liệu pareto live.</div>'; var mx=Math.max.apply(null, arr.map(function(x){return Number(x[valKey])||0;})); return arr.slice(0,8).map(function(x){return defBarRow(x.rank+'. '+x.name,Number(x[valKey])||0,mx,fmt(Number(x[valKey])||0)+' / '+fmtPct(x.cum),'gold');}).join(''); }
   function renderCombo(rows){
-    rows=(rows||[]).slice(0,14);
+    rows=(rows||[]);
     if(!rows.length) return '<div class="small">Chưa có dữ liệu máy live.</div>';
-    var w=Math.max(860,rows.length*78+120),h=330,left=58,right=46,top=34,bottom=86,innerW=w-left-right,innerH=h-top-bottom;
+    var rowCount=rows.length;
+    var w=Math.max(860,rowCount*78+120),h=350,left=58,right=46,top=34,bottom=(rowCount>18?112:(rowCount>12?100:86)),innerW=w-left-right,innerH=h-top-bottom;
     var maxProd=Math.max.apply(null,rows.map(function(x){return Number(x.actualProduction)||0;}));
     var maxRate=Math.max.apply(null,rows.map(function(x){return Math.max(Number(x.baselineRate)||0,Number(x.actualRate)||0);}));
     maxRate=Math.max(maxRate*1.18,0.01);
-    var step=innerW/rows.length,barW=Math.min(36,step*0.48);
+    var step=innerW/rows.length,barW=Math.max(10,Math.min(36,step*0.48));
     function yProd(v){return top+innerH-(maxProd?v/maxProd*innerH:0);} function yRate(v){return top+innerH-(v/maxRate*innerH);} function xPos(i){return left+step*i+step/2;}
     var grid='',bars='',labels='',p1='',p2='',dots='',prodLabels='';
     for(var g=0;g<=4;g++){var y=top+innerH*g/4; grid+='<line x1="'+left+'" y1="'+y+'" x2="'+(w-right)+'" y2="'+y+'" stroke="#E5E7EB"/>'; }
@@ -4849,11 +4856,13 @@ function cSwitch(btn) {
       var title=esc(x.fullName)+'&#10;BD sản lượng: '+fmtNum(prod)+'&#10;AK baseline: '+fmtPct(br)+'&#10;BF/BD thực tế: '+fmtPct(ar)+'&#10;BF lỗi: '+fmtNum(x.actualQty);
       bars+='<rect x="'+(xp-barW/2)+'" y="'+y+'" width="'+barW+'" height="'+Math.max(0,bh)+'" rx="4" fill="'+fill+'" opacity="0.82"><title>'+title+'</title></rect>';
       if(rows.length<=10){ prodLabels+='<text x="'+xp+'" y="'+Math.max(14,y-6)+'" font-size="9.5" text-anchor="middle" fill="'+fill+'" font-weight="700">BD '+fmtNum(prod)+'</text>'; }
-      labels+='<text x="'+xp+'" y="'+(top+innerH+18)+'" font-size="10" text-anchor="end" transform="rotate(-35 '+xp+' '+(top+innerH+18)+')">'+esc(shortName(x.name,22))+'</text>';
+      var xFont=rowCount>18?8.2:(rowCount>12?9:10), xAngle=rowCount>14?-55:-35;
+      labels+='<text x="'+xp+'" y="'+(top+innerH+18)+'" font-size="'+xFont+'" text-anchor="end" transform="rotate('+xAngle+' '+xp+' '+(top+innerH+18)+')">'+esc(shortName(x.name,rowCount>18?14:22))+'</text>';
       p1+=(i?' ':'')+xp+','+yRate(br); p2+=(i?' ':'')+xp+','+yRate(ar);
       dots+='<circle cx="'+xp+'" cy="'+yRate(br)+'" r="3" fill="#035D30"><title>AK '+fmtPct(br)+'</title></circle><circle cx="'+xp+'" cy="'+yRate(ar)+'" r="3" fill="#dc2626"><title>BF/BD '+fmtPct(ar)+'</title></circle>';
     });
-    return '<svg width="100%" height="'+h+'" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Biểu đồ ổn định máy"><rect x="0" y="0" width="'+w+'" height="'+h+'" fill="#fff"/>'+grid+'<text x="'+left+'" y="16" font-size="11" fill="#64748b">Cột xanh/đỏ: BD sản lượng SX</text><text x="'+(left+190)+'" y="16" font-size="11" fill="#035D30">Dây xanh: AK cho phép</text><text x="'+(left+340)+'" y="16" font-size="11" fill="#dc2626">Dây đỏ: BF/BD thực tế</text>'+bars+prodLabels+'<polyline points="'+p1+'" fill="none" stroke="#035D30" stroke-width="3"/><polyline points="'+p2+'" fill="none" stroke="#dc2626" stroke-width="3"/>'+dots+labels+'<text x="8" y="'+(top+innerH+4)+'" font-size="10" fill="#64748b">0</text><text x="8" y="'+(top+8)+'" font-size="10" fill="#64748b">BD '+fmtNum(maxProd)+'</text></svg>';
+    var svg='<svg width="100%" height="'+h+'" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Biểu đồ ổn định máy"><rect x="0" y="0" width="'+w+'" height="'+h+'" fill="#fff"/>'+grid+'<text x="'+left+'" y="16" font-size="11" fill="#64748b">Cột xanh/đỏ: BD sản lượng SX</text><text x="'+(left+190)+'" y="16" font-size="11" fill="#035D30">Dây xanh: AK cho phép</text><text x="'+(left+340)+'" y="16" font-size="11" fill="#dc2626">Dây đỏ: BF/BD thực tế</text>'+bars+prodLabels+'<polyline points="'+p1+'" fill="none" stroke="#035D30" stroke-width="3"/><polyline points="'+p2+'" fill="none" stroke="#dc2626" stroke-width="3"/>'+dots+labels+'<text x="8" y="'+(top+innerH+4)+'" font-size="10" fill="#64748b">0</text><text x="8" y="'+(top+8)+'" font-size="10" fill="#64748b">BD '+fmtNum(maxProd)+'</text></svg>';
+    return '<div class="def-svg-scroll-inner">'+svg+'</div>'; 
   }
 
 
@@ -4871,9 +4880,11 @@ function cSwitch(btn) {
     opts=opts||{}; rows=(rows||[]).filter(function(x){return (x.needSx||x.actualProduction||x.baselineQty||x.actualQty);});
     var limit=opts.limit||0; if(limit) rows=rows.slice(0,limit);
     if(!rows.length){ setHTML(id,'<div class="small">Không có dữ liệu theo điều kiện lọc.</div>'); return; }
-    var w=Math.max(opts.minWidth||680, rows.length*(opts.stepW||76)+120), h=opts.height||320, left=58, right=58, top=50, bottom=96, innerW=w-left-right, innerH=h-top-bottom;
+    var rowCount=rows.length;
+    var w=Math.max(opts.minWidth||680, rowCount*(opts.stepW||76)+120);
+    var h=opts.height||320, left=58, right=58, top=50, bottom=(rowCount>18?118:(rowCount>12?108:96)), innerW=w-left-right, innerH=h-top-bottom;
     var maxRate=Math.max.apply(null, rows.map(function(x){return Math.max(Number(x.baselineRate)||0,Number(x.actualRate)||0);})); maxRate=Math.max(maxRate*1.24,0.01);
-    var step=innerW/rows.length, barW=Math.min(opts.barW||40,step*0.50), fsz=step<58?8.8:9.8;
+    var step=innerW/rows.length, barW=Math.max(10,Math.min(opts.barW||40,step*0.50)), fsz=step<42?7.4:(step<58?8.4:9.6);
     function yRate(v){return top+innerH-((Number(v)||0)/maxRate*innerH);} function xPos(i){return left+step*i+step/2;}
     function clamp(v,min,max){ return Math.max(min,Math.min(max,v)); }
     function estimateBox(text,x,y,size){ var ww=String(text||'').length*size*0.57+8, hh=size+6; return {x1:x-ww/2,x2:x+ww/2,y1:y-hh+2,y2:y+4,w:ww,h:hh}; }
@@ -4909,12 +4920,13 @@ function cSwitch(btn) {
       line+=(i?' ':'')+xp+','+by;
       dots+='<circle cx="'+xp+'" cy="'+by+'" r="3.5" fill="#E2B624" stroke="#7B4A0E" stroke-width="1"><title>'+title+'</title></circle>';
       baseLabels+='<text x="'+xp+'" y="'+byLabel+'" font-size="'+(fsz-0.4)+'" text-anchor="middle" fill="#7B4A0E">'+baseText+'</text>';
-      labels+='<text x="'+xp+'" y="'+(top+innerH+18)+'" font-size="10" text-anchor="end" transform="rotate(-40 '+xp+' '+(top+innerH+18)+')">'+esc(shortName(x.name||x.fullName,opts.labelLen||22))+'</text>';
+      var xFont=rowCount>18?8.2:(rowCount>12?9:10), xAngle=rowCount>14?-55:-40, xLab=shortName(x.name||x.fullName, rowCount>18?14:(opts.labelLen||22));
+      labels+='<text x="'+xp+'" y="'+(top+innerH+18)+'" font-size="'+xFont+'" text-anchor="end" transform="rotate('+xAngle+' '+xp+' '+(top+innerH+18)+')">'+esc(xLab)+'</text>';
     });
     var legend='<text x="'+left+'" y="18" font-size="11" fill="#64748b">Cột = tỷ lệ sai hỏng thực tế BF/BD</text><text x="'+(left+220)+'" y="18" font-size="11" fill="#7B4A0E">Dây vàng = tỷ lệ cho phép AK</text><text x="'+(left+420)+'" y="18" fill="#991b1b" font-size="11">Cột đỏ = vượt chuẩn</text>';
     var axis='<text x="8" y="'+(top+innerH+4)+'" font-size="10" fill="#64748b">0%</text><text x="8" y="'+(top+8)+'" font-size="10" fill="#64748b">'+fmtPct(maxRate)+'</text>';
     var svg='<svg width="100%" height="'+h+'" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid meet" role="img" aria-label="'+esc(opts.title||'AK baseline vs BF/BD')+'"><rect width="'+w+'" height="'+h+'" fill="#fff"/>'+grid+legend+bars+leaders+valueLabels+'<polyline points="'+line+'" fill="none" stroke="#E2B624" stroke-width="3"/>'+dots+baseLabels+labels+axis+'</svg>';
-    setHTML(id,svg);
+    setHTML(id,'<div class="def-svg-scroll-inner">'+svg+'</div>');
   }
 
   function renderValueComboChart(id, rows, opts){
@@ -4958,7 +4970,7 @@ function cSwitch(btn) {
     var legend='<text x="'+left+'" y="18" font-size="11" fill="#64748b">Cột = giá trị sai hỏng thực tế BG</text><text x="'+(left+230)+'" y="18" font-size="11" fill="#7B4A0E">Dây vàng = giá trị cho phép BG/BF×AI</text><text x="'+(left+500)+'" y="18" fill="#991b1b" font-size="11">Cột đỏ = vượt giá trị cho phép</text>';
     var axis='<text x="8" y="'+(top+innerH+4)+'" font-size="10" fill="#64748b">0</text><text x="8" y="'+(top+8)+'" font-size="10" fill="#64748b">'+fmtMoneyShort(maxVal)+'</text>';
     var svg='<svg width="100%" height="'+h+'" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid meet" role="img" aria-label="'+esc(opts.title||'Giá trị sai hỏng BG vs cho phép')+'"><rect width="'+w+'" height="'+h+'" fill="#fff"/>'+grid+legend+bars+leaders+valueLabels+'<polyline points="'+line+'" fill="none" stroke="#E2B624" stroke-width="3"/>'+dots+baseLabels+labels+axis+'</svg>';
-    setHTML(id,svg);
+    setHTML(id,'<div class="def-svg-scroll-inner">'+svg+'</div>');
   }
 
   function mainSegmentRank(seg){ var order={'Túi giấy':1,'Khay giấy':2,'Flexo cuộn 6 màu':3,'GS6 khác':4}; return order[seg]||9; }
@@ -4989,13 +5001,29 @@ function cSwitch(btn) {
     var machRows=machineRowsByPeriod(raw,'def-machine-rate-month-filter','def-machine-rate-week-filter');
     var machGroups=aggregateMetricGroups(machRows,function(r){return {key:r.machine,name:r.machine,fullName:r.machine,sortKey:r.machine};});
     machGroups.sort(function(a,b){return (Number(b.diffQty)||0)-(Number(a.diffQty)||0);}); machGroups.forEach(function(x,i){x.rank=i+1; x.name=shortName(x.fullName,32);});
-    renderRateComboChart('def-machine-rate-combo',machGroups.slice(0,16),{minWidth:900,height:335,stepW:78,labelLen:20,title:'Theo máy'});
+    renderRateComboChart('def-machine-rate-combo',machGroups,{minWidth:900,height:360,stepW:78,labelLen:20,title:'Theo máy'});
+    renderMachinePeriodSummary('def-machine-rate-summary', machGroups, 'máy sản xuất theo điều kiện lọc', 'Hiển thị đầy đủ, không cắt Top 16');
 
     updateLinkedWeekOptions(d,'def-machine-stability-month-filter','def-machine-stability-week-filter','Tất cả tuần');
     var stRows=machineRowsByPeriod(raw,'def-machine-stability-month-filter','def-machine-stability-week-filter');
     var stGroups=machineAggByProduction(stRows);
     setHTML('def-machine-combo',renderCombo(stGroups));
+    renderMachinePeriodSummary('def-machine-stability-summary', stGroups, 'máy sản xuất theo điều kiện lọc', 'Sắp xếp theo sản lượng BD giảm dần');
     renderMachineStabilityTable('def-machine-stability-table',stGroups);
+  }
+
+
+  function selectedLabel(id){ var el=$(id); if(!el) return ''; var opt=el.options && el.options[el.selectedIndex]; return opt ? opt.textContent : el.value; }
+  function renderMachinePeriodSummary(id, rows, label, note){
+    rows=rows||[];
+    var red=rows.filter(function(x){return (Number(x.actualRate)||0)>(Number(x.baselineRate)||0);}).length;
+    var green=rows.length-red;
+    var month=selectedLabel(id.indexOf('stability')>=0?'def-machine-stability-month-filter':'def-machine-rate-month-filter') || 'Tất cả tháng';
+    var week=selectedLabel(id.indexOf('stability')>=0?'def-machine-stability-week-filter':'def-machine-rate-week-filter') || 'Tất cả tuần';
+    var html='<b>Phạm vi:</b> '+esc(month)+' · '+esc(week)+' &nbsp;|&nbsp; <b>Đang hiển thị:</b> '+fmtNum(rows.length)+' '+esc(label||'máy')+' &nbsp;|&nbsp; 🔴 '+fmtNum(red)+' vượt AK · 🟢 '+fmtNum(green)+' trong chuẩn';
+    if(note) html+=' &nbsp;|&nbsp; '+esc(note);
+    html+=' &nbsp;|&nbsp; <span style="color:#035D30;font-weight:900">Biểu đồ co giãn toàn khung, không dùng thanh trượt ngang.</span>';
+    setHTML(id,html);
   }
 
 
@@ -5032,7 +5060,7 @@ function cSwitch(btn) {
     return groups;
   }
   function renderMachineStabilityTable(id, rows){
-    rows=(rows||[]).slice(0,16);
+    rows=(rows||[]);
     if(!rows.length){ setHTML(id,'<div class="small">Không có dữ liệu bảng theo điều kiện lọc.</div>'); return; }
     var html='<table><thead><tr><th>Máy</th><th>SLSX thực tế (BD)</th><th>SL lỗi thực tế (BF)</th><th>Tỉ lệ lỗi thực tế (BF/BD)</th><th>SL sai hỏng cho phép (AI)</th><th>Tỉ lệ lỗi định mức (AK)</th><th>Chênh lệch ĐM-TT</th><th>Giá trị sai hỏng thực tế (BG)</th><th>RAG</th></tr></thead><tbody>';
     rows.forEach(function(x){
