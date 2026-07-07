@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V9.37 – Pipeline Device Fit</title>
+<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V9.39 – Pipeline Filter PlanBH Table10</title>
 <style>
 :root{
   --dark:#035D30;--green:#035A28;--gold:#E2B624;--gold2:#FFFDE7;
@@ -4610,12 +4610,12 @@ function cSwitch(btn) {
    <h2>Nguồn Google Sheet live – tự cập nhật</h2>
    <div class="small" style="margin-bottom:8px"><b>Cơ chế live V9.13 – 100% Google Sheet:</b> CSV publish của Google thường bị Chrome chặn CORS khi dashboard mở từ ổ đĩa nội bộ. Vì vậy dashboard ưu tiên đọc bằng <b>Google Sheets Edit URL + GViz JSONP</b>. CSV publish chỉ giữ để đối chiếu; không dùng fallback tĩnh khi live lỗi. Bấm <b>Nạp dữ liệu ngay</b> phải nhập mật khẩu thao tác. <b>V9.21:</b> đã khóa logic phân mảng theo S/T → AU/AV → AX, không dùng bộ phận gây lỗi để quyết định mảng.</div>
    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:7px">
-     <input id="def-source-url" value="https://docs.google.com/spreadsheets/d/1NTYFPqkcfDExkzAgTrVv52GQwm0zJyZtrDFW4G080xw/gviz/tq?tqx=out:csv&gid=0" style="flex:1;min-width:320px;border:1px solid #A5D6A7;border-radius:6px;padding:7px 10px;font-family:'Times New Roman',Times,serif;font-size:12px" placeholder="CSV publish link - có thể bị CORS nếu mở HTML local" />
+     <input id="def-source-url" value="https://docs.google.com/spreadsheets/d/1NTYFPqkcfDExkzAgTrVv52GQwm0zJyZtrDFW4G080xw/gviz/tq?tqx=out:csv&gid=1190903695" style="flex:1;min-width:320px;border:1px solid #A5D6A7;border-radius:6px;padding:7px 10px;font-family:'Times New Roman',Times,serif;font-size:12px" placeholder="CSV publish link - có thể bị CORS nếu mở HTML local" />
      <button class="btn" id="def-load-now" type="button">Nạp dữ liệu ngay</button>
      <label class="small" style="display:flex;align-items:center;gap:4px"><input type="checkbox" id="def-auto-refresh" checked /> Tự nạp lại 5 phút/lần</label>
    </div>
    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-     <input id="def-edit-url" value="https://docs.google.com/spreadsheets/d/1NTYFPqkcfDExkzAgTrVv52GQwm0zJyZtrDFW4G080xw/edit?usp=sharing" style="flex:1;min-width:320px;border:1px solid #E2B624;border-radius:6px;padding:7px 10px;font-family:'Times New Roman',Times,serif;font-size:12px;background:#FFFDE7" placeholder="DÁN LINK GOOGLE SHEETS DẠNG EDIT Ở ĐÂY: https://docs.google.com/spreadsheets/d/<SHEET_ID>/edit#gid=<GID>" />
+     <input id="def-edit-url" value="https://docs.google.com/spreadsheets/d/1NTYFPqkcfDExkzAgTrVv52GQwm0zJyZtrDFW4G080xw/edit?usp=sharing#gid=1190903695" style="flex:1;min-width:320px;border:1px solid #E2B624;border-radius:6px;padding:7px 10px;font-family:'Times New Roman',Times,serif;font-size:12px;background:#FFFDE7" placeholder="DÁN LINK GOOGLE SHEETS DẠNG EDIT Ở ĐÂY: https://docs.google.com/spreadsheets/d/<SHEET_ID>/edit#gid=<GID>" />
      <span class="small" style="color:#991b1b"><b>Khuyến nghị:</b> dùng link edit + share Anyone with link Viewer.</span>
    </div>
    <div class="small" id="def-live-log" style="margin-top:8px;color:#64748b">Đã nạp sẵn Google Sheet: 1NTYFPqkcfDExkzAgTrVv52GQwm0zJyZtrDFW4G080xw · đang khởi tạo kết nối LIVE... V9.1 đã fix lỗi CSV/header có xuống dòng trong ô.</div>
@@ -4632,12 +4632,19 @@ function cSwitch(btn) {
   window.GS6_DEFECT_WEEK_FILTER = '';
   window.GS6_DEFECT_OPERATION_CODE_FILTER = '';
  </script>
+
+<script id="gs6-v941-embedded-defect-data">
+// V9.41 fallback: dữ liệu kiểm soát sai hỏng đã xử lý từ file nguồn GS6_SaiHong_ERP_Dashboard_Data_V4.json.
+// Ưu tiên LIVE Google Sheet; chỉ dùng nguồn này khi LIVE lỗi để dashboard không trắng.
+window.GS6_DEFECT_EMBEDDED_DATA_V941 = {"updated":"21/06/2026 13:08","period":"2026-04-01 → 2026-06-19","kpi":{"ltt":213,"needSx":21390203.0,"baselineQty":980326.0,"allowedScaledQty":602494.15719,"actualProduction":14785467.0,"actualQty":748329.0,"diffQty":145834.84281,"value":247182847.0,"baselineRate":0.045830607591709156,"actualRate":0.050612469663623066,"diffRate":0.00478186207191391},"segments":[{"rank":1,"name":"Túi giấy","fullName":"Túi giấy","lttCount":111,"needSx":19692094.0,"baselineQty":946169.0,"allowedScaledQty":578298.22553,"baselineRate":0.048048165928925586,"actualProduction":13797910.0,"actualQty":720330.0,"actualRate":0.052205732607329663,"diffQty":142031.77447,"diffRate":0.004157566678404077,"value":146264775.0,"rag":"Vàng"},{"rank":2,"name":"Khay giấy","fullName":"Khay giấy","lttCount":19,"needSx":588987.0,"baselineQty":15760.0,"allowedScaledQty":11201.230910000002,"baselineRate":0.026757806199457713,"actualProduction":336944.0,"actualQty":23479.0,"actualRate":0.06968220238377891,"diffQty":12277.769090000002,"diffRate":0.0429243961843212,"value":70981982.0,"rag":"Đỏ"},{"rank":3,"name":"GS6 khác","fullName":"GS6 khác","lttCount":4,"needSx":13270.0,"baselineQty":28.0,"allowedScaledQty":32.5954,"baselineRate":0.0021100226073850793,"actualProduction":13030.0,"actualQty":383.0,"actualRate":0.029393706830391404,"diffQty":350.40459999999996,"diffRate":0.027283684223006324,"value":0.0,"rag":"Đỏ"},{"rank":4,"name":"Flexo cuộn 6 màu","fullName":"Flexo cuộn 6 màu","lttCount":79,"needSx":1095852.0,"baselineQty":18369.0,"allowedScaledQty":12962.10535,"baselineRate":0.01676230001861565,"actualProduction":637583.0,"actualQty":4137.0,"actualRate":0.0064885669787306125,"diffQty":-8825.105350000002,"diffRate":-0.01027373303988504,"value":29936090.0,"rag":"Xanh"}],"machines":[{"rank":1,"name":"QD450-9","fullName":"QD450-9","lttCount":24,"needSx":4439557.0,"baselineQty":206212.0,"allowedScaledQty":62047.83486999999,"baselineRate":0.046448778560563585,"actualProduction":3460053.0,"actualQty":180153.0,"actualRate":0.05206654348936274,"diffQty":118105.16513000001,"diffRate":0.005617764928799153,"value":54364805.0,"rag":"Đỏ"},{"rank":2,"name":"QL330-6","fullName":"QL330-6","lttCount":9,"needSx":5713319.0,"baselineQty":148319.0,"allowedScaledQty":137556.31012,"baselineRate":0.02596021681968047,"actualProduction":4943593.0,"actualQty":178593.0,"actualRate":0.036126153589100075,"diffQty":41036.68988,"diffRate":0.010165936769419605,"value":0.0,"rag":"Đỏ"},{"rank":3,"name":"QD360-2","fullName":"QD360-2","lttCount":18,"needSx":847667.0,"baselineQty":15281.0,"allowedScaledQty":9648.842349999999,"baselineRate":0.01802712621819653,"actualProduction":771644.0,"actualQty":37844.0,"actualRate":0.04904334122989358,"diffQty":28195.15765,"diffRate":0.03101621501169705,"value":20043193.0,"rag":"Đỏ"},{"rank":4,"name":"Máy nghiền số 1","fullName":"Máy nghiền số 1","lttCount":4,"needSx":108477.0,"baselineQty":37.0,"allowedScaledQty":27.172279999999997,"baselineRate":0.00034108612885680835,"actualProduction":77334.0,"actualQty":11847.0,"actualRate":0.15319264489099232,"diffQty":11819.827720000001,"diffRate":0.15285155876213552,"value":5007508.0,"rag":"Đỏ"},{"rank":5,"name":"QD450-17","fullName":"QD450-17","lttCount":1,"needSx":3800560.0,"baselineQty":146560.0,"allowedScaledQty":2391.1597,"baselineRate":0.038562738122802954,"actualProduction":62007.0,"actualQty":5907.0,"actualRate":0.09526343799893561,"diffQty":3515.8403,"diffRate":0.05670069987613265,"value":0.0,"rag":"Đỏ"},{"rank":6,"name":"Máy cắt via số 1","fullName":"Máy cắt via số 1","lttCount":3,"needSx":98862.0,"baselineQty":2862.0,"allowedScaledQty":2314.29133,"baselineRate":0.028949444680463676,"actualProduction":73825.0,"actualQty":4355.0,"actualRate":0.058990856755841516,"diffQty":2040.70867,"diffRate":0.03004141207537784,"value":60181363.0,"rag":"Đỏ"},{"rank":7,"name":"QX550-1","fullName":"QX550-1","lttCount":2,"needSx":199460.0,"baselineQty":11085.0,"allowedScaledQty":10555.96839,"baselineRate":0.05557505264213376,"actualProduction":187066.0,"actualQty":12241.0,"actualRate":0.0654367977077609,"diffQty":1685.03161,"diffRate":0.009861745065627134,"value":0.0,"rag":"Đỏ"},{"rank":8,"name":"Cắt V góc khay giấy số 1","fullName":"Cắt V góc khay giấy số 1","lttCount":2,"needSx":108000.0,"baselineQty":0.0,"allowedScaledQty":0.0,"baselineRate":0,"actualProduction":57221.0,"actualQty":1602.0,"actualRate":0.027996714492930917,"diffQty":1602.0,"diffRate":0.027996714492930917,"value":0.0,"rag":"Đỏ"},{"rank":9,"name":"Máy ép khay giấy HGHY Pulp Model ZJWD-957…","fullName":"Máy ép khay giấy HGHY Pulp Model ZJWD-9575S số 4","lttCount":1,"needSx":34500.0,"baselineQty":4500.0,"allowedScaledQty":2051.6087,"baselineRate":0.13043478260869565,"actualProduction":15729.0,"actualQty":2834.0,"actualRate":0.18017674359463412,"diffQty":782.3913,"diffRate":0.04974196098593847,"value":0.0,"rag":"Đỏ"},{"rank":10,"name":"Máy ép khay giấy HGHY Pulp Model ZJWD-957…","fullName":"Máy ép khay giấy HGHY Pulp Model ZJWD-9575S số 5","lttCount":1,"needSx":30000.0,"baselineQty":0.0,"allowedScaledQty":0.0,"baselineRate":0,"actualProduction":11483.0,"actualQty":513.0,"actualRate":0.04467473656709919,"diffQty":513.0,"diffRate":0.04467473656709919,"value":0.0,"rag":"Đỏ"}],"machineStability":[{"rank":1,"name":"QL330-6","fullName":"QL330-6","lttCount":9,"needSx":5713319.0,"baselineQty":148319.0,"allowedScaledQty":137556.31012,"baselineRate":0.02596021681968047,"actualProduction":4943593.0,"actualQty":178593.0,"actualRate":0.036126153589100075,"diffQty":41036.68988,"diffRate":0.010165936769419605,"value":0.0,"rag":"Đỏ"},{"rank":2,"name":"QD360-1","fullName":"QD360-1","lttCount":46,"needSx":4104853.0,"baselineQty":351392.0,"allowedScaledQty":289369.27833000006,"baselineRate":0.08560403990106345,"actualProduction":3792154.0,"actualQty":239554.0,"actualRate":0.06317095771954409,"diffQty":-49815.27832999999,"diffRate":-0.022433082181519362,"value":60548982.0,"rag":"Xanh"},{"rank":3,"name":"QD450-9","fullName":"QD450-9","lttCount":24,"needSx":4439557.0,"baselineQty":206212.0,"allowedScaledQty":62047.83486999999,"baselineRate":0.046448778560563585,"actualProduction":3460053.0,"actualQty":180153.0,"actualRate":0.05206654348936274,"diffQty":118105.16513000001,"diffRate":0.005617764928799153,"value":54364805.0,"rag":"Đỏ"},{"rank":4,"name":"QD360-2","fullName":"QD360-2","lttCount":18,"needSx":847667.0,"baselineQty":15281.0,"allowedScaledQty":9648.842349999999,"baselineRate":0.01802712621819653,"actualProduction":771644.0,"actualQty":37844.0,"actualRate":0.04904334122989358,"diffQty":28195.15765,"diffRate":0.03101621501169705,"value":20043193.0,"rag":"Đỏ"},{"rank":5,"name":"QX330-1","fullName":"QX330-1","lttCount":3,"needSx":283309.0,"baselineQty":38309.0,"allowedScaledQty":38002.55072000001,"baselineRate":0.13521984829285338,"actualProduction":277595.0,"actualQty":38295.0,"actualRate":0.13795277292458438,"diffQty":292.44927999999993,"diffRate":0.0027329246317309985,"value":0.0,"rag":"Vàng"},{"rank":6,"name":"YRK21450-1","fullName":"YRK21450-1","lttCount":32,"needSx":518936.0,"baselineQty":10536.0,"allowedScaledQty":7857.41812,"baselineRate":0.020303081690227695,"actualProduction":260032.0,"actualQty":1408.0,"actualRate":0.005414718188530642,"diffQty":-6449.41812,"diffRate":-0.014888363501697054,"value":298786.0,"rag":"Xanh"},{"rank":7,"name":"QX550-1","fullName":"QX550-1","lttCount":2,"needSx":199460.0,"baselineQty":11085.0,"allowedScaledQty":10555.96839,"baselineRate":0.05557505264213376,"actualProduction":187066.0,"actualQty":12241.0,"actualRate":0.0654367977077609,"diffQty":1685.03161,"diffRate":0.009861745065627134,"value":0.0,"rag":"Đỏ"},{"rank":8,"name":"YRK21450-2","fullName":"YRK21450-2","lttCount":14,"needSx":337021.0,"baselineQty":2601.0,"allowedScaledQty":1029.9428,"baselineRate":0.007717619970268915,"actualProduction":181337.0,"actualQty":494.0,"actualRate":0.002724209620761345,"diffQty":-535.9428,"diffRate":-0.00499341034950757,"value":1434793.0,"rag":"Xanh"},{"rank":9,"name":"QX450-2","fullName":"QX450-2","lttCount":1,"needSx":149900.0,"baselineQty":24900.0,"allowedScaledQty":24876.91061,"baselineRate":0.16611074049366245,"actualProduction":149761.0,"actualQty":24761.0,"actualRate":0.16533676992007265,"diffQty":-115.91061,"diffRate":-0.0007739705735897995,"value":0.0,"rag":"Xanh"},{"rank":10,"name":"YRK41450-1","fullName":"YRK41450-1","lttCount":16,"needSx":153349.0,"baselineQty":3393.0,"allowedScaledQty":2635.9636299999997,"baselineRate":0.022126000169547893,"actualProduction":114585.0,"actualQty":663.0,"actualRate":0.005786097656761356,"diffQty":-1972.96363,"diffRate":-0.01633990251278654,"value":2808417.0,"rag":"Xanh"},{"rank":11,"name":"YRK21450-3","fullName":"YRK21450-3","lttCount":13,"needSx":83789.0,"baselineQty":0.0,"allowedScaledQty":0.0,"baselineRate":0,"actualProduction":79383.0,"actualQty":213.0,"actualRate":0.00268319413476437,"diffQty":213.0,"diffRate":0.00268319413476437,"value":1175341.0,"rag":"Vàng"},{"rank":12,"name":"Máy nghiền số 1","fullName":"Máy nghiền số 1","lttCount":4,"needSx":108477.0,"baselineQty":37.0,"allowedScaledQty":27.172279999999997,"baselineRate":0.00034108612885680835,"actualProduction":77334.0,"actualQty":11847.0,"actualRate":0.15319264489099232,"diffQty":11819.827720000001,"diffRate":0.15285155876213552,"value":5007508.0,"rag":"Đỏ"}],"operations":[{"rank":1,"name":"Thao tác hoàn thiện thân túi QD trong","fullName":"Thao tác hoàn thiện thân túi QD trong","lttCount":85,"needSx":12070685.0,"baselineQty":653793.0,"allowedScaledQty":298287.23636000004,"baselineRate":0.054163703219825554,"actualProduction":6972036.0,"actualQty":405936.0,"actualRate":0.05822345151401972,"diffQty":107648.76363999998,"diffRate":0.004059748294194164,"value":134956980.0,"rag":"Vàng"},{"rank":2,"name":"Thao tác hoàn thiện thân túi DC","fullName":"Thao tác hoàn thiện thân túi DC","lttCount":9,"needSx":5713319.0,"baselineQty":148319.0,"allowedScaledQty":137556.31012,"baselineRate":0.02596021681968047,"actualProduction":4943593.0,"actualQty":178593.0,"actualRate":0.036126153589100075,"diffQty":41036.68988,"diffRate":0.010165936769419605,"value":0.0,"rag":"Đỏ"},{"rank":3,"name":"Thao tác nghiền NVL đen","fullName":"Thao tác nghiền NVL đen","lttCount":3,"needSx":76266.0,"baselineQty":26.0,"allowedScaledQty":16.5872,"baselineRate":0.00034091207090971074,"actualProduction":46338.0,"actualQty":8374.0,"actualRate":0.18071561137727135,"diffQty":8357.4128,"diffRate":0.18037469930636163,"value":0.0,"rag":"Đỏ"},{"rank":4,"name":"Thao tác cắt phẳng khay","fullName":"Thao tác cắt phẳng khay","lttCount":1,"needSx":56283.0,"baselineQty":283.0,"allowedScaledQty":264.04886,"baselineRate":0.0050281612565072934,"actualProduction":52514.0,"actualQty":4222.0,"actualRate":0.08039760825684579,"diffQty":3957.95114,"diffRate":0.0753694470003385,"value":60181363.0,"rag":"Đỏ"},{"rank":5,"name":"Thao tác nghiền NVL nâu","fullName":"Thao tác nghiền NVL nâu","lttCount":1,"needSx":32211.0,"baselineQty":11.0,"allowedScaledQty":10.58508,"baselineRate":0.0003414982459408277,"actualProduction":30996.0,"actualQty":3473.0,"actualRate":0.11204671570525229,"diffQty":3462.41492,"diffRate":0.11170521745931146,"value":5007508.0,"rag":"Đỏ"},{"rank":6,"name":"Thao tác hoàn thiện thân túi QX ngoài","fullName":"Thao tác hoàn thiện thân túi QX ngoài","lttCount":5,"needSx":540359.0,"baselineQty":70359.0,"allowedScaledQty":70027.52618999999,"baselineRate":0.13020788031660432,"actualProduction":534477.0,"actualQty":71852.0,"actualRate":0.13443422261388235,"diffQty":1824.4738100000002,"diffRate":0.00422634229727803,"value":0.0,"rag":"Vàng"},{"rank":7,"name":"Thao tác V-cutting khay+ Kiểm + Đóng gói …","fullName":"Thao tác V-cutting khay+ Kiểm + Đóng gói khay","lttCount":2,"needSx":108000.0,"baselineQty":0.0,"allowedScaledQty":0.0,"baselineRate":0,"actualProduction":57221.0,"actualQty":1602.0,"actualRate":0.027996714492930917,"diffQty":1602.0,"diffRate":0.027996714492930917,"value":0.0,"rag":"Đỏ"},{"rank":8,"name":"Thao tác ép khay đen+ Phun keo định vị dá…","fullName":"Thao tác ép khay đen+ Phun keo định vị dán tai","lttCount":1,"needSx":30000.0,"baselineQty":0.0,"allowedScaledQty":0.0,"baselineRate":0,"actualProduction":11483.0,"actualQty":513.0,"actualRate":0.04467473656709919,"diffQty":513.0,"diffRate":0.04467473656709919,"value":0.0,"rag":"Đỏ"},{"rank":9,"name":"Thao tác đóng gói sản phẩm","fullName":"Thao tác đóng gói sản phẩm","lttCount":2,"needSx":10959.0,"baselineQty":0.0,"allowedScaledQty":0.0,"baselineRate":0,"actualProduction":10365.0,"actualQty":277.0,"actualRate":0.02672455378678244,"diffQty":277.0,"diffRate":0.02672455378678244,"value":0.0,"rag":"Đỏ"},{"rank":10,"name":"Thao tác cắt phẳng khay lần 1","fullName":"Thao tác cắt phẳng khay lần 1","lttCount":1,"needSx":30000.0,"baselineQty":0.0,"allowedScaledQty":0.0,"baselineRate":0,"actualProduction":11311.0,"actualQty":133.0,"actualRate":0.011758465210856689,"diffQty":133.0,"diffRate":0.011758465210856689,"value":0.0,"rag":"Đỏ"}],"defects":[{"rank":1,"name":"Chỉnh máy, setting","fullName":"Chỉnh máy, setting","qty":389744.0,"value":158941694.0,"share":0.6430126359051119,"cum":0.6430126359051119},{"rank":2,"name":"Ép thủng lọt sáng","fullName":"Ép thủng lọt sáng","qty":4131.0,"value":55653952.0,"share":0.22515296945341842,"cum":0.8681656053585304},{"rank":3,"name":"Hở đáy túi","fullName":"Hở đáy túi","qty":27785.0,"value":11629732.0,"share":0.04704910612183377,"cum":0.9152147114803642},{"rank":4,"name":"Vỡ giấy,vỡ góc,vỡ lăn","fullName":"Vỡ giấy,vỡ góc,vỡ lăn","qty":1160.0,"value":8208025.0,"share":0.033206288784269886,"cum":0.948421000264634},{"rank":5,"name":"Rách xước, nốt, nhăn túi","fullName":"Rách xước, nốt, nhăn túi","qty":28310.0,"value":6644658.0,"share":0.026881549754138076,"cum":0.9753025500187721},{"rank":6,"name":"Bóc cuộn","fullName":"Bóc cuộn","qty":1176.7399999999998,"value":2346262.0,"share":0.009492009775257585,"cum":0.9847945597940297},{"rank":7,"name":"Đốm, bẩn, loang màu bề mặt khay","fullName":"Đốm, bẩn, loang màu bề mặt khay","qty":771.0,"value":1946567.0,"share":0.007875008414317682,"cum":0.9926695682083474},{"rank":8,"name":"Sai kích tước túi","fullName":"Sai kích tước túi","qty":2305.0,"value":883173.0,"share":0.0035729542349676067,"cum":0.996242522443315},{"rank":9,"name":"Bần, dính keo, tràn keo, túi","fullName":"Bần, dính keo, tràn keo, túi","qty":2455.0,"value":839333.0,"share":0.0033955956498874697,"cum":0.9996381180932025},{"rank":10,"name":"Nhăn hông túi,","fullName":"Nhăn hông túi,","qty":255.0,"value":89451.0,"share":0.00036188190679752144,"cum":1.0}],"operationT":[{"rank":1,"name":"Thao tác hoàn thiện thân túi QD trong","fullName":"Thao tác hoàn thiện thân túi QD trong","qty":405936.0,"value":134956980.0,"share":0.5459803608459934,"cum":0.5459803608459934},{"rank":2,"name":"Thao tác cắt phẳng khay","fullName":"Thao tác cắt phẳng khay","qty":3710.0,"value":60181363.0,"share":0.24346900980552263,"cum":0.7894493706515161},{"rank":3,"name":"Thao tác in Flexo cuộn +Phủ","fullName":"Thao tác in Flexo cuộn +Phủ","qty":763.0,"value":18829274.0,"share":0.07617548801838989,"cum":0.865624858669906},{"rank":4,"name":"Thao tá in Flexo cuộn mặt trước","fullName":"Thao tá in Flexo cuộn mặt trước","qty":3192.9999999999995,"value":11106816.0,"share":0.04493360334182088,"cum":0.9105584620117269},{"rank":5,"name":"Thao tác xoắn dây túi","fullName":"Thao tác xoắn dây túi","qty":746.0,"value":9014132.0,"share":0.03646746572184274,"cum":0.9470259277335696},{"rank":6,"name":"Thao tác ép khay nâu","fullName":"Thao tác ép khay nâu","qty":803.0,"value":5793111.0,"share":0.023436541290423763,"cum":0.9704624690239934},{"rank":7,"name":"Thao tác nghiền NVL nâu","fullName":"Thao tác nghiền NVL nâu","qty":1124.0,"value":5007508.0,"share":0.02025831509255171,"cum":0.9907207841165451},{"rank":8,"name":"Thao tác bế tròn","fullName":"Thao tác bế tròn","qty":1283.0,"value":2293663.0,"share":0.009279215883454891,"cum":1.0},{"rank":9,"name":"Thao tác đóng gói sản phẩm","fullName":"Thao tác đóng gói sản phẩm","qty":86.0,"value":0.0,"share":0.0,"cum":1.0},{"rank":10,"name":"Thao tác nghiền NVL đen","fullName":"Thao tác nghiền NVL đen","qty":8374.0,"value":0.0,"share":0.0,"cum":1.0}],"dataQuality":{"defect_qty_without_value":2149}};
+</script>
 <script id="gs6-defect-live-loader">
 (function(){
   'use strict';
   var SHEET_ID = '1NTYFPqkcfDExkzAgTrVv52GQwm0zJyZtrDFW4G080xw';
-  var DEFAULT_DEFECT_CSV_URL = 'https://docs.google.com/spreadsheets/d/1NTYFPqkcfDExkzAgTrVv52GQwm0zJyZtrDFW4G080xw/gviz/tq?tqx=out:csv&gid=0';
-  var DEFAULT_DEFECT_EDIT_URL = 'https://docs.google.com/spreadsheets/d/1NTYFPqkcfDExkzAgTrVv52GQwm0zJyZtrDFW4G080xw/edit?usp=sharing';
+  var DEFAULT_DEFECT_GID = '1190903695'; // V9.41: sheet TONGHOPSAIHONG gid đúng từ metadata Google Sheet
+  var DEFAULT_DEFECT_CSV_URL = 'https://docs.google.com/spreadsheets/d/1NTYFPqkcfDExkzAgTrVv52GQwm0zJyZtrDFW4G080xw/gviz/tq?tqx=out:csv&gid=1190903695';
+  var DEFAULT_DEFECT_EDIT_URL = 'https://docs.google.com/spreadsheets/d/1NTYFPqkcfDExkzAgTrVv52GQwm0zJyZtrDFW4G080xw/edit?usp=sharing#gid=1190903695';
   var AUTO_REFRESH_MS = 5 * 60 * 1000;
   var timer = null;
 
@@ -5598,6 +5605,18 @@ function cSwitch(btn) {
     setText('def-data-status','🟢 LIVE – Google Sheet – Kỳ dữ liệu: '+d.period+' · Dòng ERP sau lọc: '+fmtNum(d.dataQuality.rawRows)+' · LTT unique Q: '+fmtNum(k.lttCount||k.ltt)+' · Số TK unique AS: '+fmtNum(k.statCount||0)+' · Cặp giá trị unique AS+Q: '+fmtNum(k.valuePairCount||0)+' · Mảng: '+(d.selectedSegment||'Tất cả')+' · Tháng: '+(d.selectedMonth?monthLabelOfKey(d.selectedMonth):'Tất cả')+' · Tuần: '+(d.selectedWeek||'Tất cả')+' · Mã thao tác S: '+(d.selectedOperationCode?d.selectedOperationCode:'Tất cả')+' · Công thức V9.21: AF/AG/AH theo Q; BD/BE/BF/AI theo AS; BG theo cặp AS+Q; giá trị cho phép = BG/BF*AI, BF=0 => 0 · Header row: '+d.dataQuality.headerRow+' · Cập nhật dashboard: '+(d.updated||new Date().toLocaleString('vi-VN')));
   }
   function renderLiveError(err){
+    var fb = window.GS6_DEFECT_EMBEDDED_DATA_V941 || window.GS6_CL_DEFECT_SOURCE || window.GS6_DEFECT_DATA;
+    if(fb && fb.kpi){
+      window.GS6_DEFECT_LIVE_DATA = null;
+      window.GS6_DEFECT_DATA = fb;
+      window.GS6_CL_DEFECT_SOURCE = fb;
+      try { renderDefectData(fb,'fallback'); } catch(e) {}
+      try { if(window.renderQualityFromDefectData) window.renderQualityFromDefectData(fb,'Nguồn fallback GS6_SaiHong_ERP_Dashboard_Data_V4'); } catch(e) {}
+      setText('def-data-status','🟡 LIVE lỗi – đang dùng dữ liệu fallback GS6_SaiHong_ERP_Dashboard_Data_V4. Lý do LIVE: '+(err && err.message ? err.message : err || 'Không rõ lỗi'));
+      setText('def-live-log','🟡 LIVE lỗi – đã hiển thị fallback để không trắng dashboard. Sửa quyền/link Google Sheet rồi bấm Nạp dữ liệu ngay. Lý do: '+(err && err.message ? err.message : err || 'Không rõ lỗi'));
+      setText('def-header-live-summary','🟡 FALLBACK – Live Google Sheet lỗi, đang dùng dữ liệu đóng gói');
+      return;
+    }
     window.GS6_DEFECT_LIVE_DATA=null; window.GS6_DEFECT_DATA=null;
     setHTML('def-kpis','<div class="metric" style="border-left-color:#dc2626"><div class="label">LIVE ERROR</div><div class="value" style="color:#dc2626">Không có dữ liệu điều hành</div><div class="hint">Dashboard đã tắt fallback. Cần sửa quyền/link Google Sheet rồi nạp lại.</div></div>');
     ['def-segment-combo-total','def-segment-value-total','def-segment-monthly-combo','def-segment-monthly-value-combo','def-flow-month-stack','def-flow-month-stack-legend','def-machine-rate-combo','def-machine-combo','def-pareto-defects','def-pareto-operationT','def-weekly-dept-chart','def-weekly-machine-chart','def-week-pareto-chart','def-week-pareto-table','def-machine-stability-table'].forEach(function(id){ setHTML(id,'<div class="alert red"><b>LIVE ERROR:</b> Không render dữ liệu tĩnh/fallback. '+esc(err && err.message ? err.message : err || '')+'</div>'); });
@@ -5633,7 +5652,9 @@ function cSwitch(btn) {
     else if(sid) base='https://docs.google.com/spreadsheets/d/'+sid+'/gviz/tq';
     else if(SHEET_ID) base='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq';
     if(!base) throw new Error('Không tách được ID Google Sheet từ URL');
-    var params=['tqx='+encodeURIComponent('out:json;responseHandler:'+callbackName),'headers='+String(headersMode),'_='+Date.now()]; if(gid) params.push('gid='+encodeURIComponent(gid));
+    var params=['tqx='+encodeURIComponent('out:json;responseHandler:'+callbackName),'headers='+String(headersMode),'_='+Date.now()];
+    gid = gid || (typeof DEFAULT_DEFECT_GID !== 'undefined' ? DEFAULT_DEFECT_GID : '1190903695');
+    if(gid) params.push('gid='+encodeURIComponent(gid));
     return base+'?'+params.join('&');
   }
   function loadGvizJSONP(sourceUrl, headersMode){
@@ -5698,208 +5719,7 @@ function cSwitch(btn) {
     return '<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
       '<style>html,body{margin:0;height:100%;font-family:Times New Roman,serif;background:#fff;color:#035D30}.bar{position:sticky;top:0;z-index:2;background:#F3F8F1;border-bottom:1px solid #A5D6A7;padding:6px 10px;font-size:12px;display:flex;gap:8px;align-items:center;justify-content:space-between}.bar a{color:#035D30;font-weight:700}iframe{display:block;width:100%;height:calc(100vh - 34px);border:0;background:#fff}</style>' +
       '</head><body><div class="bar"><span>GS6 Upload Drive – GitHub bridge mode</span><a target="_blank" rel="noopener" href="'+safeSrc+'">Mở tab mới</a></div>' +
-      '<iframe title="GS6 Report Upload App inner" referrerpolicy="no-referrer" allow="clipboard-read; clipboard-write" src="'+safeSrc+'"></iframe>
-<!-- V9.32 HOTFIX/UPGRADE: Pipeline Đơn Hàng chi tiết theo yêu cầu: KPI tổng/đã giao, biểu đồ tháng, top KH/top mã hàng. Không preview trong chat. -->
-<style>
-#pipe-analytics-v930{margin:12px 0 16px 0;}
-#pipe-analytics-v930 .pipe-note{background:#F3F8F1;border:1px dashed #A5D6A7;border-radius:8px;padding:8px 10px;font-size:12px;color:#334155;margin-bottom:10px;line-height:1.45}
-#pipe-analytics-v930 .pipe-kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(160px,1fr));gap:10px;margin-bottom:12px;}
-#pipe-analytics-v930 .pipe-kpi{background:#fff;border:1px solid #D9D9D9;border-left:5px solid #E2B624;border-radius:10px;padding:12px 14px;box-shadow:0 4px 10px rgba(3,93,48,.08);min-height:92px;}
-#pipe-analytics-v930 .pipe-kpi .lbl{font-size:11px;color:#64748b;font-weight:900;text-transform:uppercase;letter-spacing:.35px;line-height:1.25}
-#pipe-analytics-v930 .pipe-kpi .val{font-size:24px;font-weight:900;color:#035D30;margin-top:6px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-#pipe-analytics-v930 .pipe-kpi .hint{font-size:10.5px;color:#64748b;line-height:1.35;margin-top:5px;}
-#pipe-analytics-v930 .pipe-row-title{font-size:13px;font-weight:900;color:#035D30;margin:8px 0 7px;border-left:4px solid #E2B624;padding-left:8px;}
-#pipe-analytics-v930 .pipe-month-scroll{overflow-x:auto;padding:4px 2px 2px 2px;}
-#pipe-analytics-v930 .pipe-month-chart{display:flex;align-items:flex-end;gap:12px;min-height:235px;padding:12px 4px 4px;border-bottom:1px solid #A5D6A7;}
-#pipe-analytics-v930 .pipe-month{width:76px;min-width:76px;text-align:center;}
-#pipe-analytics-v930 .pipe-bars{height:168px;display:flex;align-items:flex-end;justify-content:center;gap:7px;margin-bottom:6px;}
-#pipe-analytics-v930 .pipe-bar{width:24px;border-radius:5px 5px 0 0;border:1px solid rgba(3,93,48,.18);position:relative;min-height:2px;}
-#pipe-analytics-v930 .pipe-bar.order{background:#035D30;}
-#pipe-analytics-v930 .pipe-bar.ship{background:#E2B624;}
-#pipe-analytics-v930 .pipe-bar span{position:absolute;left:50%;bottom:100%;transform:translateX(-50%);font-size:9.5px;font-weight:700;color:#334155;white-space:nowrap;margin-bottom:2px;}
-#pipe-analytics-v930 .pipe-month-label{font-size:11px;font-weight:900;color:#035D30;white-space:nowrap;}
-#pipe-analytics-v930 .pipe-legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:11px;color:#64748b;margin-top:8px;}
-#pipe-analytics-v930 .pipe-dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px;}
-#pipe-analytics-v930 .pipe-dot.order{background:#035D30}.pipe-dot.ship{background:#E2B624}
-#pipe-analytics-v930 .pipe-top-list{display:flex;flex-direction:column;gap:7px;}
-#pipe-analytics-v930 .pipe-top-row{display:grid;grid-template-columns:34px minmax(140px,1fr) 110px;gap:8px;align-items:center;font-size:12px;}
-#pipe-analytics-v930 .pipe-top-rank{font-weight:900;color:#035D30;text-align:right;}
-#pipe-analytics-v930 .pipe-top-label{font-weight:700;color:#1F1F1F;white-space:normal;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.25;}
-#pipe-analytics-v930 .pipe-top-value{text-align:right;font-weight:900;color:#035D30;white-space:nowrap;}
-#pipe-analytics-v930 .pipe-top-bar-wrap{grid-column:2/4;height:8px;background:#F3F8F1;border:1px solid #A5D6A7;border-radius:999px;overflow:hidden;margin-top:-3px;}
-#pipe-analytics-v930 .pipe-top-bar{height:100%;background:#035D30;border-radius:999px;}
-@media(max-width:960px){#pipe-analytics-v930 .pipe-kpi-grid{grid-template-columns:1fr 1fr}.grid2.pipe-v932-top{grid-template-columns:1fr!important}}
-@media(max-width:560px){#pipe-analytics-v930 .pipe-kpi-grid{grid-template-columns:1fr}}
-</style>
-<script>
-(function(){
-  'use strict';
-  var SPREADSHEET_ID='1V9kJpx6Ae-jWYSMYOjnfOoR1QxIlLsqKU5UXaQLKdGc';
-  var SHEET_GID='44615137';
-  var RANGE='A7:W';
-  var DEFAULT_URL='https://docs.google.com/spreadsheets/d/'+SPREADSHEET_ID+'/edit?gid='+SHEET_GID+'#gid='+SHEET_GID;
-  var PLANTS={'Nhà máy GS Quế Võ 2- PX Túi':'Túi Giấy','Nhà máy GS Quế Võ 2- PX Khay':'Khay Giấy'};
-  var PIPE_HEADERS=['Mảng','Trạng thái giao','Ngày','Số','Số đơn hàng chi tiết','Nội dung','Mã khách hàng','Số PO','Mã hàng','Tên vật tư, hàng hóa','Model','Đvt','Dự kiến giao','Số lượng','Đơn giá','Giá trị','Số lượng đã xuất bán','Giá trị đã giao','Số lượng còn lại','Mã nhà máy','Tên nhà máy','Tên kho','Ngày DO đầu','Ngày DO cuối','Ghi chú'];
-  var NUM={'Số lượng':1,'Đơn giá':1,'Giá trị':1,'Số lượng đã xuất bán':1,'Giá trị đã giao':1,'Số lượng còn lại':1};
-  function $(id){return document.getElementById(id)}
-  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-  function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/\s+/g,' ').trim()}
-  function num(v){
-    if(v==null)return 0;
-    var s=String(v).trim(); if(!s)return 0;
-    s=s.replace(/\s/g,'').replace(/[^0-9,\.\-]/g,'');
-    if(!s||s==='-'||s===','||s==='.')return 0;
-    var lc=s.lastIndexOf(','), ld=s.lastIndexOf('.');
-    if(lc>=0&&ld>=0){ if(lc>ld){ s=s.replace(/\./g,'').replace(',', '.'); } else { s=s.replace(/,/g,''); } }
-    else if(lc>=0){
-      var parts=s.split(',');
-      if(parts.length>2){ s=s.replace(/,/g,''); }
-      else { var dec=parts[1]||''; if(dec.length===3 && parts[0].length<=3) s=s.replace(/,/g,''); else s=s.replace(',', '.'); }
-    } else if(ld>=0){
-      var p=s.split('.');
-      if(p.length>2) s=s.replace(/\./g,'');
-    }
-    var x=parseFloat(s); return isFinite(x)?x:0;
-  }
-  function fmtInt(x){return Math.round(num(x)).toLocaleString('vi-VN')}
-  function fmtMoneyFull(x){return Math.round(num(x)).toLocaleString('vi-VN')}
-  function fmtMoneyShort(x){x=num(x); if(Math.abs(x)>=1e9)return (x/1e9).toLocaleString('vi-VN',{maximumFractionDigits:1})+' tỷ'; if(Math.abs(x)>=1e6)return (x/1e6).toLocaleString('vi-VN',{maximumFractionDigits:1})+' tr'; return Math.round(x).toLocaleString('vi-VN')}
-  function idFromUrl(u){var m=String(u||'').match(/\/spreadsheets\/d\/([^\/\?#]+)/);return m?m[1]:SPREADSHEET_ID}
-  function gidFromUrl(u){var m=String(u||'').match(/[?&#]gid=([0-9]+)/);return m?m[1]:SHEET_GID}
-  function gvizUrl(input,cb){return 'https://docs.google.com/spreadsheets/d/'+encodeURIComponent(idFromUrl(input))+'/gviz/tq?gid='+encodeURIComponent(gidFromUrl(input))+'&range='+encodeURIComponent(RANGE)+'&headers=1&tqx='+encodeURIComponent('responseHandler:'+cb+';out:json')+'&_='+Date.now()}
-  function cell(c){if(!c)return ''; if(c.f!=null)return String(c.f).trim(); var v=c.v; if(v==null)return ''; return String(v).trim()}
-  function gvizRows(payload){
-    var t=payload&&payload.table; if(!t||!t.cols||!t.rows)return [];
-    var headers=t.cols.map(function(c,i){return c&&(c.label||c.id)?String(c.label||c.id).trim():'Column '+(i+1)});
-    var start=0;
-    if(headers.join('|').indexOf('Tên nhà máy')<0&&headers.join('|').indexOf('Ten nha may')<0&&t.rows.length){headers=(t.rows[0].c||[]).map(function(c,i){return cell(c)||'Column '+(i+1)});start=1;}
-    var out=[];
-    for(var r=start;r<t.rows.length;r++){var cs=t.rows[r].c||[],o={},empty=true; for(var i=0;i<headers.length;i++){var v=cell(cs[i]); if(v)empty=false; o[headers[i]]=v;} o._sourceRow=7+r; if(!empty)out.push(o);}
-    return out;
-  }
-  function plant(r){return (r['Tên nhà máy']||r['Ten nha may']||'').trim()}
-  function mapMang(r){
-    // V9.31 STRICT: GS6 trong DON_HANG_SO chỉ được lấy theo cột S - Tên nhà máy với 2 giá trị anh Mạnh chốt.
-    var p=plant(r);
-    if(p==='Nhà máy GS Quế Võ 2- PX Túi')return 'Túi Giấy';
-    if(p==='Nhà máy GS Quế Võ 2- PX Khay')return 'Khay Giấy';
-    // Fallback chống lỗi dấu/khoảng trắng của Google Sheets, vẫn chỉ nhận PX Túi/PX Khay.
-    var q=norm(p);
-    if(q==='nha may gs que vo 2- px tui' || q==='nha may gs que vo 2 - px tui')return 'Túi Giấy';
-    if(q==='nha may gs que vo 2- px khay' || q==='nha may gs que vo 2 - px khay')return 'Khay Giấy';
-    return '';
-  }
-  function deliveredValue(r){return num(r['Số lượng đã xuất bán'])*num(r['Đơn giá'])}
-  function status(r){if((r['Trạng thái đóng']||'').trim())return 'Đã đóng'; var qty=num(r['Số lượng']),sold=num(r['Số lượng đã xuất bán']),rr=(r['Số lượng còn lại']||'').trim(); var rem=rr?num(rr):(qty>0?Math.max(qty-sold,0):0); if(rem<0)return 'Xuất vượt'; if(rem>0&&sold<=0)return 'Chưa xuất'; if(rem>0)return 'Còn lại'; return 'Đã giao hết'}
-  function rag(s){return s==='Chưa xuất'?'R':(s==='Còn lại'||s==='Xuất vượt'?'Y':'G')}
-  function pill(s){var r=rag(s),bg={G:'#E8F5E9',Y:'#FFF8E1',R:'#FFEBEE'}[r],fg={G:'#035A28',Y:'#E65100',R:'#C62828'}[r];return '<span style="background:'+bg+';color:'+fg+';padding:2px 8px;border-radius:10px;font-size:11px;font-weight:900;white-space:nowrap">'+esc(s)+'</span>'}
-  function prep(rows){var out=[];(rows||[]).forEach(function(r){var m=mapMang(r); if(m!=='Túi Giấy'&&m!=='Khay Giấy')return; var o={}; Object.keys(r).forEach(function(k){o[k]=r[k]}); o['Mảng']=m; o['Trạng thái giao']=status(o); o['Giá trị đã giao']=deliveredValue(o); out.push(o);}); return out}
-  function monthKeyFromDate(v){
-    var s=String(v||'').trim(); if(!s)return 'Không rõ';
-    var m=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/); if(m){var y=m[3].length===2?('20'+m[3]):m[3]; return y+'-'+String(m[2]).padStart(2,'0');}
-    m=s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/); if(m)return m[1]+'-'+String(m[2]).padStart(2,'0');
-    return 'Không rõ';
-  }
-  function monthLabel(k){if(k==='Không rõ')return k; var a=k.split('-'); return a[1]+'/'+a[0];}
-  function addBy(map,key,val){if(!key)key='Không rõ'; map[key]=(map[key]||0)+num(val)}
-  function itemCodeName(r){
-    var code=(r['Mã hàng']||'').trim();
-    var name=(r['Tên vật tư, hàng hóa']||'').trim();
-    if(code&&name)return code+' – '+name;
-    if(code)return code;
-    if(name)return name;
-    return 'Không rõ mã hàng';
-  }
-  function uniqueCount(obj){return Object.keys(obj).length}
-  function buildAnalytics(data){
-    var stats={value:0,qty:0,orderLines:0,customers:{},delValue:0,delQty:0,delLines:0,delCustomers:{},monthly:{},custValue:{},itemValue:{}};
-    data.forEach(function(r){
-      var val=num(r['Giá trị']), qty=num(r['Số lượng']), sold=num(r['Số lượng đã xuất bán']), dval=deliveredValue(r);
-      stats.value+=val; stats.qty+=qty; if((r['Số đơn hàng chi tiết']||'').trim())stats.orderLines++; var c=(r['Mã khách hàng']||'').trim(); if(c)stats.customers[c]=1;
-      stats.delValue+=dval; stats.delQty+=sold; if(sold>0){stats.delLines++; if(c)stats.delCustomers[c]=1;}
-      var mk=monthKeyFromDate(r['Ngày']); if(!stats.monthly[mk])stats.monthly[mk]={order:0,ship:0}; stats.monthly[mk].order+=val; stats.monthly[mk].ship+=dval;
-      addBy(stats.custValue,c||'Không rõ mã KH',val);
-      addBy(stats.itemValue,itemCodeName(r),val);
-    });
-    return stats;
-  }
-  function kpi(label,value,hint){return '<div class="pipe-kpi"><div class="lbl">'+esc(label)+'</div><div class="val" title="'+esc(value)+'">'+esc(value)+'</div><div class="hint">'+esc(hint||'')+'</div></div>'}
-  function ensureLayout(){
-    var pane=$('p-pipeline'); if(!pane)return;
-    var oldGrid=pane.querySelector(':scope > .grid3'); if(oldGrid)oldGrid.style.display='none';
-    var area=$('pipe-analytics-v930'); if(area)return area;
-    area=document.createElement('div'); area.id='pipe-analytics-v930';
-    area.innerHTML=''
-      +'<div class="pipe-note"><b>Logic V9.32:</b> Tổng hợp toàn bộ đơn hàng GS6 tải từ DON_HANG_SO, lọc nghiêm theo cột S - Tên nhà máy: PX Túi và PX Khay. In cuộn nếu cột S là PX Túi vẫn nằm trong GS6. Giá trị đơn hàng lấy cột O; Số lượng lấy cột M; Số dòng đơn hàng đếm cột C; Khách hàng unique theo cột F. Giá trị đã giao = cột P × cột N. Top mã hàng hiển thị Mã hàng + Tên vật tư, hàng hóa theo cùng dòng.</div>'
-      +'<div class="pipe-row-title">Dòng 1. Tổng đơn hàng</div><div id="pipe-kpi-order" class="pipe-kpi-grid"></div>'
-      +'<div class="pipe-row-title">Dòng 2. Tổng đã giao</div><div id="pipe-kpi-delivery" class="pipe-kpi-grid"></div>'
-      +'<div class="card"><div class="card-title">Dòng 3. Tổng giá trị đơn hàng theo tháng – Đặt hàng vs Đã giao</div><div id="pipe-month-chart"></div></div>'
-      +'<div class="grid2 pipe-v932-top" style="margin-top:14px"><div class="card"><div class="card-title">Dòng 4. Top 10 khách hàng theo giá trị đặt hàng</div><div id="pipe-top-customer"></div></div><div class="card"><div class="card-title">Dòng 4. Top 10 mã hàng + tên vật tư theo giá trị đặt hàng</div><div id="pipe-top-item"></div></div></div>';
-    var ds=pane.querySelector('.ds-bar'); if(ds&&ds.parentNode)ds.parentNode.insertBefore(area,ds.nextSibling); else pane.insertBefore(area,pane.firstChild);
-    return area;
-  }
-  function renderMonthChart(el,monthly){
-    if(!el)return; var keys=Object.keys(monthly||{}).sort();
-    if(!keys.length){el.innerHTML='<div class="small">Chưa có dữ liệu tháng.</div>'; return;}
-    var max=0; keys.forEach(function(k){max=Math.max(max,monthly[k].order,monthly[k].ship)}); if(max<=0)max=1;
-    var bars=keys.map(function(k){var o=monthly[k].order,s=monthly[k].ship; var ho=Math.max(2,Math.round(o/max*168)), hs=Math.max(2,Math.round(s/max*168)); return '<div class="pipe-month"><div class="pipe-bars"><div class="pipe-bar order" style="height:'+ho+'px" title="Đặt hàng: '+fmtMoneyFull(o)+'"><span>'+fmtMoneyShort(o)+'</span></div><div class="pipe-bar ship" style="height:'+hs+'px" title="Đã giao: '+fmtMoneyFull(s)+'"><span>'+fmtMoneyShort(s)+'</span></div></div><div class="pipe-month-label">'+esc(monthLabel(k))+'</div></div>';}).join('');
-    el.innerHTML='<div class="pipe-month-scroll"><div class="pipe-month-chart">'+bars+'</div></div><div class="pipe-legend"><span><i class="pipe-dot order"></i>Giá trị đơn hàng cột O</span><span><i class="pipe-dot ship"></i>Giá trị đã giao = P × N</span></div>';
-  }
-  function topEntries(map){return Object.keys(map||{}).map(function(k){return [k,map[k]]}).sort(function(a,b){return b[1]-a[1]}).slice(0,10)}
-  function renderTop(el,entries){
-    if(!el)return; if(!entries.length){el.innerHTML='<div class="small">Chưa có dữ liệu.</div>';return;}
-    var max=entries[0][1]||1;
-    el.innerHTML='<div class="pipe-top-list">'+entries.map(function(e,i){var w=Math.max(2,Math.round(e[1]/max*100));return '<div class="pipe-top-row"><div class="pipe-top-rank">#'+(i+1)+'</div><div class="pipe-top-label" title="'+esc(e[0])+'">'+esc(e[0])+'</div><div class="pipe-top-value">'+fmtMoneyShort(e[1])+'</div><div class="pipe-top-bar-wrap"><div class="pipe-top-bar" style="width:'+w+'%"></div></div></div>';}).join('')+'</div>';
-  }
-  function renderAnalytics(data){
-    ensureLayout(); var st=buildAnalytics(data||[]);
-    var k1=$('pipe-kpi-order'); if(k1)k1.innerHTML=''
-      +kpi('Tổng giá trị đơn hàng',fmtMoneyFull(st.value),'Cột O – không tách mảng')
-      +kpi('Tổng số lượng đơn hàng',fmtInt(st.qty),'Cột M – tổng SL đặt')
-      +kpi('Tổng số dòng đơn hàng',fmtInt(st.orderLines),'Đếm dòng có cột C')
-      +kpi('Tổng số khách hàng',fmtInt(uniqueCount(st.customers)),'Unique mã KH cột F');
-    var k2=$('pipe-kpi-delivery'); if(k2)k2.innerHTML=''
-      +kpi('Giá trị đơn hàng đã giao',fmtMoneyFull(st.delValue),'Cột P × đơn giá cột N')
-      +kpi('Tổng số lượng đã giao',fmtInt(st.delQty),'Cột P')
-      +kpi('Tổng số đơn đã giao',fmtInt(st.delLines),'Đếm dòng có cột P > 0')
-      +kpi('Tổng KH đã giao',fmtInt(uniqueCount(st.delCustomers)),'Unique mã KH cột F với P > 0');
-    renderMonthChart($('pipe-month-chart'),st.monthly);
-    renderTop($('pipe-top-customer'),topEntries(st.custValue));
-    renderTop($('pipe-top-item'),topEntries(st.itemValue));
-  }
-  function renderTable(data){
-    var tbody=$('body-pipe'),table=$('tbl-pipe'); if(!tbody||!table)return; var th=table.querySelector('thead'); if(th)th.innerHTML='<tr>'+PIPE_HEADERS.map(function(h){return '<th>'+esc(h)+'</th>'}).join('')+'</tr>'; tbody.innerHTML='';
-    if(!data.length){tbody.innerHTML='<tr><td colspan="'+PIPE_HEADERS.length+'" style="text-align:center;color:#999;padding:18px">Không có dòng DON_HANG_SO thuộc GS6 PX Túi/PX Khay/Flexo. Kiểm tra quyền Google Sheet hoặc tên nhà máy cột S.</td></tr>';return;}
-    data.forEach(function(r){var tr=document.createElement('tr'); tr.setAttribute('data-mang',r['Mảng']||''); tr.setAttribute('data-status',r['Trạng thái giao']||''); tr.innerHTML=PIPE_HEADERS.map(function(h){var v=r[h]; if(h==='Trạng thái giao')v=pill(v); else if(h==='Giá trị đã giao')v=fmtMoneyFull(v); else v=esc(v==null?'':v); return '<td'+(NUM[h]?' style="text-align:right;white-space:nowrap"':'')+'>'+v+'</td>';}).join(''); tbody.appendChild(tr);});
-  }
-  function filter(){var q=norm(($('q-pipe')||{}).value||''),fm=($('f-pipe-mang')||{}).value||'',fs=($('f-pipe-gd')||{}).value||''; document.querySelectorAll('#body-pipe tr').forEach(function(tr){var ok=(!q||norm(tr.innerText||'').indexOf(q)>=0)&&(!fm||(tr.getAttribute('data-mang')||'')===fm)&&(!fs||(tr.getAttribute('data-status')||'')===fs); tr.style.display=ok?'':'none';});}
-  function render(rows){var data=prep(rows); window.GS6_PIPE_SOURCE_ROWS=rows||[]; window.GS6_PIPE_ROWS=data; renderAnalytics(data); renderTable(data); filter();}
-  function load(){
-    ensureLayout(); var st=$('st-pipeline'),u=($('url-pipeline')||{}).value||DEFAULT_URL; if(st)st.textContent='Đang tải LIVE DON_HANG_SO V9.32 bằng JSONP…';
-    var cb='__gs6donhang_v930_'+Date.now()+'_'+Math.floor(Math.random()*1e5),s=document.createElement('script'),done=false;
-    var timer=setTimeout(function(){if(done)return; done=true; try{delete window[cb]}catch(e){window[cb]=undefined} if(s.parentNode)s.parentNode.removeChild(s); if(st)st.textContent='✗ Quá thời gian tải. Kiểm tra quyền chia sẻ Google Sheet hoặc mạng.';},30000);
-    window[cb]=function(payload){if(done)return; done=true; clearTimeout(timer); try{delete window[cb]}catch(e){window[cb]=undefined} if(s.parentNode)s.parentNode.removeChild(s); try{var rows=gvizRows(payload); render(rows); var visible=window.GS6_PIPE_ROWS?window.GS6_PIPE_ROWS.length:0; if(st)st.textContent='✔ LIVE DON_HANG_SO V9.32: nguồn '+rows.length.toLocaleString('vi-VN')+' dòng; hiển thị '+visible.toLocaleString('vi-VN')+' dòng GS6; KPI + biểu đồ đã cập nhật'; try{localStorage.setItem('gs6_url_pipeline',u)}catch(e){}}catch(err){if(st)st.textContent='✗ Lỗi xử lý DON_HANG_SO V9.32: '+(err&&err.message?err.message:err)}};
-    s.onerror=function(){if(done)return; done=true; clearTimeout(timer); try{delete window[cb]}catch(e){window[cb]=undefined} if(s.parentNode)s.parentNode.removeChild(s); if(st)st.textContent='✗ Không tải được Google Sheet. Cần bật Anyone with the link can view hoặc Publish to web.';};
-    s.src=gvizUrl(u,cb); document.head.appendChild(s);
-  }
-  function exportCsv(){var rows=window.GS6_PIPE_ROWS||[]; if(!rows.length){alert('Chưa có dữ liệu để xuất. Bấm Tải DON_HANG_SO trước.');return;} function c(v){v=(v==null?'':String(v)); return '"'+v.replace(/"/g,'""')+'"'} var lines=[PIPE_HEADERS.map(c).join(',')]; rows.forEach(function(r){lines.push(PIPE_HEADERS.map(function(h){return c(r[h]||'')}).join(','))}); var blob=new Blob(['\uFEFF'+lines.join('\n')],{type:'text/csv;charset=utf-8'}),a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='GS6_DON_HANG_SO_Pipeline_V9_32.csv'; document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(function(){URL.revokeObjectURL(a.href)},1000);}
-  function replaceBtn(id,text,fn){var b=$(id); if(!b)return; var n=b.cloneNode(true); n.textContent=text; n.onclick=function(ev){if(ev){ev.preventDefault();ev.stopPropagation()} fn(); return false}; b.parentNode.replaceChild(n,b);}
-  function init(){
-    ensureLayout();
-    var url=$('url-pipeline'); if(url){var saved=''; try{saved=localStorage.getItem('gs6_url_pipeline')||''}catch(e){} if(saved&&saved.indexOf(SPREADSHEET_ID)<0)saved=''; url.value=saved||DEFAULT_URL; url.placeholder='Google Sheet DON_HANG_SO – V9.32 KPI + chart';}
-    var st=$('st-pipeline'); if(st)st.textContent='Nguồn DON_HANG_SO | V9.35 KPI + Pareto/Backlog Responsive';
-    var fm=$('f-pipe-mang'); if(fm){fm.innerHTML='<option value="">-- Tất cả mảng --</option><option value="Túi Giấy">Túi Giấy</option><option value="Khay Giấy">Khay Giấy</option><option value="Flexo">Flexo</option>'; fm.onchange=filter;}
-    var fg=$('f-pipe-gd'); if(fg){fg.innerHTML='<option value="">-- Tất cả trạng thái giao --</option><option>Chưa xuất</option><option>Còn lại</option><option>Đã giao hết</option><option>Xuất vượt</option><option>Đã đóng</option>'; fg.onchange=filter;}
-    var q=$('q-pipe'); if(q){q.placeholder='Tìm SO, PO, mã KH, mã hàng, tên vật tư…'; q.oninput=filter;}
-    replaceBtn('btn-load-pipeline','Tải DON_HANG_SO V9.33',load); replaceBtn('btn-demo-pipe','Tải lại LIVE',load); replaceBtn('btn-export-pipe','Xuất CSV Pipeline V9.33',exportCsv);
-    setTimeout(load,3300);
-  }
-  window.renderPipe=render; window.filterPipe=filter; window.loadPipelineJSONP=load; window.loadCSV=function(tab){if(tab==='pipeline')return load();};
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init); else init();
-})();
-</script>
-
-</body></html>';
+      '<iframe title="GS6 Report Upload App inner" referrerpolicy="no-referrer" allow="clipboard-read; clipboard-write" src="'+safeSrc+'"></iframe></body></html>';
   }
   function openReportFrame(){
     clearReportWebAppOverride();
@@ -7263,5 +7083,422 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
 })();
 </script>
 
+
+
+<!-- V9.38: Dòng 3 bổ sung Kế hoạch BH từ Google Sheet KHKD_2026, cột I Doanh thu thuần. Không preview trong chat. -->
+<style>
+#pipe-month-chart{width:100%!important;max-width:100%!important;overflow:hidden!important;min-width:0!important;box-sizing:border-box!important;}
+#pipe-month-chart .pipe-v938-month-wrap{width:100%!important;max-width:100%!important;overflow:hidden!important;border:1px solid #E5E7EB!important;border-radius:10px!important;background:#fff!important;padding:8px 10px 6px 10px!important;box-sizing:border-box!important;}
+#pipe-month-chart .pipe-v938-month-head{display:flex!important;justify-content:space-between!important;gap:12px!important;align-items:flex-start!important;margin:0 0 6px 0!important;flex-wrap:wrap!important;}
+#pipe-month-chart .pipe-v938-month-title{font-size:16px!important;line-height:1.2!important;font-weight:900!important;color:#035D30!important;margin:0!important;}
+#pipe-month-chart .pipe-v938-month-sub{font-size:11.5px!important;line-height:1.35!important;color:#64748B!important;margin:2px 0 0 0!important;}
+#pipe-month-chart .pipe-v938-month-svg{width:100%!important;max-width:100%!important;height:auto!important;display:block!important;overflow:visible!important;}
+#pipe-month-chart .pipe-v938-legend{display:flex!important;gap:14px!important;align-items:center!important;justify-content:center!important;flex-wrap:wrap!important;margin:6px 0 0 0!important;font-size:12px!important;color:#374151!important;}
+#pipe-month-chart .pipe-v938-lg{display:inline-flex!important;gap:5px!important;align-items:center!important;white-space:nowrap!important;}
+#pipe-month-chart .pipe-v938-swatch{width:10px!important;height:10px!important;border-radius:2px!important;display:inline-block!important;}
+#pipe-month-chart .pipe-v938-plan{background:#D6A300!important;}
+#pipe-month-chart .pipe-v938-order{background:#166534!important;}
+#pipe-month-chart .pipe-v938-ship{background:#E53935!important;}
+#pipe-month-chart .pipe-v938-error{font-size:12px!important;color:#B45309!important;background:#FFF8E1!important;border:1px solid #FFE082!important;border-radius:8px!important;padding:8px 10px!important;margin-bottom:8px!important;}
+@media(max-width:1180px){#pipe-month-chart .pipe-v938-month-title{font-size:14.5px!important}#pipe-month-chart .pipe-v938-month-sub{font-size:11px!important}}
+</style>
+<script>
+(function(){
+  'use strict';
+  var PLAN_ID='1iQfsf3UoX7Zvn2K7-YRPhZSdbMrwGVUSfBQkFN8v8s4';
+  var PLAN_GID='670719299';
+  var PLAN_RANGE='A3:K1000';
+  function $(id){return document.getElementById(id)}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/\s+/g,' ').trim()}
+  function num(v){
+    if(v==null)return 0; if(typeof v==='number')return isFinite(v)?v:0;
+    var s=String(v).trim(); if(!s)return 0;
+    s=s.replace(/\s/g,'').replace(/[^0-9,\.\-]/g,''); if(!s||s==='-'||s===','||s==='.')return 0;
+    var lc=s.lastIndexOf(','),ld=s.lastIndexOf('.');
+    if(lc>=0&&ld>=0){ if(lc>ld){s=s.replace(/\./g,'').replace(',', '.')} else {s=s.replace(/,/g,'')} }
+    else if(lc>=0){var p=s.split(','); if(p.length>2){s=s.replace(/,/g,'')} else {var dec=p[1]||''; if(dec.length===3&&p[0].length<=3)s=s.replace(/,/g,''); else s=s.replace(',', '.')}}
+    else if(ld>=0){var q=s.split('.'); if(q.length>2)s=s.replace(/\./g,'')}
+    var x=parseFloat(s); return isFinite(x)?x:0;
+  }
+  function fmtTy(x,d){return (num(x)/1e9).toLocaleString('vi-VN',{minimumFractionDigits:0,maximumFractionDigits:d==null?1:d})}
+  function fmtTyFull(x){return (num(x)/1e9).toLocaleString('vi-VN',{minimumFractionDigits:2,maximumFractionDigits:2})+' tỷ'}
+  function monthKeyPlan(v){
+    var s=String(v||'').trim(); if(!s)return '';
+    var m=s.match(/th[aá]ng\s*(\d{1,2})/i); if(m)return '2026-'+String(m[1]).padStart(2,'0');
+    m=s.match(/^(\d{1,2})[\/\-](\d{4})$/); if(m)return m[2]+'-'+String(m[1]).padStart(2,'0');
+    m=s.match(/^(\d{4})[\/\-](\d{1,2})/); if(m)return m[1]+'-'+String(m[2]).padStart(2,'0');
+    m=s.match(/^(\d{1,2})$/); if(m)return '2026-'+String(m[1]).padStart(2,'0');
+    return '';
+  }
+  function monthKeyActual(v){
+    var s=String(v||'').trim(); if(!s)return '';
+    var m=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/); if(m){var y=m[3].length===2?('20'+m[3]):m[3]; return y+'-'+String(m[2]).padStart(2,'0')}
+    m=s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/); if(m)return m[1]+'-'+String(m[2]).padStart(2,'0');
+    return monthKeyPlan(s);
+  }
+  function monthLabel(k){if(!k)return 'Không rõ'; var a=String(k).split('-'); return (a[1]||k)+'/'+(a[0]||'2026')}
+  function cell(c){if(!c)return ''; if(c.f!=null)return String(c.f).trim(); var v=c.v; if(v==null)return ''; return String(v).trim()}
+  function gvizPlanUrl(cb){return 'https://docs.google.com/spreadsheets/d/'+encodeURIComponent(PLAN_ID)+'/gviz/tq?gid='+encodeURIComponent(PLAN_GID)+'&range='+encodeURIComponent(PLAN_RANGE)+'&headers=1&tqx='+encodeURIComponent('responseHandler:'+cb+';out:json')+'&_='+Date.now()}
+  function rowsFromGviz(payload){
+    var t=payload&&payload.table; if(!t||!t.cols||!t.rows)return [];
+    var headers=t.cols.map(function(c,i){return c&&(c.label||c.id)?String(c.label||c.id).trim():'Column '+(i+1)});
+    var start=0;
+    if(headers.join('|').toLowerCase().indexOf('doanh thu')<0&&t.rows.length){headers=(t.rows[0].c||[]).map(function(c,i){return cell(c)||'Column '+(i+1)});start=1;}
+    var out=[];
+    for(var r=start;r<t.rows.length;r++){var cs=t.rows[r].c||[],o={},empty=true; for(var i=0;i<headers.length;i++){var v=cell(cs[i]); if(v)empty=false; o[headers[i]]=v;} if(!empty)out.push(o)}
+    return out;
+  }
+  function getField(r,names,idxFallback){
+    for(var i=0;i<names.length;i++){if(r[names[i]]!=null&&String(r[names[i]]).trim()!=='')return r[names[i]];}
+    if(idxFallback){return r['Column '+idxFallback]||''}
+    return '';
+  }
+  function planMonthlyFromRows(rows){
+    var map={};
+    (rows||[]).forEach(function(r){
+      var factory=getField(r,['Nhà máy','Nha may'],2);
+      if(factory && norm(factory).indexOf('gs6')<0)return;
+      var m=monthKeyPlan(getField(r,['Tháng','Tháng ','Thang'],1)); if(!m)return;
+      var rev=num(getField(r,['Doanh thu thuần','Doanh thu ke hoach','Doanh thu kế hoạch','Doanh thu thuan'],9));
+      if(!map[m])map[m]={plan:0,qty:0,gp:0,cat:{}};
+      map[m].plan+=rev;
+      map[m].qty+=num(getField(r,['Số lượng bán thuần','Số lượng bán hàng','So luong ban thuan','So luong ban hang'],8));
+      map[m].gp+=num(getField(r,['Lãi gộp','Lai gop'],10));
+      var cat=String(getField(r,['Nghành hàng','Ngành hàng','Nganh hang'],6)||'').trim(); if(cat)map[m].cat[cat]=1;
+    });
+    return map;
+  }
+  function actualMonthlyFromPipe(rows){
+    var map={};
+    (rows||[]).forEach(function(r){
+      var mk=monthKeyActual(r&&r['Ngày']); if(!mk)return;
+      if(!map[mk])map[mk]={order:0,ship:0};
+      var order=num(r&&r['Giá trị']);
+      var ship=num(r&&r['Giá trị đã giao']); if(!ship)ship=num(r&&r['Số lượng đã xuất bán'])*num(r&&r['Đơn giá']);
+      map[mk].order+=order; map[mk].ship+=ship;
+    });
+    return map;
+  }
+  function unionKeys(a,b){var m={}; Object.keys(a||{}).forEach(function(k){m[k]=1}); Object.keys(b||{}).forEach(function(k){m[k]=1}); return Object.keys(m).filter(function(k){return k&&k!=='Không rõ'}).sort();}
+  function renderMonthlyPlanChart(){
+    var el=$('pipe-month-chart'); if(!el)return;
+    var titleCard=el.closest('.card'); var title=titleCard?titleCard.querySelector('.card-title'):null;
+    if(title)title.textContent='Dòng 3. Tổng giá trị đơn hàng theo tháng – Kế hoạch BH-Đơn đặt hàng vs Đã giao';
+    var actual=actualMonthlyFromPipe(window.GS6_PIPE_ROWS||[]);
+    var plan=window.GS6_KHKD2026_PLAN_MONTHLY||{};
+    var keys=unionKeys(actual,plan);
+    if(!keys.length){el.innerHTML='<div class="small">Chưa có dữ liệu tháng từ DON_HANG_SO hoặc KHKD_2026.</div>';return}
+    var max=0; keys.forEach(function(k){var a=actual[k]||{},p=plan[k]||{}; max=Math.max(max,p.plan||0,a.order||0,a.ship||0)}); if(max<=0)max=1;
+    var W=1000,H=360,ml=58,mr=22,mt=46,mb=64,plotW=W-ml-mr,plotH=H-mt-mb,step=plotW/Math.max(keys.length,1),barW=Math.max(8,Math.min(18,step*0.19));
+    var svg=[];
+    svg.push('<svg class="pipe-v938-month-svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Tổng giá trị đơn hàng theo tháng kế hoạch BH đơn đặt hàng đã giao" preserveAspectRatio="xMidYMid meet">');
+    svg.push('<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#fff" rx="10"></rect>');
+    for(var i=0;i<=5;i++){var y=mt+plotH-i*plotH/5,v=max*i/5; svg.push('<line x1="'+ml+'" y1="'+y+'" x2="'+(W-mr)+'" y2="'+y+'" stroke="#E5E7EB"></line>'); svg.push('<text x="'+(ml-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="10" fill="#4B5563">'+esc(fmtTy(v,1))+'</text>')}
+    svg.push('<line x1="'+ml+'" y1="'+mt+'" x2="'+ml+'" y2="'+(mt+plotH)+'" stroke="#9CA3AF"></line><line x1="'+ml+'" y1="'+(mt+plotH)+'" x2="'+(W-mr)+'" y2="'+(mt+plotH)+'" stroke="#9CA3AF"></line>');
+    svg.push('<text x="18" y="'+(mt+plotH/2)+'" transform="rotate(-90 18 '+(mt+plotH/2)+')" text-anchor="middle" font-size="10.5" fill="#374151">Tỷ đồng</text>');
+    keys.forEach(function(k,idx){
+      var a=actual[k]||{},p=plan[k]||{},vals=[{key:'plan',v:p.plan||0,c:'#D6A300',name:'Kế hoạch BH'}, {key:'order',v:a.order||0,c:'#166534',name:'Đơn đặt hàng'}, {key:'ship',v:a.ship||0,c:'#E53935',name:'Đã giao'}];
+      var cx=ml+idx*step+step/2;
+      vals.forEach(function(d,j){var h=Math.max(0,d.v/max*plotH),x=cx+(j-1)*barW*1.25-barW/2,y=mt+plotH-h; svg.push('<rect x="'+x+'" y="'+y+'" width="'+barW+'" height="'+Math.max(1,h)+'" fill="'+d.c+'" rx="2"><title>'+esc(monthLabel(k)+' · '+d.name+': '+fmtTyFull(d.v))+'</title></rect>'); if(d.v>0&&h>20&&idx%2===0){svg.push('<text x="'+(x+barW/2)+'" y="'+(y-4)+'" text-anchor="middle" font-size="8" font-weight="900" fill="#374151">'+esc(fmtTy(d.v,1))+'</text>')}});
+      svg.push('<text x="'+cx+'" y="'+(mt+plotH+18)+'" text-anchor="middle" font-size="10" fill="#374151">'+esc(monthLabel(k))+'</text>');
+    });
+    svg.push('</svg>');
+    var warn='';
+    if(window.GS6_KHKD2026_PLAN_ERROR)warn='<div class="pipe-v938-error"><b>KHKD_2026 chưa tải được:</b> '+esc(window.GS6_KHKD2026_PLAN_ERROR)+' · Cần bật quyền xem link hoặc Publish to web cho Google Sheet kế hoạch.</div>';
+    el.innerHTML='<div class="pipe-v938-month-wrap">'+warn+'<div class="pipe-v938-month-head"><div><div class="pipe-v938-month-title">Tổng giá trị đơn hàng theo tháng – Kế hoạch BH-Đơn đặt hàng vs Đã giao</div><div class="pipe-v938-month-sub">Kế hoạch BH lấy từ sheet KHKD_2026 cột I – Doanh thu thuần; Đơn đặt hàng lấy DON_HANG_SO cột O; Đã giao = cột P × cột N.</div></div></div>'+svg.join('')+'<div class="pipe-v938-legend"><span class="pipe-v938-lg"><i class="pipe-v938-swatch pipe-v938-plan"></i>Kế hoạch BH</span><span class="pipe-v938-lg"><i class="pipe-v938-swatch pipe-v938-order"></i>Đơn đặt hàng</span><span class="pipe-v938-lg"><i class="pipe-v938-swatch pipe-v938-ship"></i>Đã giao</span></div></div>';
+  }
+  function loadPlan(){
+    if(window.GS6_KHKD2026_PLAN_LOADING)return; window.GS6_KHKD2026_PLAN_LOADING=true;
+    var cb='__gs6_khkd2026_v938_'+Date.now()+'_'+Math.floor(Math.random()*1e5),s=document.createElement('script'),done=false;
+    var timer=setTimeout(function(){if(done)return; done=true; window.GS6_KHKD2026_PLAN_LOADING=false; window.GS6_KHKD2026_PLAN_ERROR='Quá thời gian tải Google Sheet KHKD_2026'; try{delete window[cb]}catch(e){window[cb]=undefined} if(s.parentNode)s.parentNode.removeChild(s); renderMonthlyPlanChart();},30000);
+    window[cb]=function(payload){if(done)return; done=true; clearTimeout(timer); window.GS6_KHKD2026_PLAN_LOADING=false; try{delete window[cb]}catch(e){window[cb]=undefined} if(s.parentNode)s.parentNode.removeChild(s); try{var rows=rowsFromGviz(payload); window.GS6_KHKD2026_PLAN_ROWS=rows; window.GS6_KHKD2026_PLAN_MONTHLY=planMonthlyFromRows(rows); window.GS6_KHKD2026_PLAN_ERROR=''; renderMonthlyPlanChart(); var st=$('st-pipeline'); if(st&&st.textContent.indexOf('KHKD_2026')<0)st.textContent=(st.textContent||'')+' | KHKD_2026: '+rows.length.toLocaleString('vi-VN')+' dòng kế hoạch';}catch(err){window.GS6_KHKD2026_PLAN_ERROR=err&&err.message?err.message:String(err); renderMonthlyPlanChart();}};
+    s.onerror=function(){if(done)return; done=true; clearTimeout(timer); window.GS6_KHKD2026_PLAN_LOADING=false; window.GS6_KHKD2026_PLAN_ERROR='Không tải được Google Sheet KHKD_2026 bằng JSONP'; try{delete window[cb]}catch(e){window[cb]=undefined} if(s.parentNode)s.parentNode.removeChild(s); renderMonthlyPlanChart();};
+    s.src=gvizPlanUrl(cb); document.head.appendChild(s);
+  }
+  function schedule(){[100,300,700,1200,2500,4500,7000].forEach(function(t){setTimeout(function(){renderMonthlyPlanChart();},t)})}
+  var prevRender=window.renderPipe; if(typeof prevRender==='function'){window.renderPipe=function(){var r=prevRender.apply(this,arguments); schedule(); loadPlan(); return r;}}
+  var prevLoad=window.loadPipelineJSONP; if(typeof prevLoad==='function'){window.loadPipelineJSONP=function(){var r=prevLoad.apply(this,arguments); schedule(); loadPlan(); return r;}}
+  window.GS6_renderMonthlyPlanChart_V938=renderMonthlyPlanChart;
+  window.GS6_loadKHKD2026_V938=loadPlan;
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){loadPlan();schedule();}); else {loadPlan();schedule();}
+  var ticks=0,iv=setInterval(function(){ticks++; renderMonthlyPlanChart(); if(ticks>120&&(window.GS6_PIPE_ROWS||[]).length&&(window.GS6_KHKD2026_PLAN_MONTHLY||window.GS6_KHKD2026_PLAN_ERROR))clearInterval(iv)},1000);
+})();
+</script>
+
+
+<!-- V9.39: Pipeline filters, source/footer relocation, D3 industry filter, 10-row table viewport. No dashboard preview. -->
+<style>
+#p-pipeline{overflow-x:hidden!important;max-width:100%!important;}
+#pipe-analytics-v930{max-width:100%!important;overflow:visible!important;}
+#pipe-analytics-v930 .pipe-v939-filterbar{display:flex!important;gap:10px!important;align-items:center!important;justify-content:space-between!important;flex-wrap:wrap!important;background:#F8FBF6!important;border:1px solid #DDEAD5!important;border-radius:10px!important;padding:8px 10px!important;margin:0 0 10px 0!important;box-sizing:border-box!important;}
+#pipe-analytics-v930 .pipe-v939-filterbar label{display:flex!important;gap:8px!important;align-items:center!important;font-size:12px!important;font-weight:900!important;color:#035D30!important;white-space:nowrap!important;}
+#pipe-analytics-v930 .pipe-v939-filterbar select{border:1px solid #BFD7B8!important;border-radius:8px!important;padding:6px 10px!important;font-size:12px!important;background:#fff!important;color:#1F2937!important;min-width:230px!important;max-width:100%!important;}
+#pipe-v939-month-filterbar{display:flex!important;justify-content:flex-end!important;align-items:center!important;gap:8px!important;margin:4px 0 8px 0!important;flex-wrap:wrap!important;}
+#pipe-v939-month-filterbar label{font-size:12px!important;font-weight:900!important;color:#035D30!important;display:flex!important;gap:8px!important;align-items:center!important;}
+#pipe-v939-month-filterbar select{border:1px solid #BFD7B8!important;border-radius:8px!important;padding:6px 10px!important;font-size:12px!important;background:#fff!important;min-width:170px!important;}
+#pipe-month-chart .pipe-v939-month-wrap{width:100%!important;max-width:100%!important;overflow:hidden!important;border:1px solid #E5E7EB!important;border-radius:10px!important;background:#fff!important;padding:8px 10px 6px 10px!important;box-sizing:border-box!important;}
+#pipe-month-chart .pipe-v939-month-head{display:flex!important;justify-content:space-between!important;gap:12px!important;align-items:flex-start!important;margin:0 0 6px 0!important;flex-wrap:wrap!important;}
+#pipe-month-chart .pipe-v939-month-title{font-size:16px!important;line-height:1.2!important;font-weight:900!important;color:#035D30!important;margin:0!important;}
+#pipe-month-chart .pipe-v939-month-sub{font-size:11.5px!important;line-height:1.35!important;color:#64748B!important;margin:2px 0 0 0!important;}
+#pipe-month-chart .pipe-v939-month-svg{width:100%!important;max-width:100%!important;height:auto!important;display:block!important;overflow:visible!important;}
+#pipe-month-chart .pipe-v939-legend{display:flex!important;gap:14px!important;align-items:center!important;justify-content:center!important;flex-wrap:wrap!important;margin:6px 0 0 0!important;font-size:12px!important;color:#374151!important;}
+#pipe-month-chart .pipe-v939-lg{display:inline-flex!important;gap:5px!important;align-items:center!important;white-space:nowrap!important;}
+#pipe-month-chart .pipe-v939-swatch{width:10px!important;height:10px!important;border-radius:2px!important;display:inline-block!important;}
+#pipe-month-chart .pipe-v939-plan{background:#D6A300!important;}
+#pipe-month-chart .pipe-v939-order{background:#166534!important;}
+#pipe-month-chart .pipe-v939-ship{background:#E53935!important;}
+#pipe-month-chart .pipe-v939-error{font-size:12px!important;color:#B45309!important;background:#FFF8E1!important;border:1px solid #FFE082!important;border-radius:8px!important;padding:8px 10px!important;margin-bottom:8px!important;}
+#p-pipeline .pipe-table-scroll{max-height:405px!important;overflow:auto!important;border:1px solid #E5E7EB!important;border-radius:10px!important;position:relative!important;box-sizing:border-box!important;}
+#p-pipeline .pipe-table-scroll table{margin:0!important;}
+#p-pipeline .pipe-table-scroll thead th{position:sticky!important;top:0!important;z-index:3!important;background:#F3F8F1!important;box-shadow:0 1px 0 #DDEAD5!important;}
+#p-pipeline .pipe-v939-footer{margin:16px 0 0 0!important;border:1px dashed #A5D6A7!important;border-radius:12px!important;background:#F8FBF6!important;padding:10px!important;}
+#p-pipeline .pipe-v939-footer-title{font-size:13px!important;font-weight:900!important;color:#035D30!important;margin:0 0 8px 0!important;border-bottom:1px solid #DDEAD5!important;padding-bottom:6px!important;}
+#p-pipeline .pipe-v939-footer .ds-bar{margin:0 0 8px 0!important;background:#fff!important;border:1px solid #E5E7EB!important;border-radius:10px!important;padding:8px!important;display:flex!important;gap:8px!important;align-items:center!important;flex-wrap:wrap!important;}
+#p-pipeline .pipe-v939-footer .ds-bar input{min-width:320px!important;flex:1 1 360px!important;}
+#p-pipeline .pipe-v939-footer .pipe-note{margin:0!important;background:#fff!important;border:1px solid #E5E7EB!important;border-radius:10px!important;padding:8px 10px!important;font-size:12px!important;color:#334155!important;line-height:1.45!important;}
+#p-pipeline .pipe-v939-muted{font-size:11.5px!important;color:#64748B!important;line-height:1.35!important;margin-top:4px!important;}
+@media(max-width:900px){#pipe-analytics-v930 .pipe-v939-filterbar{align-items:flex-start!important}#pipe-analytics-v930 .pipe-v939-filterbar label{width:100%!important}#pipe-analytics-v930 .pipe-v939-filterbar select{flex:1!important;min-width:180px!important}#pipe-month-chart .pipe-v939-month-title{font-size:14px!important}}
+</style>
+<script>
+(function(){
+  'use strict';
+  function $(id){return document.getElementById(id)}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/\s+/g,' ').trim()}
+  function num(v){
+    if(v==null)return 0; if(typeof v==='number')return isFinite(v)?v:0;
+    var s=String(v).trim(); if(!s)return 0; s=s.replace(/\s/g,'').replace(/[^0-9,\.\-]/g,'');
+    if(!s||s==='-'||s===','||s==='.')return 0; var lc=s.lastIndexOf(','),ld=s.lastIndexOf('.');
+    if(lc>=0&&ld>=0){ if(lc>ld){s=s.replace(/\./g,'').replace(',', '.')} else {s=s.replace(/,/g,'')} }
+    else if(lc>=0){var p=s.split(','); if(p.length>2){s=s.replace(/,/g,'')} else {var dec=p[1]||''; if(dec.length===3&&p[0].length<=3)s=s.replace(/,/g,''); else s=s.replace(',', '.')}}
+    else if(ld>=0){var q=s.split('.'); if(q.length>2)s=s.replace(/\./g,'')}
+    var x=parseFloat(s); return isFinite(x)?x:0;
+  }
+  function fmtInt(x){return Math.round(num(x)).toLocaleString('vi-VN')}
+  function fmtFull(x){return Math.round(num(x)).toLocaleString('vi-VN')}
+  function fmtTy(x,d){return (num(x)/1e9).toLocaleString('vi-VN',{minimumFractionDigits:0,maximumFractionDigits:d==null?1:d})}
+  function fmtTyLabel(x){return fmtTy(x,1)+' tỷ'}
+  function fmtTyFull(x){return (num(x)/1e9).toLocaleString('vi-VN',{minimumFractionDigits:2,maximumFractionDigits:2})+' tỷ'}
+  function monthKeyPlan(v){var s=String(v||'').trim(); if(!s)return ''; var m=s.match(/th[aá]ng\s*(\d{1,2})/i); if(m)return '2026-'+String(m[1]).padStart(2,'0'); m=s.match(/^(\d{1,2})[\/\-](\d{4})$/); if(m)return m[2]+'-'+String(m[1]).padStart(2,'0'); m=s.match(/^(\d{4})[\/\-](\d{1,2})/); if(m)return m[1]+'-'+String(m[2]).padStart(2,'0'); m=s.match(/^(\d{1,2})$/); if(m)return '2026-'+String(m[1]).padStart(2,'0'); return ''}
+  function monthKeyActual(v){var s=String(v||'').trim(); if(!s)return ''; var m=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/); if(m){var y=m[3].length===2?('20'+m[3]):m[3]; return y+'-'+String(m[2]).padStart(2,'0')} m=s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/); if(m)return m[1]+'-'+String(m[2]).padStart(2,'0'); return monthKeyPlan(s)}
+  function monthLabel(k){if(!k)return 'Không rõ'; var a=String(k).split('-'); return (a[1]||k)+'/'+(a[0]||'2026')}
+  function field(r,names,idxFallback){for(var i=0;i<names.length;i++){if(r&&r[names[i]]!=null&&String(r[names[i]]).trim()!=='')return r[names[i]]} return idxFallback?(r&&r['Column '+idxFallback]||''):''}
+  function kpi(lbl,val,hint){return '<div class="pipe-kpi"><div class="lbl">'+esc(lbl)+'</div><div class="val" title="'+esc(val)+'">'+esc(val)+'</div><div class="hint">'+esc(hint||'')+'</div></div>'}
+  function plantOf(r){return String((r&&r['Tên nhà máy'])||(r&&r['Ten nha may'])||'').trim()}
+  function industryOfPipe(r){var m=String((r&&r['Mảng'])||'').trim(); if(!m){var p=norm(plantOf(r)); if(p.indexOf('px tui')>=0)m='Túi Giấy'; if(p.indexOf('px khay')>=0)m='Khay Giấy'} return m}
+  function getPlantValue(){return ($('pipe-filter-plant-s')||{}).value||''}
+  function getIndustryValue(){return ($('pipe-filter-nganh')||{}).value||''}
+  function filterRowsByPlant(rows){var plant=getPlantValue(); return (rows||[]).filter(function(r){if(!plant)return true; return plantOf(r)===plant || norm(plantOf(r))===norm(plant)})}
+  function pipeRowsForMonth(){var rows=filterRowsByPlant(window.GS6_PIPE_ROWS||[]),ng=getIndustryValue(); if(!ng)return rows; var nn=norm(ng); return rows.filter(function(r){return norm(industryOfPipe(r)).indexOf(nn)>=0})}
+  function planRowsFiltered(){
+    var rows=window.GS6_KHKD2026_PLAN_ROWS||[], ng=getIndustryValue(), plant=getPlantValue();
+    var plantIndustry=''; if(norm(plant).indexOf('px tui')>=0)plantIndustry='Túi giấy'; if(norm(plant).indexOf('px khay')>=0)plantIndustry='Khay giấy';
+    return rows.filter(function(r){
+      var factory=field(r,['Nhà máy','Nha may'],2); if(factory && norm(factory).indexOf('gs6')<0)return false;
+      var cat=String(field(r,['Nghành hàng','Ngành hàng','Nganh hang'],6)||'').trim();
+      if(plantIndustry && norm(cat).indexOf(norm(plantIndustry))<0)return false;
+      if(ng && norm(cat).indexOf(norm(ng))<0)return false;
+      return true;
+    });
+  }
+  function ensureLayout(){
+    var pane=$('p-pipeline'), area=$('pipe-analytics-v930'); if(!pane||!area)return;
+    // 1) Footer relocation for source bar and logic line
+    var footer=$('pipe-v939-footer');
+    if(!footer){footer=document.createElement('div'); footer.id='pipe-v939-footer'; footer.className='pipe-v939-footer'; footer.innerHTML='<div class="pipe-v939-footer-title">Nguồn dữ liệu & logic tính Pipeline</div>'; pane.appendChild(footer)}
+    var ds=pane.querySelector(':scope > .ds-bar') || pane.querySelector('.ds-bar');
+    if(ds && ds.parentNode!==footer){footer.appendChild(ds)}
+    var note=area.querySelector(':scope > .pipe-note') || area.querySelector('.pipe-note');
+    if(note && note.parentNode!==footer){
+      note.innerHTML='<b>Logic V9.39:</b> Tổng hợp đơn hàng GS6 từ DON_HANG_SO, lọc nghiêm theo cột S - Tên nhà máy: PX Túi và PX Khay. Bộ lọc Nhà máy dùng trực tiếp cột S. Giá trị đơn hàng lấy cột O; Số lượng lấy cột M; Số dòng đơn hàng đếm cột C; Khách hàng unique theo cột F. Giá trị đã giao = cột P × cột N. Dòng 3 bổ sung Kế hoạch BH từ KHKD_2026, Doanh thu thuần cột I, lọc theo Nghành hàng cột F.';
+      footer.appendChild(note);
+    }
+    // 2) Row 1 title and plant filter
+    var titles=area.querySelectorAll('.pipe-row-title');
+    if(titles&&titles.length){titles[0].textContent='Tổng đơn hàng'}
+    if(!$('pipe-v939-filterbar')){
+      var fb=document.createElement('div'); fb.id='pipe-v939-filterbar'; fb.className='pipe-v939-filterbar';
+      fb.innerHTML='<label>Lọc nhà máy theo cột S <select id="pipe-filter-plant-s"><option value="">Tất cả GS6: PX Túi + PX Khay</option><option value="Nhà máy GS Quế Võ 2- PX Túi">Nhà máy GS Quế Võ 2- PX Túi</option><option value="Nhà máy GS Quế Võ 2- PX Khay">Nhà máy GS Quế Võ 2- PX Khay</option></select></label><div class="pipe-v939-muted">Bộ lọc này tác động vào KPI, biểu đồ và bảng Pipeline.</div>';
+      var kpiOrder=$('pipe-kpi-order'); if(kpiOrder&&kpiOrder.parentNode)kpiOrder.parentNode.insertBefore(fb,kpiOrder);
+    }
+    // 3) Dòng 3 title + industry filter
+    var month=$('pipe-month-chart'); if(month){
+      var card=month.closest('.card'), ct=card?card.querySelector('.card-title'):null; if(ct)ct.textContent='Dòng 3. Tổng giá trị đơn hàng theo tháng – Kế hoạch BH-Đơn đặt hàng vs Đã giao';
+      if(card&&!$('pipe-v939-month-filterbar')){var mf=document.createElement('div'); mf.id='pipe-v939-month-filterbar'; mf.innerHTML='<label>Lọc nghành hàng <select id="pipe-filter-nganh"><option value="">Tất cả nghành hàng</option><option value="Túi giấy">Túi giấy</option><option value="Khay giấy">Khay giấy</option></select></label>'; card.insertBefore(mf,month)}
+    }
+    // 4) Table viewport = 10 rows
+    var tbl=$('tbl-pipe'); if(tbl&&tbl.parentNode){tbl.parentNode.classList.add('pipe-table-scroll')}
+    var fm=$('f-pipe-mang'); if(fm && fm.innerHTML.indexOf('Flexo')>=0){fm.innerHTML='<option value="">-- Tất cả mảng --</option><option value="Túi Giấy">Túi Giấy</option><option value="Khay Giấy">Khay Giấy</option>'}
+    bindControls();
+  }
+  function bindControls(){
+    var p=$('pipe-filter-plant-s'); if(p&&!p.__v939){p.__v939=true; p.addEventListener('change',renderAll)}
+    var n=$('pipe-filter-nganh'); if(n&&!n.__v939){n.__v939=true; n.addEventListener('change',renderAll)}
+    ['q-pipe','f-pipe-mang','f-pipe-gd'].forEach(function(id){var e=$(id); if(e&&!e.__v939){e.__v939=true; e.addEventListener(id==='q-pipe'?'input':'change',applyTableFilter)}})
+  }
+  function renderKpis(){
+    var rows=filterRowsByPlant(window.GS6_PIPE_ROWS||[]), st={value:0,qty:0,lines:0,customers:{},delValue:0,delQty:0,delLines:0,delCustomers:{}};
+    rows.forEach(function(r){st.value+=num(r['Giá trị']); st.qty+=num(r['Số lượng']); if(String(r['Số đơn hàng chi tiết']||'').trim())st.lines++; var c=String(r['Mã khách hàng']||'').trim(); if(c)st.customers[c]=1; var sold=num(r['Số lượng đã xuất bán']); var dv=sold*num(r['Đơn giá']); if(!dv)dv=num(r['Giá trị đã giao']); st.delValue+=dv; st.delQty+=sold; if(sold>0){st.delLines++; if(c)st.delCustomers[c]=1}});
+    var k1=$('pipe-kpi-order'); if(k1)k1.innerHTML=kpi('Tổng giá trị đơn hàng',fmtFull(st.value),'Cột O – theo bộ lọc nhà máy')+kpi('Tổng số lượng đơn hàng',fmtInt(st.qty),'Cột M – tổng SL đặt')+kpi('Tổng số dòng đơn hàng',fmtInt(st.lines),'Đếm dòng có cột C')+kpi('Tổng số khách hàng',fmtInt(Object.keys(st.customers).length),'Unique mã KH cột F');
+    var k2=$('pipe-kpi-delivery'); if(k2)k2.innerHTML=kpi('Giá trị đơn hàng đã giao',fmtFull(st.delValue),'Cột P × đơn giá cột N')+kpi('Tổng số lượng đã giao',fmtInt(st.delQty),'Cột P')+kpi('Tổng số đơn đã giao',fmtInt(st.delLines),'Đếm dòng có cột P > 0')+kpi('Tổng KH đã giao',fmtInt(Object.keys(st.delCustomers).length),'Unique mã KH cột F với P > 0');
+  }
+  function actualMonthly(rows){var map={}; (rows||[]).forEach(function(r){var mk=monthKeyActual(r&&r['Ngày']); if(!mk)return; if(!map[mk])map[mk]={order:0,ship:0}; var order=num(r&&r['Giá trị']); var ship=num(r&&r['Giá trị đã giao']); if(!ship)ship=num(r&&r['Số lượng đã xuất bán'])*num(r&&r['Đơn giá']); map[mk].order+=order; map[mk].ship+=ship}); return map}
+  function planMonthly(rows){var map={}; (rows||[]).forEach(function(r){var mk=monthKeyPlan(field(r,['Tháng','Tháng ','Thang'],1)); if(!mk)return; var rev=num(field(r,['Doanh thu thuần','Doanh thu ke hoach','Doanh thu kế hoạch','Doanh thu thuan'],9)); if(!map[mk])map[mk]={plan:0}; map[mk].plan+=rev}); return map}
+  function unionKeys(a,b){var m={}; Object.keys(a||{}).forEach(function(k){m[k]=1}); Object.keys(b||{}).forEach(function(k){m[k]=1}); return Object.keys(m).filter(Boolean).sort()}
+  function renderMonth(){
+    var el=$('pipe-month-chart'); if(!el)return;
+    var actual=actualMonthly(pipeRowsForMonth()), plan=planMonthly(planRowsFiltered()), keys=unionKeys(actual,plan);
+    if(!keys.length){el.innerHTML='<div class="small">Chưa có dữ liệu tháng theo bộ lọc hiện tại.</div>'; return}
+    var max=0; keys.forEach(function(k){var a=actual[k]||{},p=plan[k]||{}; max=Math.max(max,p.plan||0,a.order||0,a.ship||0)}); if(max<=0)max=1;
+    var W=1120,H=385,ml=58,mr=24,mt=58,mb=72,plotW=W-ml-mr,plotH=H-mt-mb,step=plotW/Math.max(keys.length,1),barW=Math.max(7,Math.min(17,step*0.18));
+    var svg=[]; svg.push('<svg class="pipe-v939-month-svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Tổng giá trị đơn hàng theo tháng kế hoạch bán hàng đơn đặt hàng đã giao" preserveAspectRatio="xMidYMid meet">');
+    svg.push('<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#fff" rx="10"></rect>');
+    for(var i=0;i<=5;i++){var y=mt+plotH-i*plotH/5,v=max*i/5; svg.push('<line x1="'+ml+'" y1="'+y+'" x2="'+(W-mr)+'" y2="'+y+'" stroke="#E5E7EB"></line>'); svg.push('<text x="'+(ml-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="10" fill="#4B5563">'+esc(fmtTy(v,1))+'</text>')}
+    svg.push('<line x1="'+ml+'" y1="'+mt+'" x2="'+ml+'" y2="'+(mt+plotH)+'" stroke="#9CA3AF"></line><line x1="'+ml+'" y1="'+(mt+plotH)+'" x2="'+(W-mr)+'" y2="'+(mt+plotH)+'" stroke="#9CA3AF"></line>');
+    svg.push('<text x="18" y="'+(mt+plotH/2)+'" transform="rotate(-90 18 '+(mt+plotH/2)+')" text-anchor="middle" font-size="10.5" fill="#374151">Tỷ đồng</text>');
+    keys.forEach(function(k,idx){
+      var a=actual[k]||{},p=plan[k]||{},vals=[{v:p.plan||0,c:'#D6A300',name:'Kế hoạch BH'},{v:a.order||0,c:'#166534',name:'Đơn đặt hàng'},{v:a.ship||0,c:'#E53935',name:'Đã giao'}];
+      var cx=ml+idx*step+step/2;
+      vals.forEach(function(d,j){var h=d.v>0?Math.max(1,d.v/max*plotH):0,x=cx+(j-1)*barW*1.35-barW/2,y=mt+plotH-h; svg.push('<rect x="'+x+'" y="'+y+'" width="'+barW+'" height="'+h+'" fill="'+d.c+'" rx="2"><title>'+esc(monthLabel(k)+' · '+d.name+': '+fmtTyFull(d.v))+'</title></rect>'); if(d.v>0){var ty=Math.max(11,y-5-(j===1?8:0)); svg.push('<text x="'+(x+barW/2)+'" y="'+ty+'" text-anchor="middle" font-size="7.5" font-weight="900" fill="'+d.c+'">'+esc(fmtTy(d.v,1))+'</text>')}});
+      svg.push('<text x="'+cx+'" y="'+(mt+plotH+18)+'" text-anchor="middle" font-size="10" fill="#374151">'+esc(monthLabel(k))+'</text>');
+    });
+    svg.push('</svg>');
+    var warn=''; if(window.GS6_KHKD2026_PLAN_ERROR)warn='<div class="pipe-v939-error"><b>KHKD_2026 chưa tải được:</b> '+esc(window.GS6_KHKD2026_PLAN_ERROR)+' · Cần bật quyền xem link hoặc Publish to web cho Google Sheet kế hoạch.</div>';
+    var ng=getIndustryValue()||'Tất cả';
+    el.innerHTML='<div class="pipe-v939-month-wrap">'+warn+'<div class="pipe-v939-month-head"><div><div class="pipe-v939-month-title">Tổng giá trị đơn hàng theo tháng – Kế hoạch BH-Đơn đặt hàng vs Đã giao</div><div class="pipe-v939-month-sub">Kế hoạch BH: KHKD_2026 cột I – Doanh thu thuần; lọc nghành hàng cột F = '+esc(ng)+'. Đơn đặt hàng: DON_HANG_SO cột O; Đã giao = cột P × cột N.</div></div></div>'+svg.join('')+'<div class="pipe-v939-legend"><span class="pipe-v939-lg"><i class="pipe-v939-swatch pipe-v939-plan"></i>Kế hoạch BH</span><span class="pipe-v939-lg"><i class="pipe-v939-swatch pipe-v939-order"></i>Đơn đặt hàng</span><span class="pipe-v939-lg"><i class="pipe-v939-swatch pipe-v939-ship"></i>Đã giao</span></div></div>';
+  }
+  function syncTablePlantAttrs(){var trs=document.querySelectorAll('#body-pipe tr'), rows=window.GS6_PIPE_ROWS||[]; trs.forEach(function(tr,i){if(rows[i])tr.setAttribute('data-plant-s',plantOf(rows[i]));});}
+  function applyTableFilter(){
+    syncTablePlantAttrs(); var q=norm(($('q-pipe')||{}).value||''),fm=($('f-pipe-mang')||{}).value||'',fs=($('f-pipe-gd')||{}).value||'',plant=getPlantValue();
+    document.querySelectorAll('#body-pipe tr').forEach(function(tr){var ok=true; if(q&&norm(tr.innerText||'').indexOf(q)<0)ok=false; if(fm&&(tr.getAttribute('data-mang')||'')!==fm)ok=false; if(fs&&(tr.getAttribute('data-status')||'')!==fs)ok=false; if(plant&&(tr.getAttribute('data-plant-s')||'')!==plant)ok=false; tr.style.display=ok?'':'none'});
+  }
+  function renderAll(){ensureLayout(); renderKpis(); renderMonth(); applyTableFilter();}
+  function schedule(){[80,180,350,700,1200,2200,4000,7000].forEach(function(t){setTimeout(renderAll,t)})}
+  var prevRender=window.renderPipe; if(typeof prevRender==='function'){window.renderPipe=function(){var r=prevRender.apply(this,arguments); schedule(); return r;}}
+  var prevFilter=window.filterPipe; window.filterPipe=function(){if(typeof prevFilter==='function'){try{prevFilter.apply(this,arguments)}catch(e){}} applyTableFilter(); return false;};
+  var prevMonth=window.GS6_renderMonthlyPlanChart_V938; window.GS6_renderMonthlyPlanChart_V938=function(){renderMonth();};
+  window.GS6_renderPipelineV939=renderAll;
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){ensureLayout(); bindControls(); schedule(); if(typeof window.GS6_loadKHKD2026_V938==='function')window.GS6_loadKHKD2026_V938();});
+  else {ensureLayout(); bindControls(); schedule(); if(typeof window.GS6_loadKHKD2026_V938==='function')window.GS6_loadKHKD2026_V938();}
+  window.addEventListener('resize',function(){schedule()},{passive:true});
+  var ticks=0,iv=setInterval(function(){ticks++; renderAll(); if(ticks>120&&(window.GS6_PIPE_ROWS||[]).length)clearInterval(iv)},1000);
+})();
+</script>
+
+
+
+<!-- V9.41: Pipeline - bỏ tiêu đề Tổng đơn hàng, chỉnh header bảng DON_HANG_SO nền xanh chữ đen. Không preview trong chat. -->
+<style id="gs6-v940-pipeline-final-css">
+  /* Pipeline table header: green background, black text, sticky inside 10-row viewport */
+  #tbl-pipe thead th,
+  .pipe-table-scroll #tbl-pipe thead th{
+    background:#C6E0B4 !important;
+    color:#000000 !important;
+    font-weight:800 !important;
+    border:1px solid #8FBF78 !important;
+    box-shadow:none !important;
+  }
+  #tbl-pipe thead,
+  .pipe-table-scroll #tbl-pipe thead{
+    background:#C6E0B4 !important;
+  }
+  /* Safety: no horizontal overflow in pipeline table viewport */
+  .pipe-table-scroll{
+    max-height:420px !important;
+    overflow:auto !important;
+  }
+</style>
+<script id="gs6-v940-pipeline-final-js">
+(function(){
+  function byId(id){return document.getElementById(id)}
+  function removeOrderTitle(){
+    var kpi=byId('pipe-kpi-order');
+    if(!kpi) return;
+    var node=kpi.previousElementSibling;
+    // In V9.39 the filter bar is inserted between the title and KPI grid.
+    if(node && node.id==='pipe-v939-filterbar') node=node.previousElementSibling;
+    if(node && node.classList && node.classList.contains('pipe-row-title')){
+      var txt=(node.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+      if(txt==='tổng đơn hàng' || txt==='dòng 1. tổng đơn hàng'){
+        node.remove();
+      }
+    }
+  }
+  function stylePipeHeader(){
+    var table=byId('tbl-pipe');
+    if(!table) return;
+    var ths=table.querySelectorAll('thead th');
+    ths.forEach(function(th){
+      th.style.background='#C6E0B4';
+      th.style.color='#000000';
+      th.style.fontWeight='800';
+      th.style.border='1px solid #8FBF78';
+    });
+  }
+  function applyV940(){ removeOrderTitle(); stylePipeHeader(); }
+  window.GS6_applyPipelineV940=applyV940;
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',applyV940);
+  else applyV940();
+  [100,300,700,1200,2500,5000,8000].forEach(function(t){setTimeout(applyV940,t)});
+  var n=0, timer=setInterval(function(){n++; applyV940(); if(n>60) clearInterval(timer);},1000);
+})();
+</script>
+
+
+
+<!-- V9.41: final fixes - Pipeline title/header + Group02 Quality uses Group06 source + Group06 gid/live fallback status. No preview. -->
+<style id="gs6-v941-final-css">
+  /* 1) Bỏ riêng dòng tiêu đề Tổng đơn hàng; giữ KPI và bộ lọc nhà máy */
+  #pipe-kpi-order ~ .pipe-row-title{display:none!important;}
+  /* 2) Header bảng Pipeline nền xanh chữ đen */
+  #tbl-pipe thead th,
+  .pipe-table-scroll #tbl-pipe thead th{
+    background:#C6E0B4!important;color:#000!important;font-weight:900!important;border:1px solid #8FBF78!important;
+  }
+  #tbl-pipe thead{background:#C6E0B4!important;}
+  /* Chất lượng Group 02: cảnh báo nguồn */
+  #st-cl.gs6-v941-warn,#def-live-log.gs6-v941-warn{color:#92400e!important;font-weight:800!important;}
+</style>
+<script id="gs6-v941-final-js">
+(function(){
+  function $(id){return document.getElementById(id)}
+  function removeTotalTitle(){
+    var k=$('pipe-kpi-order'); if(!k) return;
+    var n=k.previousElementSibling;
+    if(n && n.id==='pipe-v939-filterbar') n=n.previousElementSibling;
+    if(n && n.classList && n.classList.contains('pipe-row-title')){
+      var t=(n.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+      if(t==='tổng đơn hàng'||t==='dòng 1. tổng đơn hàng') n.remove();
+    }
+  }
+  function headerGreen(){
+    var ths=document.querySelectorAll('#tbl-pipe thead th');
+    ths.forEach(function(th){th.style.background='#C6E0B4';th.style.color='#000';th.style.fontWeight='900';th.style.border='1px solid #8FBF78';});
+  }
+  function ensureDefectGid(){
+    var csv=$('def-source-url'), edit=$('def-edit-url');
+    var sid='1NTYFPqkcfDExkzAgTrVv52GQwm0zJyZtrDFW4G080xw', gid='1190903695';
+    if(csv && (!csv.value || csv.value.indexOf('gid=0')>=0 || csv.value.indexOf('gid='+gid)<0)) csv.value='https://docs.google.com/spreadsheets/d/'+sid+'/gviz/tq?tqx=out:csv&gid='+gid;
+    if(edit && (!edit.value || edit.value.indexOf('gid='+gid)<0)) edit.value='https://docs.google.com/spreadsheets/d/'+sid+'/edit?usp=sharing#gid='+gid;
+  }
+  function syncCLFromBestSource(){
+    var d=window.GS6_DEFECT_LIVE_DATA || window.GS6_DEFECT_DATA || window.GS6_CL_DEFECT_SOURCE || window.GS6_DEFECT_EMBEDDED_DATA_V941;
+    if(!d || !d.kpi || typeof window.renderQualityFromDefectData!=='function') return;
+    try{
+      window.renderQualityFromDefectData(d, window.GS6_DEFECT_LIVE_DATA?'Google Sheet LIVE Group 06':'Fallback GS6_SaiHong_ERP_Dashboard_Data_V4');
+      var st=$('st-cl');
+      if(st && !window.GS6_DEFECT_LIVE_DATA){st.classList.add('gs6-v941-warn');}
+    }catch(e){
+      var st=$('st-cl'); if(st){st.textContent='⚠ Lỗi đồng bộ Tab Chất lượng từ nguồn Group 06: '+(e&&e.message?e.message:e); st.classList.add('gs6-v941-warn');}
+    }
+  }
+  function applyAll(){removeTotalTitle(); headerGreen(); ensureDefectGid(); syncCLFromBestSource();}
+  window.GS6_V941_applyFinalFix=applyAll;
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',applyAll); else applyAll();
+  [80,200,500,1000,2000,4000,7000,12000].forEach(function(t){setTimeout(applyAll,t)});
+  var i=0,tm=setInterval(function(){i++; applyAll(); if(i>90) clearInterval(tm);},1000);
+})();
+</script>
 </body>
 </html>
