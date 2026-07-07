@@ -7500,5 +7500,216 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
   var i=0,tm=setInterval(function(){i++; applyAll(); if(i>90) clearInterval(tm);},1000);
 })();
 </script>
+<!-- V9.42: Group02 Pipeline - Đã giao lấy từ sheet mới "Bảng kê phiếu xuất kho bán hàng". Chỉ can thiệp biểu đồ Dòng 3 Pipeline. Không preview trong chat. -->
+<style id="gs6-v942-delivered-newsource-css">
+  #pipe-v939-month-filterbar select option[value="Flexo cuộn 6 màu"],
+  #pipe-v939-month-filterbar select option[value="GS6 khác"]{font-weight:700;}
+  #pipe-month-chart .pipe-v942-error{
+    font-size:12px!important;color:#B45309!important;background:#FFF8E1!important;
+    border:1px solid #FFE082!important;border-radius:8px!important;padding:8px 10px!important;margin-bottom:8px!important;
+  }
+  #pipe-month-chart .pipe-v942-source{
+    font-size:11.5px!important;line-height:1.35!important;color:#64748B!important;margin:2px 0 0 0!important;
+  }
+</style>
+<script id="gs6-v942-delivered-newsource-js">
+(function(){
+  'use strict';
+  var NEW_SHIP_ID='1AHXrfW16_6PSpWVbz5WdQO6xEAPhCwBk4PieBKKn9Us';
+  var NEW_SHIP_SHEET='Bảng kê phiếu xuất kho bán hàng';
+  var NEW_SHIP_RANGE='B11:L100000';
+  var rendering=false;
+  function $(id){return document.getElementById(id)}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/\s+/g,' ').trim()}
+  function num(v){
+    if(v==null)return 0; if(typeof v==='number')return isFinite(v)?v:0;
+    var s=String(v).trim(); if(!s)return 0; s=s.replace(/\s/g,'').replace(/[^0-9,\.\-]/g,'');
+    if(!s||s==='-'||s===','||s==='.')return 0;
+    var lc=s.lastIndexOf(','),ld=s.lastIndexOf('.');
+    if(lc>=0&&ld>=0){ if(lc>ld){s=s.replace(/\./g,'').replace(',', '.')} else {s=s.replace(/,/g,'')} }
+    else if(lc>=0){var p=s.split(','); if(p.length>2){s=s.replace(/,/g,'')} else {var dec=p[1]||''; if(dec.length===3&&p[0].length<=3)s=s.replace(/,/g,''); else s=s.replace(',', '.')}}
+    else if(ld>=0){var q=s.split('.'); if(q.length>2)s=s.replace(/\./g,'')}
+    var x=parseFloat(s); return isFinite(x)?x:0;
+  }
+  function fmtTy(x,d){return (num(x)/1e9).toLocaleString('vi-VN',{minimumFractionDigits:0,maximumFractionDigits:d==null?1:d})}
+  function fmtTyFull(x){return (num(x)/1e9).toLocaleString('vi-VN',{minimumFractionDigits:2,maximumFractionDigits:2})+' tỷ'}
+  function monthKey(v){
+    var s=String(v||'').trim(); if(!s)return '';
+    var m=s.match(/^Date\((\d{4})\s*,\s*(\d{1,2})\s*,\s*(\d{1,2})/); if(m)return m[1]+'-'+String(parseInt(m[2],10)+1).padStart(2,'0');
+    m=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/); if(m){var y=m[3].length===2?('20'+m[3]):m[3]; return y+'-'+String(m[2]).padStart(2,'0')}
+    m=s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/); if(m)return m[1]+'-'+String(m[2]).padStart(2,'0');
+    m=s.match(/th[aá]ng\s*(\d{1,2})/i); if(m)return '2026-'+String(m[1]).padStart(2,'0');
+    m=s.match(/^(\d{1,2})[\/\-](\d{4})$/); if(m)return m[2]+'-'+String(m[1]).padStart(2,'0');
+    m=s.match(/^(\d{4})[\/\-](\d{1,2})$/); if(m)return m[1]+'-'+String(m[2]).padStart(2,'0');
+    return '';
+  }
+  function monthLabel(k){if(!k)return 'Không rõ'; var a=String(k).split('-'); return (a[1]||k)+'/'+(a[0]||'2026')}
+  function field(r,names,idxFallback){for(var i=0;i<names.length;i++){if(r&&r[names[i]]!=null&&String(r[names[i]]).trim()!=='')return r[names[i]]} return idxFallback?(r&&r['Column '+idxFallback]||''):''}
+  function sameIndustry(a,b){
+    var x=norm(a),y=norm(b); if(!x||!y)return false;
+    function canon(z){
+      if(z.indexOf('tui')>=0)return 'tui';
+      if(z.indexOf('khay')>=0)return 'khay';
+      if(z.indexOf('flexo')>=0||z.indexOf('in cuon')>=0)return 'flexo';
+      if(z.indexOf('khac')>=0)return 'khac';
+      return z;
+    }
+    return canon(x)===canon(y);
+  }
+  function materialIndustry(code){
+    var s=String(code||'').trim();
+    var part=s.split('-')[1]||'';
+    var x=(part.charAt(0)||'').toUpperCase();
+    if(x==='K')return 'Khay giấy';
+    if(x==='T')return 'Túi giấy';
+    if(x==='I')return 'Flexo cuộn 6 màu';
+    return 'GS6 khác';
+  }
+  function cell(c){if(!c)return ''; if(typeof c.v==='number')return c.v; if(c.f!=null)return String(c.f).trim(); if(c.v!=null)return String(c.v).trim(); return ''}
+  function gvizShipUrl(cb){
+    return 'https://docs.google.com/spreadsheets/d/'+encodeURIComponent(NEW_SHIP_ID)+'/gviz/tq?sheet='+encodeURIComponent(NEW_SHIP_SHEET)+'&range='+encodeURIComponent(NEW_SHIP_RANGE)+'&headers=0&tqx='+encodeURIComponent('responseHandler:'+cb+';out:json')+'&_='+Date.now();
+  }
+  function rowsFromShipGviz(payload){
+    var t=payload&&payload.table; if(!t||!t.rows)return [];
+    var out=[];
+    for(var i=0;i<t.rows.length;i++){
+      var cs=t.rows[i].c||[];
+      // Range B:L => index 0 = B Ngày, index 5 = G Vật tư, index 10 = L Doanh thu.
+      var date=cell(cs[0]), material=cell(cs[5]), revenue=cell(cs[10]);
+      var rv=num(revenue);
+      if(!date&&!material&&!rv)continue;
+      out.push({date:date, material:material, revenue:rv, industry:materialIndustry(material)});
+    }
+    return out;
+  }
+  function loadDeliveredNew(){
+    if(window.GS6_DELIVERED_NEW_LOADING)return;
+    window.GS6_DELIVERED_NEW_LOADING=true;
+    var cb='__gs6_delivered_v942_'+Date.now()+'_'+Math.floor(Math.random()*1e5),s=document.createElement('script'),done=false;
+    var timer=setTimeout(function(){
+      if(done)return; done=true; window.GS6_DELIVERED_NEW_LOADING=false; window.GS6_DELIVERED_NEW_ERROR='Quá thời gian tải Google Sheet nguồn Đã giao mới';
+      try{delete window[cb]}catch(e){window[cb]=undefined} if(s.parentNode)s.parentNode.removeChild(s); renderMonthV942();
+    },30000);
+    window[cb]=function(payload){
+      if(done)return; done=true; clearTimeout(timer); window.GS6_DELIVERED_NEW_LOADING=false;
+      try{delete window[cb]}catch(e){window[cb]=undefined} if(s.parentNode)s.parentNode.removeChild(s);
+      try{
+        var rows=rowsFromShipGviz(payload);
+        window.GS6_DELIVERED_NEW_ROWS=rows;
+        window.GS6_DELIVERED_NEW_ERROR='';
+        var st=$('st-pipeline');
+        if(st){
+          var msg='Đã giao NEW: '+rows.length.toLocaleString('vi-VN')+' dòng từ Bảng kê phiếu xuất kho bán hàng';
+          if((st.textContent||'').indexOf('Đã giao NEW')<0)st.textContent=(st.textContent||'')+' | '+msg;
+        }
+        renderMonthV942();
+      }catch(err){window.GS6_DELIVERED_NEW_ERROR=err&&err.message?err.message:String(err); renderMonthV942();}
+    };
+    s.onerror=function(){
+      if(done)return; done=true; clearTimeout(timer); window.GS6_DELIVERED_NEW_LOADING=false; window.GS6_DELIVERED_NEW_ERROR='Không tải được Google Sheet nguồn Đã giao mới';
+      try{delete window[cb]}catch(e){window[cb]=undefined} if(s.parentNode)s.parentNode.removeChild(s); renderMonthV942();
+    };
+    s.src=gvizShipUrl(cb); document.head.appendChild(s);
+  }
+  function getPlantValue(){return ($('pipe-filter-plant-s')||{}).value||''}
+  function getIndustryValue(){return ($('pipe-filter-nganh')||{}).value||''}
+  function plantIndustry(){var p=norm(getPlantValue()); if(p.indexOf('px tui')>=0)return 'Túi giấy'; if(p.indexOf('px khay')>=0)return 'Khay giấy'; return ''}
+  function plantOf(r){return String((r&&r['Tên nhà máy'])||(r&&r['Ten nha may'])||'').trim()}
+  function industryOfPipe(r){var m=String((r&&r['Mảng'])||'').trim(); if(!m){var p=norm(plantOf(r)); if(p.indexOf('px tui')>=0)m='Túi giấy'; if(p.indexOf('px khay')>=0)m='Khay giấy'} return m}
+  function orderRowsFiltered(){
+    var plant=getPlantValue(), ng=getIndustryValue(), pInd=plantIndustry();
+    return (window.GS6_PIPE_ROWS||[]).filter(function(r){
+      if(plant && !(plantOf(r)===plant || norm(plantOf(r))===norm(plant)))return false;
+      var ind=industryOfPipe(r);
+      if(pInd && !sameIndustry(ind,pInd))return false;
+      if(ng && !sameIndustry(ind,ng))return false;
+      return true;
+    });
+  }
+  function planRowsFiltered(){
+    var rows=window.GS6_KHKD2026_PLAN_ROWS||[], ng=getIndustryValue(), pInd=plantIndustry();
+    return rows.filter(function(r){
+      var factory=field(r,['Nhà máy','Nha may'],2); if(factory && norm(factory).indexOf('gs6')<0)return false;
+      var cat=String(field(r,['Nghành hàng','Ngành hàng','Nganh hang'],6)||'').trim();
+      if(pInd && !sameIndustry(cat,pInd))return false;
+      if(ng && !sameIndustry(cat,ng))return false;
+      return true;
+    });
+  }
+  function deliveredRowsFiltered(){
+    var rows=window.GS6_DELIVERED_NEW_ROWS||[], ng=getIndustryValue(), pInd=plantIndustry();
+    return rows.filter(function(r){
+      if(pInd && !sameIndustry(r.industry,pInd))return false;
+      if(ng && !sameIndustry(r.industry,ng))return false;
+      return true;
+    });
+  }
+  function planMonthly(rows){var map={}; (rows||[]).forEach(function(r){var mk=monthKey(field(r,['Tháng','Tháng ','Thang'],1)); if(!mk)return; if(!map[mk])map[mk]={plan:0}; map[mk].plan+=num(field(r,['Doanh thu thuần','Doanh thu ke hoach','Doanh thu kế hoạch','Doanh thu thuan'],9));}); return map}
+  function orderMonthly(rows){var map={}; (rows||[]).forEach(function(r){var mk=monthKey(r&&r['Ngày']); if(!mk)return; if(!map[mk])map[mk]={order:0}; map[mk].order+=num(r&&r['Giá trị']);}); return map}
+  function shipMonthly(rows){var map={}; (rows||[]).forEach(function(r){var mk=monthKey(r&&r.date); if(!mk)return; if(!map[mk])map[mk]={ship:0}; map[mk].ship+=num(r&&r.revenue);}); return map}
+  function unionKeys(){var m={}; for(var i=0;i<arguments.length;i++){Object.keys(arguments[i]||{}).forEach(function(k){if(k)m[k]=1})} return Object.keys(m).sort()}
+  function ensureIndustryOptions(){
+    var sel=$('pipe-filter-nganh'); if(!sel)return;
+    var opts=[['','Tất cả nghành hàng'],['Túi giấy','Túi giấy'],['Khay giấy','Khay giấy'],['Flexo cuộn 6 màu','Flexo cuộn 6 màu / In cuộn']];
+    var cur=sel.value, html=opts.map(function(o){return '<option value="'+esc(o[0])+'">'+esc(o[1])+'</option>'}).join('');
+    if(sel.innerHTML!==html){sel.innerHTML=html; sel.value=cur; if(sel.value!==cur)sel.value='';}
+    if(!sel.__v942){sel.__v942=true; sel.addEventListener('change',function(){setTimeout(renderMonthV942,60)});}
+  }
+  function bindFilterEvents(){
+    ['pipe-filter-nganh','pipe-filter-plant-s'].forEach(function(id){var e=$(id); if(e&&!e.__v942bind){e.__v942bind=true; e.addEventListener('change',function(){setTimeout(renderMonthV942,80);});}});
+  }
+  function renderMonthV942(){
+    var el=$('pipe-month-chart'); if(!el||rendering)return;
+    rendering=true;
+    try{
+      ensureIndustryOptions(); bindFilterEvents();
+      var card=el.closest('.card'), ct=card?card.querySelector('.card-title'):null;
+      if(ct)ct.textContent='Dòng 3. Tổng giá trị đơn hàng theo tháng – Kế hoạch BH-Đơn đặt hàng vs Đã giao';
+      var plan=planMonthly(planRowsFiltered()), order=orderMonthly(orderRowsFiltered()), ship=shipMonthly(deliveredRowsFiltered());
+      var keys=unionKeys(plan,order,ship);
+      if(!keys.length){el.innerHTML='<div class="small">Chưa có dữ liệu tháng theo bộ lọc hiện tại.</div>'; return;}
+      var max=0; keys.forEach(function(k){var p=plan[k]||{},o=order[k]||{},s=ship[k]||{}; max=Math.max(max,p.plan||0,o.order||0,s.ship||0)}); if(max<=0)max=1;
+      var W=1120,H=385,ml=58,mr=24,mt=58,mb=72,plotW=W-ml-mr,plotH=H-mt-mb,step=plotW/Math.max(keys.length,1),barW=Math.max(7,Math.min(17,step*0.18));
+      var svg=[]; svg.push('<svg class="pipe-v939-month-svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Tổng giá trị đơn hàng theo tháng kế hoạch bán hàng đơn đặt hàng đã giao" preserveAspectRatio="xMidYMid meet">');
+      svg.push('<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#fff" rx="10"></rect>');
+      for(var i=0;i<=5;i++){var y=mt+plotH-i*plotH/5,v=max*i/5; svg.push('<line x1="'+ml+'" y1="'+y+'" x2="'+(W-mr)+'" y2="'+y+'" stroke="#E5E7EB"></line>'); svg.push('<text x="'+(ml-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="10" fill="#4B5563">'+esc(fmtTy(v,1))+'</text>')}
+      svg.push('<line x1="'+ml+'" y1="'+mt+'" x2="'+ml+'" y2="'+(mt+plotH)+'" stroke="#9CA3AF"></line><line x1="'+ml+'" y1="'+(mt+plotH)+'" x2="'+(W-mr)+'" y2="'+(mt+plotH)+'" stroke="#9CA3AF"></line>');
+      svg.push('<text x="18" y="'+(mt+plotH/2)+'" transform="rotate(-90 18 '+(mt+plotH/2)+')" text-anchor="middle" font-size="10.5" fill="#374151">Tỷ đồng</text>');
+      keys.forEach(function(k,idx){
+        var p=plan[k]||{},o=order[k]||{},s=ship[k]||{};
+        var vals=[{v:p.plan||0,c:'#D6A300',name:'Kế hoạch BH'},{v:o.order||0,c:'#166534',name:'Đơn đặt hàng'},{v:s.ship||0,c:'#E53935',name:'Đã giao'}];
+        var cx=ml+idx*step+step/2;
+        vals.forEach(function(d,j){var h=d.v>0?Math.max(1,d.v/max*plotH):0,x=cx+(j-1)*barW*1.35-barW/2,y=mt+plotH-h; svg.push('<rect x="'+x+'" y="'+y+'" width="'+barW+'" height="'+h+'" fill="'+d.c+'" rx="2"><title>'+esc(monthLabel(k)+' · '+d.name+': '+fmtTyFull(d.v))+'</title></rect>'); if(d.v>0){var ty=Math.max(11,y-5-(j===1?8:0)); svg.push('<text x="'+(x+barW/2)+'" y="'+ty+'" text-anchor="middle" font-size="7.5" font-weight="900" fill="'+d.c+'">'+esc(fmtTy(d.v,1))+'</text>')}});
+        svg.push('<text x="'+cx+'" y="'+(mt+plotH+18)+'" text-anchor="middle" font-size="10" fill="#374151">'+esc(monthLabel(k))+'</text>');
+      });
+      svg.push('</svg>');
+      var warn='';
+      if(window.GS6_KHKD2026_PLAN_ERROR)warn+='<div class="pipe-v942-error"><b>KHKD_2026 chưa tải được:</b> '+esc(window.GS6_KHKD2026_PLAN_ERROR)+'</div>';
+      if(window.GS6_DELIVERED_NEW_ERROR)warn+='<div class="pipe-v942-error"><b>Nguồn Đã giao mới chưa tải được:</b> '+esc(window.GS6_DELIVERED_NEW_ERROR)+' · Kiểm tra quyền xem Google Sheet hoặc tên sheet.</div>';
+      var ng=getIndustryValue()||'Tất cả';
+      var src='<div class="pipe-v942-source">Kế hoạch BH: KHKD_2026 cột I – Doanh thu thuần; lọc nghành hàng cột F = '+esc(ng)+'. Đơn đặt hàng: DON_HANG_SO cột O. <b>Đã giao:</b> Google Sheet "Bảng kê phiếu xuất kho bán hàng", tháng từ cột B, doanh thu VND từ cột L, mảng theo mã vật tư cột G: K=Khay giấy, T=Túi giấy, I=Flexo/In cuộn, khác=GS6 khác và chỉ cộng trong Tất cả.</div>';
+      el.innerHTML='<div class="pipe-v939-month-wrap">'+warn+'<div class="pipe-v939-month-head"><div><div class="pipe-v939-month-title">Tổng giá trị đơn hàng theo tháng – Kế hoạch BH-Đơn đặt hàng vs Đã giao</div>'+src+'</div></div>'+svg.join('')+'<div class="pipe-v939-legend"><span class="pipe-v939-lg"><i class="pipe-v939-swatch pipe-v939-plan"></i>Kế hoạch BH</span><span class="pipe-v939-lg"><i class="pipe-v939-swatch pipe-v939-order"></i>Đơn đặt hàng</span><span class="pipe-v939-lg"><i class="pipe-v939-swatch pipe-v939-ship"></i>Đã giao</span></div></div>';
+    } finally { setTimeout(function(){rendering=false;},0); }
+  }
+  function installObserver(){
+    var el=$('pipe-month-chart'); if(!el||el.__v942obs)return;
+    el.__v942obs=true;
+    if(window.MutationObserver){
+      var mo=new MutationObserver(function(){if(!rendering)setTimeout(renderMonthV942,30)});
+      mo.observe(el,{childList:true,subtree:false});
+    }
+  }
+  function apply(){ensureIndustryOptions(); bindFilterEvents(); installObserver(); renderMonthV942();}
+  window.GS6_loadDeliveredRevenueV942=loadDeliveredNew;
+  var prevV938=window.GS6_renderMonthlyPlanChart_V938;
+  window.GS6_renderMonthlyPlanChart_V938=function(){try{if(typeof prevV938==='function')prevV938.apply(this,arguments)}catch(e){} setTimeout(renderMonthV942,30);};
+  var prevV939=window.GS6_renderPipelineV939;
+  window.GS6_renderPipelineV939=function(){var r; try{if(typeof prevV939==='function')r=prevV939.apply(this,arguments)}catch(e){} setTimeout(renderMonthV942,30); return r;};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){loadDeliveredNew(); apply();}); else {loadDeliveredNew(); apply();}
+  [80,200,500,1000,2000,4000,7000,12000].forEach(function(t){setTimeout(apply,t)});
+  var n=0,timer=setInterval(function(){n++; apply(); if(n>180)clearInterval(timer);},1000);
+})();
+</script>
 </body>
 </html>
