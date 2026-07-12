@@ -5035,7 +5035,7 @@ function cSwitch(btn) {
  <div class="def-chart-row-main def-value-row">
   <div class="def-card">
     <h2>So sánh tổng giá trị: Giá trị sai hỏng cho phép Vs Giá trị sai hỏng thực tế của 3 mảng</h2>
-    <div class="def-chart-note"><b>Chú thích:</b> Cột xanh/đỏ = <b>Giá trị sai hỏng thực tế BG</b>; dây vàng = <b>Giá trị sai hỏng cho phép = BG/BF × AI</b>. BG tính 1 lần duy nhất theo <b>cặp AS – Số phiếu thống kê + Q – Lệnh thao tác</b>; nếu BF = 0 hoặc trống thì giá trị cho phép = 0.</div>
+    <div class="def-chart-note"><b>Chú thích:</b> Cột xanh/đỏ = <b>Giá trị sai hỏng thực tế BG</b>; dây vàng = <b>Giá trị sai hỏng cho phép</b>. Công thức đúng theo từng LTT Q: <b>SUM(BG unique AS) / SUM(BF unique AS) × AI unique Q</b>. AI chỉ lấy 1 lần cho mỗi LTT, không nhân lặp theo số AS; nếu AS trống thì loại khỏi biểu đồ, nếu tổng BF của LTT = 0 thì giá trị cho phép = 0.</div>
     <div class="def-chart-box" id="def-segment-value-total"></div>
   </div>
   <div class="def-card">
@@ -5044,7 +5044,7 @@ function cSwitch(btn) {
       <label>Mảng</label><select id="def-value-monthly-segment-filter"><option value="">Tất cả 3 mảng</option></select>
       <label>Tháng</label><select id="def-value-month-filter"><option value="">Tất cả tháng</option></select>
     </div>
-    <div class="def-chart-note"><b>Chú thích:</b> Lọc riêng theo <b>Mảng/Tháng</b> như vùng số lượng. Cột đỏ nghĩa là giá trị sai hỏng thực tế BG vượt giá trị cho phép theo công thức <b>BG/BF × AI</b>.</div>
+    <div class="def-chart-note"><b>Chú thích:</b> Lọc riêng theo <b>Mảng/Tháng</b> như vùng số lượng. Sau khi loại trùng AS, AI của LTT được phân bổ về từng AS theo tỷ trọng BF, rồi mới nhóm theo tháng AR và mảng; vì vậy tổng các tháng luôn khớp tổng chung. Cột đỏ nghĩa là BG thực tế vượt giá trị cho phép.</div>
     <div class="def-chart-box" id="def-segment-monthly-value-combo"></div>
   </div>
  </div>
@@ -5558,6 +5558,19 @@ window.GS6_DEFECT_EMBEDDED_DATA_V941 = {"updated":"21/06/2026 13:08","period":"2
     baseFiltered.forEach(function(x){ var c=String(cell(x.row,m.opCode)||'').trim(); if(c) opCodeOptionsMap[c]=true; });
     var opCodeOptions=Object.keys(opCodeOptionsMap).sort(function(a,b){return a.localeCompare(b,'vi');});
     if(selectedOpCode && opCodeOptions.indexOf(selectedOpCode)<0){ selectedOpCode=''; window.GS6_DEFECT_OPERATION_CODE_FILTER=''; }
+    // Nền phân bổ giá trị giữ đủ lịch sử tháng/tuần của LTT; chỉ áp dụng lọc Mảng và Mã thao tác.
+    // Nhờ vậy AI_Q luôn được dùng đúng một lần kể cả khi người dùng lọc riêng tháng/tuần.
+    var valueBasisDataRows=scopedRows.filter(function(x){return !selectedSegment || x.scope.segment===selectedSegment;}).map(function(x){return x.row;});
+    if(selectedOpCode){ valueBasisDataRows=valueBasisDataRows.filter(function(r){ return String(cell(r,m.opCode)||'').trim()===selectedOpCode; }); }
+    var valueRaw=valueBasisDataRows.map(function(r,idx){
+      var dt=parseDate(cell(r,m.dateTk)), wk=dt?weekInfo(dt):null;
+      return {rowNo:hi+idx+2,ltt:String(cell(r,m.ltt)||cell(r,m.lcd)||'').trim(),statNo:String(cell(r,m.statNo)||'').trim(),
+        allowedScaledQty:(m.allowedScaledQty>=0)?num(cell(r,m.allowedScaledQty)):num(cell(r,m.allowedQty)),
+        actualQty:(m.actualQty>=0)?num(cell(r,m.actualQty)):num(cell(r,m.actualQtyLtt)),
+        actualDefectValue:(m.statDefectValue>=0)?num(cell(r,m.statDefectValue)):0,
+        segment:segmentOf(r,m),monthKey:dt?monthKeyOf(dt):'',monthLabel:dt?monthLabelOfDate(dt):'Không rõ tháng',
+        weekKey:wk?wk.key:'',weekLabel:wk?wk.label:'',weekStart:wk?wk.start:0};
+    });
     dataRows=baseFiltered.map(function(x){return x.row;});
     if(selectedOpCode){ dataRows=dataRows.filter(function(r){ return String(cell(r,m.opCode)||'').trim()===selectedOpCode; }); }
     var opSeen={}, opItems=[], seg={}, mach={}, oper={}, defMap={}, operTMap={}, dates=[], raw=[];
@@ -5610,7 +5623,7 @@ window.GS6_DEFECT_EMBEDDED_DATA_V941 = {"updated":"21/06/2026 13:08","period":"2
     var weeks=Object.keys(weekMap).map(function(k){return weekMap[k];}).sort(function(a,b){return a.start-b.start;});
     var monthMap={}; raw.forEach(function(r){ if(r.monthKey) monthMap[r.monthKey]={key:r.monthKey,label:r.monthLabel,start:+new Date(Number(String(r.monthKey).slice(0,4)),Number(String(r.monthKey).slice(5,7))-1,1)}; });
     var months=Object.keys(monthMap).map(function(k){return monthMap[k];}).sort(function(a,b){return a.start-b.start;});
-    return {updated:new Date().toLocaleString('vi-VN'), source:sourceLabel||'Google Sheet live', period:period, headerRow:hi+1, headers:headers, map:m, raw:raw, weeks:weeks, months:months, kpi:k, selectedSegment:selectedSegment, selectedMonth:selectedMonth, selectedWeek:selectedWeek, selectedOperationCode:selectedOpCode, operationCodeOptions:opCodeOptions, globalFilterOptions:{segments:globalSegments, months:globalMonths, weeks:globalWeeks}, segments:rankSort(Object.keys(seg).map(function(x){return finalize(seg[x]);}),'diffQty'), machines:rankSort(Object.keys(mach).map(function(x){return finalize(mach[x]);}),'diffQty').slice(0,20), machineStability:rankSort(Object.keys(mach).map(function(x){return finalize(JSON.parse(JSON.stringify(mach[x])));}),'actualProduction').slice(0,20), operations:rankSort(Object.keys(oper).map(function(x){return finalize(oper[x]);}),'diffQty').slice(0,20), defects:paretoFromMap(defMap,'value',10), operationT:paretoFromMap(operTMap,'value',10), dataQuality:{rawRows:dataRows.length, uniqueOperationRows:opItems.length, uniqueLtt:k.lttCount, uniqueStat:k.statCount, weeklyRows:raw.filter(function(x){return x.weekStart;}).length, headerRow:hi+1}};
+    return {updated:new Date().toLocaleString('vi-VN'), source:sourceLabel||'Google Sheet live', period:period, headerRow:hi+1, headers:headers, map:m, raw:raw, valueRaw:valueRaw, weeks:weeks, months:months, kpi:k, selectedSegment:selectedSegment, selectedMonth:selectedMonth, selectedWeek:selectedWeek, selectedOperationCode:selectedOpCode, operationCodeOptions:opCodeOptions, globalFilterOptions:{segments:globalSegments, months:globalMonths, weeks:globalWeeks}, segments:rankSort(Object.keys(seg).map(function(x){return finalize(seg[x]);}),'diffQty'), machines:rankSort(Object.keys(mach).map(function(x){return finalize(mach[x]);}),'diffQty').slice(0,20), machineStability:rankSort(Object.keys(mach).map(function(x){return finalize(JSON.parse(JSON.stringify(mach[x])));}),'actualProduction').slice(0,20), operations:rankSort(Object.keys(oper).map(function(x){return finalize(oper[x]);}),'diffQty').slice(0,20), defects:paretoFromMap(defMap,'value',10), operationT:paretoFromMap(operTMap,'value',10), dataQuality:{rawRows:dataRows.length, uniqueOperationRows:opItems.length, uniqueLtt:k.lttCount, uniqueStat:k.statCount, weeklyRows:raw.filter(function(x){return x.weekStart;}).length, headerRow:hi+1}};
   }
 
   function defBarRow(label,val,max,text,cls){ var pct=max?Math.max(0,Math.min(Math.abs(val)/max*100,100)):0; return '<div class="bar-row"><div title="'+esc(label)+'">'+esc(label)+'</div><div class="bar-bg"><div class="bar-fill '+(cls||'gold')+'" style="width:'+pct+'%"></div></div><div style="text-align:right;font-weight:700">'+text+'</div></div>'; }
@@ -5653,6 +5666,79 @@ window.GS6_DEFECT_EMBEDDED_DATA_V941 = {"updated":"21/06/2026 13:08","period":"2
       addMetric(map[g.key], aggItemFromRaw(r));
     });
     return Object.keys(map).map(function(k){ var x=finalize(map[k]); x.fullName=map[k]._fullName||x.fullName; x.name=shortName(x.fullName,42); x.sortKey=map[k]._sortKey||k; return x; }).sort(function(a,b){ return String(a.sortKey).localeCompare(String(b.sortKey),'vi'); });
+  }
+  // V9.51: Hai biểu đồ giá trị của Group 06 dùng dữ liệu LIVE raw.
+  // Bước 1: loại trùng AS. Bước 2: gom theo LTT Q, lấy AI đúng 1 lần.
+  // Bước 3: phân bổ AI_Q về AS theo BF_AS/SUM(BF_Q), rồi mới cộng theo mảng/tháng.
+  // Không dùng addMetric/pair AS+Q để tránh tác động các KPI, biểu đồ và Group khác.
+  function aggregateDefectValueGroupsByAS(rows, groupFn, includeFn){
+    var byAS={}, dq={source:'LIVE',rawRows:(rows||[]).length,uniqueAS:0,basisAS:0,uniqueLTT:0,missingASRows:0,conflictAS:0,aiConflictLTT:0,bfZeroLTT:0};
+    function nval(v){ v=Number(v); return isFinite(v)?v:0; }
+    function candidateScore(r){
+      var score=0;
+      if(nval(r.actualQty)>0) score+=8;
+      if(nval(r.actualDefectValue)!==0) score+=4;
+      if(nval(r.allowedScaledQty)!==0) score+=2;
+      if(r.monthKey) score+=1;
+      if(r.segment) score+=1;
+      return score;
+    }
+    function signature(r){
+      return [String(r.ltt||''),nval(r.actualDefectValue),nval(r.actualQty),nval(r.allowedScaledQty),String(r.monthKey||''),String(r.segment||'')].join('|');
+    }
+    (rows||[]).forEach(function(r){
+      var statNo=String(r && r.statNo || '').trim();
+      if(!statNo){ dq.missingASRows++; return; }
+      var score=candidateScore(r), sig=signature(r), o=byAS[statNo];
+      if(!o){ byAS[statNo]={row:r,score:score,signatures:{}}; o=byAS[statNo]; }
+      o.signatures[sig]=true;
+      // Nếu AS có dòng trùng không đồng nhất, giữ duy nhất dòng đầy đủ BG/BF/AI/AR/Mảng nhất; không cộng dòng còn lại.
+      if(score>o.score){ o.row=r; o.score=score; }
+    });
+    var lttMap={};
+    Object.keys(byAS).forEach(function(statNo){
+      var o=byAS[statNo], r=o.row;
+      dq.basisAS++;
+      if(Object.keys(o.signatures).length>1) dq.conflictAS++;
+      var lttKey=String(r.ltt||'').trim() || ('NO_LTT_AS_'+statNo);
+      if(!lttMap[lttKey]) lttMap[lttKey]={key:lttKey,totalBF:0,ai:nval(r.allowedScaledQty),aiValues:{},items:[]};
+      var l=lttMap[lttKey], ai=nval(r.allowedScaledQty);
+      l.totalBF+=nval(r.actualQty);
+      l.aiValues[String(ai)]=true;
+      if(!l.ai && ai) l.ai=ai;
+      l.items.push({statNo:statNo,row:r});
+    });
+    Object.keys(lttMap).forEach(function(k){
+      var l=lttMap[k];
+      dq.uniqueLTT++;
+      if(Object.keys(l.aiValues).length>1) dq.aiConflictLTT++;
+      if(!(l.totalBF>0)) dq.bfZeroLTT++;
+    });
+    var map={};
+    Object.keys(byAS).forEach(function(statNo){
+      var r=byAS[statNo].row;
+      if(includeFn && !includeFn(r)) return;
+      var g=groupFn(r);
+      if(!g || !g.key) return;
+      if(!map[g.key]) map[g.key]={rank:0,name:shortName(g.name||g.key,42),fullName:g.fullName||g.name||g.key,sortKey:g.sortKey||g.key,statCount:0,actualQty:0,allowedScaledQty:0,actualDefectValue:0,allowedDefectValue:0,diffDefectValue:0,rag:'Xanh'};
+      var lttKey=String(r.ltt||'').trim() || ('NO_LTT_AS_'+statNo), l=lttMap[lttKey];
+      var a=map[g.key], bg=nval(r.actualDefectValue), bf=nval(r.actualQty);
+      var allocatedAI=(l && l.totalBF>0)?(l.ai*bf/l.totalBF):0;
+      var allowedValue=(l && l.totalBF>0)?(bg/l.totalBF*l.ai):0;
+      dq.uniqueAS++;
+      a.statCount++;
+      a.actualQty+=bf;
+      a.allowedScaledQty+=allocatedAI;
+      a.actualDefectValue+=bg;
+      a.allowedDefectValue+=allowedValue;
+    });
+    var groups=Object.keys(map).map(function(k){
+      var a=map[k];
+      a.diffDefectValue=a.actualDefectValue-a.allowedDefectValue;
+      a.rag=a.diffDefectValue>0?'Đỏ':'Xanh';
+      return a;
+    }).sort(function(a,b){return String(a.sortKey).localeCompare(String(b.sortKey),'vi');});
+    return {groups:groups,dq:dq};
   }
   function renderRateComboChart(id, rows, opts){
     opts=opts||{}; rows=(rows||[]).filter(function(x){return (x.needSx||x.actualProduction||x.baselineQty||x.actualQty);});
@@ -5730,7 +5816,7 @@ window.GS6_DEFECT_EMBEDDED_DATA_V941 = {"updated":"21/06/2026 13:08","period":"2
     for(var g=0;g<=4;g++){ var y=top+innerH*g/4; grid+='<line x1="'+left+'" y1="'+y+'" x2="'+(w-right)+'" y2="'+y+'" stroke="#E5E7EB"/>'; }
     rows.forEach(function(x,i){
       var xp=xPos(i), av=Number(x.actualDefectValue)||0, pv=Number(x.allowedDefectValue)||0, y=yVal(av), bh=top+innerH-y, good=av<=pv, fill=good?'#035D30':'#dc2626';
-      var title=esc(x.fullName||x.name)+'&#10;Giá trị sai hỏng thực tế BG: '+fmtNum(av)+'&#10;Giá trị sai hỏng cho phép BG/BF*AI: '+fmtNum(pv)+'&#10;BF lỗi thực tế: '+fmtNum(x.actualQty)+'&#10;AI sai hỏng cho phép: '+fmtNum(x.allowedScaledQty||x.baselineQty);
+      var title=esc(x.fullName||x.name)+'&#10;Giá trị sai hỏng thực tế BG unique AS: '+fmtNum(av)+'&#10;Giá trị sai hỏng cho phép theo LTT: '+fmtNum(pv)+'&#10;BF lỗi thực tế unique AS: '+fmtNum(x.actualQty)+'&#10;AI đã phân bổ từ LTT: '+fmtNum(x.allowedScaledQty||0);
       bars+='<rect x="'+(xp-barW/2)+'" y="'+y+'" width="'+barW+'" height="'+Math.max(0,bh)+'" rx="4" fill="'+fill+'" opacity="0.86"><title>'+title+'</title></rect>';
       var py=yVal(pv), actualText=fmtMoneyShort(av), baseText='CP '+fmtMoneyShort(pv);
       var actualPref=[y-8,y-22,y+18,top+innerH-42-(i%2)*14,top+22+(i%3)*14];
@@ -5745,19 +5831,38 @@ window.GS6_DEFECT_EMBEDDED_DATA_V941 = {"updated":"21/06/2026 13:08","period":"2
       baseLabels+='<text x="'+xp+'" y="'+byLabel+'" font-size="'+(fsz-0.4)+'" text-anchor="middle" fill="#7B4A0E">'+baseText+'</text>';
       labels+='<text x="'+xp+'" y="'+(top+innerH+18)+'" font-size="10" text-anchor="end" transform="rotate(-40 '+xp+' '+(top+innerH+18)+')">'+esc(shortName(x.name||x.fullName,opts.labelLen||22))+'</text>';
     });
-    var legend='<text x="'+left+'" y="18" font-size="11" fill="#64748b">Cột = giá trị sai hỏng thực tế BG</text><text x="'+(left+230)+'" y="18" font-size="11" fill="#7B4A0E">Dây vàng = giá trị cho phép BG/BF×AI</text><text x="'+(left+500)+'" y="18" fill="#991b1b" font-size="11">Cột đỏ = vượt giá trị cho phép</text>';
+    var legend='<text x="'+left+'" y="18" font-size="11" fill="#64748b">Cột = BG thực tế unique AS</text><text x="'+(left+210)+'" y="18" font-size="11" fill="#7B4A0E">Dây vàng = ΣBG_Q/ΣBF_Q×AI_Q</text><text x="'+(left+485)+'" y="18" fill="#991b1b" font-size="11">Cột đỏ = vượt giá trị cho phép</text>';
     var axis='<text x="8" y="'+(top+innerH+4)+'" font-size="10" fill="#64748b">0</text><text x="8" y="'+(top+8)+'" font-size="10" fill="#64748b">'+fmtMoneyShort(maxVal)+'</text>';
     var svg='<svg width="100%" height="'+h+'" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid meet" role="img" aria-label="'+esc(opts.title||'Giá trị sai hỏng BG vs cho phép')+'"><rect width="'+w+'" height="'+h+'" fill="#fff"/>'+grid+legend+bars+leaders+valueLabels+'<polyline points="'+line+'" fill="none" stroke="#E2B624" stroke-width="3"/>'+dots+baseLabels+labels+axis+'</svg>';
-    setHTML(id,'<div class="def-svg-scroll-inner">'+svg+'</div>');
+    var dq=opts.dq||{}, hasWarn=(dq.missingASRows||dq.conflictAS||dq.aiConflictLTT||dq.bfZeroLTT), dqNote='';
+    if(opts.dq){
+      dqNote='<div class="alert '+(hasWarn?'':'green')+'" style="margin-bottom:8px"><b>🟢 LIVE · AS unique → LTT unique → AI unique:</b> '+fmtNum(dq.uniqueAS||0)+' AS hiển thị · '+fmtNum(dq.uniqueLTT||0)+' LTT làm nền phân bổ'
+        +(dq.missingASRows?' · Loại '+fmtNum(dq.missingASRows)+' dòng thiếu AS':'')
+        +(dq.conflictAS?' · '+fmtNum(dq.conflictAS)+' AS xung đột, đã giữ 1 dòng đầy đủ nhất':'')
+        +(dq.aiConflictLTT?' · '+fmtNum(dq.aiConflictLTT)+' LTT xung đột AI, đã giữ 1 giá trị hợp lệ':'')
+        +(dq.bfZeroLTT?' · '+fmtNum(dq.bfZeroLTT)+' LTT có tổng BF ≤ 0, giá trị cho phép = 0':'')+'</div>';
+    }
+    setHTML(id,dqNote+'<div class="def-svg-scroll-inner">'+svg+'</div>');
   }
 
   function mainSegmentRank(seg){ var order={'Túi giấy':1,'Khay giấy':2,'Flexo cuộn 6 màu':3,'GS6 khác':4}; return order[seg]||9; }
   function renderDefectVisualCharts(d){
     if(!d) return;
-    var raw=d.raw||[], mainSegs=['Túi giấy','Khay giấy','Flexo cuộn 6 màu'];
+    var raw=d.raw||[], valueBasisRaw=d.valueRaw||raw, mainSegs=['Túi giấy','Khay giấy','Flexo cuộn 6 màu'];
+    function passesGlobalValuePeriod(r){
+      if(d.selectedMonth && r.monthKey!==d.selectedMonth) return false;
+      if(d.selectedWeek && r.weekKey!==d.selectedWeek) return false;
+      return true;
+    }
     var segmentTotalRows=(d.segments||[]).filter(function(x){return mainSegs.indexOf(x.fullName)>=0;}).slice().sort(function(a,b){return mainSegmentRank(a.fullName)-mainSegmentRank(b.fullName);});
     renderRateComboChart('def-segment-combo-total',segmentTotalRows,{minWidth:540,height:428,stepW:126,barW:58,labelLen:20,title:'Theo mảng tổng'});
-    renderValueComboChart('def-segment-value-total',segmentTotalRows,{minWidth:540,height:345,stepW:126,barW:58,labelLen:20,title:'Giá trị theo mảng tổng'});
+    var valueSourceIsLive=window.GS6_DEFECT_VALUE_SOURCE_MODE==='live';
+    if(valueSourceIsLive){
+      var totalValueResult=aggregateDefectValueGroupsByAS(valueBasisRaw.filter(function(r){return mainSegs.indexOf(r.segment)>=0;}),function(r){return {key:r.segment,name:r.segment,fullName:r.segment,sortKey:String(mainSegmentRank(r.segment))};},passesGlobalValuePeriod);
+      renderValueComboChart('def-segment-value-total',totalValueResult.groups,{minWidth:540,height:345,stepW:126,barW:58,labelLen:20,title:'Giá trị theo mảng tổng',dq:totalValueResult.dq});
+    }else{
+      setHTML('def-segment-value-total','<div class="alert red"><b>LIVE ERROR:</b> Biểu đồ giá trị không sử dụng dữ liệu fallback. Hãy kiểm tra nguồn Google Sheet LIVE và nạp lại dữ liệu.</div>');
+    }
     var segSel=($('def-monthly-segment-filter')||{}).value||'', monSel=($('def-month-filter')||{}).value||'';
     var rows=raw.filter(function(r){ if(!r.monthKey) return false; if(segSel) return r.segment===segSel; return mainSegs.indexOf(r.segment)>=0; });
     if(monSel) rows=rows.filter(function(r){return r.monthKey===monSel;});
@@ -5770,10 +5875,14 @@ window.GS6_DEFECT_EMBEDDED_DATA_V941 = {"updated":"21/06/2026 13:08","period":"2
     var monthGroups=aggregateMetricGroups(rows,monthSegmentGrouper(segSel,monSel));
     renderRateComboChart('def-segment-monthly-combo',monthGroups,{minWidth:760,height:320,stepW:74,labelLen:22,title:'Theo tháng và mảng'});
     var valueSegSel=($('def-value-monthly-segment-filter')||{}).value||'', valueMonSel=($('def-value-month-filter')||{}).value||'';
-    var valueRows=raw.filter(function(r){ if(!r.monthKey) return false; if(valueSegSel) return r.segment===valueSegSel; return mainSegs.indexOf(r.segment)>=0; });
-    if(valueMonSel) valueRows=valueRows.filter(function(r){return r.monthKey===valueMonSel;});
-    var valueMonthGroups=aggregateMetricGroups(valueRows,monthSegmentGrouper(valueSegSel,valueMonSel));
-    renderValueComboChart('def-segment-monthly-value-combo',valueMonthGroups,{minWidth:760,height:330,stepW:74,labelLen:22,title:'Giá trị theo tháng và mảng'});
+    // Giữ toàn bộ tháng/tuần trong nền phân bổ để AI của một LTT không bị dùng lại khi lọc kỳ.
+    var valueRows=valueBasisRaw.filter(function(r){ if(!r.monthKey) return false; if(valueSegSel) return r.segment===valueSegSel; return mainSegs.indexOf(r.segment)>=0; });
+    if(valueSourceIsLive){
+      var valueMonthResult=aggregateDefectValueGroupsByAS(valueRows,monthSegmentGrouper(valueSegSel,valueMonSel),function(r){return passesGlobalValuePeriod(r) && (!valueMonSel || r.monthKey===valueMonSel);});
+      renderValueComboChart('def-segment-monthly-value-combo',valueMonthResult.groups,{minWidth:760,height:330,stepW:74,labelLen:22,title:'Giá trị theo tháng và mảng',dq:valueMonthResult.dq});
+    }else{
+      setHTML('def-segment-monthly-value-combo','<div class="alert red"><b>LIVE ERROR:</b> Biểu đồ giá trị theo tháng không sử dụng dữ liệu fallback. Hãy kiểm tra nguồn Google Sheet LIVE và nạp lại dữ liệu.</div>');
+    }
 
     updateLinkedWeekOptions(d,'def-machine-rate-month-filter','def-machine-rate-week-filter','Tất cả tuần');
     var machRows=machineRowsByPeriod(raw,'def-machine-rate-month-filter','def-machine-rate-week-filter');
@@ -6150,6 +6259,8 @@ window.GS6_DEFECT_EMBEDDED_DATA_V941 = {"updated":"21/06/2026 13:08","period":"2
   }
   function renderDefectData(d,mode){
     if(!d || !d.kpi) return;
+    // Chỉ hai biểu đồ giá trị được khóa LIVE tuyệt đối; lọc lại trên dữ liệu LIVE vẫn giữ trạng thái live.
+    window.GS6_DEFECT_VALUE_SOURCE_MODE=(mode==='live'||mode==='filter')?'live':String(mode||'');
     window.GS6_DEFECT_LIVE_DATA=d; window.GS6_DEFECT_DATA=null;
     var k=d.kpi;
     setText('def-period-line', d.period || 'Không rõ kỳ dữ liệu');
