@@ -8736,31 +8736,9 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
   }
   function unionKeys(a,b){var m={}; Object.keys(a||{}).forEach(function(k){m[k]=1}); Object.keys(b||{}).forEach(function(k){m[k]=1}); return Object.keys(m).filter(function(k){return k&&k!=='Không rõ'}).sort();}
   function renderMonthlyPlanChart(){
-    var el=$('pipe-month-chart'); if(!el)return;
-    var titleCard=el.closest('.card'); var title=titleCard?titleCard.querySelector('.card-title'):null;
-    if(title)title.textContent='Dòng 3. Tổng giá trị đơn hàng theo tháng – Kế hoạch BH-Đơn đặt hàng vs Đã giao';
-    var actual=actualMonthlyFromPipe(window.GS6_PIPE_ROWS||[]);
-    var plan=window.GS6_KHKD2026_PLAN_MONTHLY||{};
-    var keys=unionKeys(actual,plan);
-    if(!keys.length){el.innerHTML='<div class="small">Chưa có dữ liệu tháng từ DON_HANG_SO hoặc KHKD_2026.</div>';return}
-    var max=0; keys.forEach(function(k){var a=actual[k]||{},p=plan[k]||{}; max=Math.max(max,p.plan||0,a.order||0,a.ship||0)}); if(max<=0)max=1;
-    var W=1000,H=360,ml=58,mr=22,mt=46,mb=64,plotW=W-ml-mr,plotH=H-mt-mb,step=plotW/Math.max(keys.length,1),barW=Math.max(8,Math.min(18,step*0.19));
-    var svg=[];
-    svg.push('<svg class="pipe-v938-month-svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Tổng giá trị đơn hàng theo tháng kế hoạch BH đơn đặt hàng đã giao" preserveAspectRatio="xMidYMid meet">');
-    svg.push('<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#fff" rx="10"></rect>');
-    for(var i=0;i<=5;i++){var y=mt+plotH-i*plotH/5,v=max*i/5; svg.push('<line x1="'+ml+'" y1="'+y+'" x2="'+(W-mr)+'" y2="'+y+'" stroke="#E5E7EB"></line>'); svg.push('<text x="'+(ml-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="10" fill="#4B5563">'+esc(fmtTy(v,1))+'</text>')}
-    svg.push('<line x1="'+ml+'" y1="'+mt+'" x2="'+ml+'" y2="'+(mt+plotH)+'" stroke="#9CA3AF"></line><line x1="'+ml+'" y1="'+(mt+plotH)+'" x2="'+(W-mr)+'" y2="'+(mt+plotH)+'" stroke="#9CA3AF"></line>');
-    svg.push('<text x="18" y="'+(mt+plotH/2)+'" transform="rotate(-90 18 '+(mt+plotH/2)+')" text-anchor="middle" font-size="10.5" fill="#374151">Tỷ đồng</text>');
-    keys.forEach(function(k,idx){
-      var a=actual[k]||{},p=plan[k]||{},vals=[{key:'plan',v:p.plan||0,c:'#D6A300',name:'Kế hoạch BH'}, {key:'order',v:a.order||0,c:'#166534',name:'Đơn đặt hàng'}, {key:'ship',v:a.ship||0,c:'#E53935',name:'Đã giao'}];
-      var cx=ml+idx*step+step/2;
-      vals.forEach(function(d,j){var h=Math.max(0,d.v/max*plotH),x=cx+(j-1)*barW*1.25-barW/2,y=mt+plotH-h; svg.push('<rect x="'+x+'" y="'+y+'" width="'+barW+'" height="'+Math.max(1,h)+'" fill="'+d.c+'" rx="2"><title>'+esc(monthLabel(k)+' · '+d.name+': '+fmtTyFull(d.v))+'</title></rect>'); if(d.v>0&&h>20&&idx%2===0){svg.push('<text x="'+(x+barW/2)+'" y="'+(y-4)+'" text-anchor="middle" font-size="8" font-weight="900" fill="#374151">'+esc(fmtTy(d.v,1))+'</text>')}});
-      svg.push('<text x="'+cx+'" y="'+(mt+plotH+18)+'" text-anchor="middle" font-size="10" fill="#374151">'+esc(monthLabel(k))+'</text>');
-    });
-    svg.push('</svg>');
-    var warn='';
-    if(window.GS6_KHKD2026_PLAN_ERROR)warn='<div class="pipe-v938-error"><b>KHKD_2026 chưa tải được:</b> '+esc(window.GS6_KHKD2026_PLAN_ERROR)+' · Cần bật quyền xem link hoặc Publish to web cho Google Sheet kế hoạch.</div>';
-    el.innerHTML='<div class="pipe-v938-month-wrap">'+warn+'<div class="pipe-v938-month-head"><div><div class="pipe-v938-month-title">Tổng giá trị đơn hàng theo tháng – Kế hoạch BH-Đơn đặt hàng vs Đã giao</div><div class="pipe-v938-month-sub">Kế hoạch BH lấy từ sheet KHKD_2026 cột I – Doanh thu thuần; Đơn đặt hàng lấy DON_HANG_SO cột O; Đã giao = cột P × cột N.</div></div></div>'+svg.join('')+'<div class="pipe-v938-legend"><span class="pipe-v938-lg"><i class="pipe-v938-swatch pipe-v938-plan"></i>Kế hoạch BH</span><span class="pipe-v938-lg"><i class="pipe-v938-swatch pipe-v938-order"></i>Đơn đặt hàng</span><span class="pipe-v938-lg"><i class="pipe-v938-swatch pipe-v938-ship"></i>Đã giao</span></div></div>';
+    // V-fix chống giật Dòng 3: hàm này chỉ còn giữ để tương thích API cũ (loadPlan/schedule gọi tới),
+    // KHÔNG còn tự ghi vào #pipe-month-chart nữa. Việc vẽ biểu đồ Dòng 3 do bản V9.42 (renderMonthV942) đảm nhiệm duy nhất,
+    // tránh 3 script cùng ghi đè DOM liên tục gây nhấp nháy/giật biểu đồ.
   }
   function loadPlan(){
     if(window.GS6_KHKD2026_PLAN_LOADING)return; window.GS6_KHKD2026_PLAN_LOADING=true;
@@ -8776,7 +8754,8 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
   window.GS6_renderMonthlyPlanChart_V938=renderMonthlyPlanChart;
   window.GS6_loadKHKD2026_V938=loadPlan;
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){loadPlan();schedule();}); else {loadPlan();schedule();}
-  var ticks=0,iv=setInterval(function(){ticks++; renderMonthlyPlanChart(); if(ticks>120&&(window.GS6_PIPE_ROWS||[]).length&&(window.GS6_KHKD2026_PLAN_MONTHLY||window.GS6_KHKD2026_PLAN_ERROR))clearInterval(iv)},1000);
+  // V-fix chống giật Dòng 3: đã gỡ setInterval vẽ lại mỗi giây (nguồn gây giật biểu đồ); nạp dữ liệu KHKD_2026
+  // vẫn chạy qua loadPlan()/schedule() ở trên, render Dòng 3 do V9.42 đảm nhiệm.
 })();
 </script>
 
@@ -8901,26 +8880,9 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
   function planMonthly(rows){var map={}; (rows||[]).forEach(function(r){var mk=monthKeyPlan(field(r,['Tháng','Tháng ','Thang'],1)); if(!mk)return; var rev=num(field(r,['Doanh thu thuần','Doanh thu ke hoach','Doanh thu kế hoạch','Doanh thu thuan'],9)); if(!map[mk])map[mk]={plan:0}; map[mk].plan+=rev}); return map}
   function unionKeys(a,b){var m={}; Object.keys(a||{}).forEach(function(k){m[k]=1}); Object.keys(b||{}).forEach(function(k){m[k]=1}); return Object.keys(m).filter(Boolean).sort()}
   function renderMonth(){
-    var el=$('pipe-month-chart'); if(!el)return;
-    var actual=actualMonthly(pipeRowsForMonth()), plan=planMonthly(planRowsFiltered()), keys=unionKeys(actual,plan);
-    if(!keys.length){el.innerHTML='<div class="small">Chưa có dữ liệu tháng theo bộ lọc hiện tại.</div>'; return}
-    var max=0; keys.forEach(function(k){var a=actual[k]||{},p=plan[k]||{}; max=Math.max(max,p.plan||0,a.order||0,a.ship||0)}); if(max<=0)max=1;
-    var W=1120,H=385,ml=58,mr=24,mt=58,mb=72,plotW=W-ml-mr,plotH=H-mt-mb,step=plotW/Math.max(keys.length,1),barW=Math.max(7,Math.min(17,step*0.18));
-    var svg=[]; svg.push('<svg class="pipe-v939-month-svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Tổng giá trị đơn hàng theo tháng kế hoạch bán hàng đơn đặt hàng đã giao" preserveAspectRatio="xMidYMid meet">');
-    svg.push('<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#fff" rx="10"></rect>');
-    for(var i=0;i<=5;i++){var y=mt+plotH-i*plotH/5,v=max*i/5; svg.push('<line x1="'+ml+'" y1="'+y+'" x2="'+(W-mr)+'" y2="'+y+'" stroke="#E5E7EB"></line>'); svg.push('<text x="'+(ml-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="10" fill="#4B5563">'+esc(fmtTy(v,1))+'</text>')}
-    svg.push('<line x1="'+ml+'" y1="'+mt+'" x2="'+ml+'" y2="'+(mt+plotH)+'" stroke="#9CA3AF"></line><line x1="'+ml+'" y1="'+(mt+plotH)+'" x2="'+(W-mr)+'" y2="'+(mt+plotH)+'" stroke="#9CA3AF"></line>');
-    svg.push('<text x="18" y="'+(mt+plotH/2)+'" transform="rotate(-90 18 '+(mt+plotH/2)+')" text-anchor="middle" font-size="10.5" fill="#374151">Tỷ đồng</text>');
-    keys.forEach(function(k,idx){
-      var a=actual[k]||{},p=plan[k]||{},vals=[{v:p.plan||0,c:'#D6A300',name:'Kế hoạch BH'},{v:a.order||0,c:'#166534',name:'Đơn đặt hàng'},{v:a.ship||0,c:'#E53935',name:'Đã giao'}];
-      var cx=ml+idx*step+step/2;
-      vals.forEach(function(d,j){var h=d.v>0?Math.max(1,d.v/max*plotH):0,x=cx+(j-1)*barW*1.35-barW/2,y=mt+plotH-h; svg.push('<rect x="'+x+'" y="'+y+'" width="'+barW+'" height="'+h+'" fill="'+d.c+'" rx="2"><title>'+esc(monthLabel(k)+' · '+d.name+': '+fmtTyFull(d.v))+'</title></rect>'); if(d.v>0){var ty=Math.max(11,y-5-(j===1?8:0)); svg.push('<text x="'+(x+barW/2)+'" y="'+ty+'" text-anchor="middle" font-size="7.5" font-weight="900" fill="'+d.c+'">'+esc(fmtTy(d.v,1))+'</text>')}});
-      svg.push('<text x="'+cx+'" y="'+(mt+plotH+18)+'" text-anchor="middle" font-size="10" fill="#374151">'+esc(monthLabel(k))+'</text>');
-    });
-    svg.push('</svg>');
-    var warn=''; if(window.GS6_KHKD2026_PLAN_ERROR)warn='<div class="pipe-v939-error"><b>KHKD_2026 chưa tải được:</b> '+esc(window.GS6_KHKD2026_PLAN_ERROR)+' · Cần bật quyền xem link hoặc Publish to web cho Google Sheet kế hoạch.</div>';
-    var ng=getIndustryValue()||'Tất cả';
-    el.innerHTML='<div class="pipe-v939-month-wrap">'+warn+'<div class="pipe-v939-month-head"><div><div class="pipe-v939-month-title">Tổng giá trị đơn hàng theo tháng – Kế hoạch BH-Đơn đặt hàng vs Đã giao</div><div class="pipe-v939-month-sub">Kế hoạch BH: KHKD_2026 cột I – Doanh thu thuần; lọc nghành hàng cột F = '+esc(ng)+'. Đơn đặt hàng: DON_HANG_SO cột O; Đã giao = cột P × cột N.</div></div></div>'+svg.join('')+'<div class="pipe-v939-legend"><span class="pipe-v939-lg"><i class="pipe-v939-swatch pipe-v939-plan"></i>Kế hoạch BH</span><span class="pipe-v939-lg"><i class="pipe-v939-swatch pipe-v939-order"></i>Đơn đặt hàng</span><span class="pipe-v939-lg"><i class="pipe-v939-swatch pipe-v939-ship"></i>Đã giao</span></div></div>';
+    // V-fix chống giật Dòng 3: hàm này không còn tự ghi vào #pipe-month-chart nữa (giữ để tương thích
+    // với renderAll/schedule cũ). Việc vẽ biểu đồ Dòng 3 nay do duy nhất bản V9.42 (renderMonthV942) đảm nhiệm,
+    // tránh nhiều script ghi đè DOM liên tục gây nhấp nháy/giật biểu đồ.
   }
   function syncTablePlantAttrs(){var trs=document.querySelectorAll('#body-pipe tr'), rows=window.GS6_PIPE_ROWS||[]; trs.forEach(function(tr,i){if(rows[i])tr.setAttribute('data-plant-s',plantOf(rows[i]));});}
   function applyTableFilter(){
@@ -8936,7 +8898,8 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){ensureLayout(); bindControls(); schedule(); if(typeof window.GS6_loadKHKD2026_V938==='function')window.GS6_loadKHKD2026_V938();});
   else {ensureLayout(); bindControls(); schedule(); if(typeof window.GS6_loadKHKD2026_V938==='function')window.GS6_loadKHKD2026_V938();}
   window.addEventListener('resize',function(){schedule()},{passive:true});
-  var ticks=0,iv=setInterval(function(){ticks++; renderAll(); if(ticks>120&&(window.GS6_PIPE_ROWS||[]).length)clearInterval(iv)},1000);
+  // V-fix chống giật Dòng 3: đã gỡ setInterval vẽ lại mỗi giây. KPI/bảng Pipeline vẫn cập nhật qua
+  // schedule() ở trên cùng các listener change/resize/filterPipe hiện có.
 })();
 </script>
 
@@ -9223,7 +9186,9 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
       var plan=planMonthly(planRowsFiltered()), order=orderMonthly(orderRowsFiltered()), ship=shipMonthly(deliveredRowsFiltered());
       var keys=unionKeys(plan,order,ship);
       if(!keys.length){el.innerHTML='<div class="small">Chưa có dữ liệu tháng theo bộ lọc hiện tại.</div>'; return;}
-      var max=0; keys.forEach(function(k){var p=plan[k]||{},o=order[k]||{},s=ship[k]||{}; max=Math.max(max,p.plan||0,o.order||0,s.ship||0)}); if(max<=0)max=1;
+      var max=0,totalPlan=0,totalOrder=0,totalShip=0;
+      keys.forEach(function(k){var p=plan[k]||{},o=order[k]||{},s=ship[k]||{}; max=Math.max(max,p.plan||0,o.order||0,s.ship||0); totalPlan+=p.plan||0; totalOrder+=o.order||0; totalShip+=s.ship||0;});
+      if(max<=0)max=1;
       var W=1120,H=385,ml=58,mr=24,mt=58,mb=72,plotW=W-ml-mr,plotH=H-mt-mb,step=plotW/Math.max(keys.length,1),barW=Math.max(7,Math.min(17,step*0.18));
       var svg=[]; svg.push('<svg class="pipe-v939-month-svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Tổng giá trị đơn hàng theo tháng kế hoạch bán hàng đơn đặt hàng đã giao" preserveAspectRatio="xMidYMid meet">');
       svg.push('<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#fff" rx="10"></rect>');
@@ -9243,26 +9208,20 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
       if(window.GS6_DELIVERED_NEW_ERROR)warn+='<div class="pipe-v942-error"><b>Nguồn Đã giao mới chưa tải được:</b> '+esc(window.GS6_DELIVERED_NEW_ERROR)+' · Kiểm tra quyền xem Google Sheet hoặc tên sheet.</div>';
       var ng=getIndustryValue()||'Tất cả';
       var src='<div class="pipe-v942-source">Kế hoạch BH: KHKD_2026 cột I – Doanh thu thuần; lọc nghành hàng cột F = '+esc(ng)+'. Đơn đặt hàng: DON_HANG_SO cột O. <b>Đã giao:</b> Google Sheet "Bảng kê phiếu xuất kho bán hàng", tháng từ cột B, doanh thu VND từ cột L, mảng theo mã vật tư cột G: K=Khay giấy, T=Túi giấy, I=Flexo/In cuộn, khác=GS6 khác và chỉ cộng trong Tất cả.</div>';
-      el.innerHTML='<div class="pipe-v939-month-wrap">'+warn+'<div class="pipe-v939-month-head"><div><div class="pipe-v939-month-title">Tổng giá trị đơn hàng theo tháng – Kế hoạch BH-Đơn đặt hàng vs Đã giao</div>'+src+'</div></div>'+svg.join('')+'<div class="pipe-v939-legend"><span class="pipe-v939-lg"><i class="pipe-v939-swatch pipe-v939-plan"></i>Kế hoạch BH</span><span class="pipe-v939-lg"><i class="pipe-v939-swatch pipe-v939-order"></i>Đơn đặt hàng</span><span class="pipe-v939-lg"><i class="pipe-v939-swatch pipe-v939-ship"></i>Đã giao</span></div></div>';
+      el.innerHTML='<div class="pipe-v939-month-wrap">'+warn+'<div class="pipe-v939-month-head"><div><div class="pipe-v939-month-title">Tổng giá trị đơn hàng theo tháng – Kế hoạch BH-Đơn đặt hàng vs Đã giao</div>'+src+'</div></div>'+svg.join('')+'<div class="pipe-v939-legend"><span class="pipe-v939-lg"><i class="pipe-v939-swatch pipe-v939-plan"></i>Kế hoạch BH: '+esc(fmtTyFull(totalPlan))+'</span><span class="pipe-v939-lg"><i class="pipe-v939-swatch pipe-v939-order"></i>Đơn đặt hàng: '+esc(fmtTyFull(totalOrder))+'</span><span class="pipe-v939-lg"><i class="pipe-v939-swatch pipe-v939-ship"></i>Đã giao: '+esc(fmtTyFull(totalShip))+'</span></div></div>';
     } finally { setTimeout(function(){rendering=false;},0); }
   }
-  function installObserver(){
-    var el=$('pipe-month-chart'); if(!el||el.__v942obs)return;
-    el.__v942obs=true;
-    if(window.MutationObserver){
-      var mo=new MutationObserver(function(){if(!rendering)setTimeout(renderMonthV942,30)});
-      mo.observe(el,{childList:true,subtree:false});
-    }
-  }
-  function apply(){ensureIndustryOptions(); bindFilterEvents(); installObserver(); renderMonthV942();}
+  function apply(){ensureIndustryOptions(); bindFilterEvents(); renderMonthV942();}
   window.GS6_loadDeliveredRevenueV942=loadDeliveredNew;
   var prevV938=window.GS6_renderMonthlyPlanChart_V938;
   window.GS6_renderMonthlyPlanChart_V938=function(){try{if(typeof prevV938==='function')prevV938.apply(this,arguments)}catch(e){} setTimeout(renderMonthV942,30);};
   var prevV939=window.GS6_renderPipelineV939;
   window.GS6_renderPipelineV939=function(){var r; try{if(typeof prevV939==='function')r=prevV939.apply(this,arguments)}catch(e){} setTimeout(renderMonthV942,30); return r;};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){loadDeliveredNew(); apply();}); else {loadDeliveredNew(); apply();}
+  // V-fix chống giật Dòng 3: chỉ còn 1 loạt setTimeout nạp dữ liệu ban đầu, đã gỡ MutationObserver và
+  // setInterval vẽ lại mỗi giây (nguồn chính gây giật/nhấp nháy biểu đồ). renderMonthV942 vẫn được
+  // gọi lại khi: dữ liệu Kế hoạch BH/Đơn đặt hàng/Đã giao tải xong, hoặc khi đổi bộ lọc ngành hàng/nhà máy.
   [80,200,500,1000,2000,4000,7000,12000].forEach(function(t){setTimeout(apply,t)});
-  var n=0,timer=setInterval(function(){n++; apply(); if(n>180)clearInterval(timer);},1000);
 })();
 </script>
 <!-- V9.49: Fix script syntax in Group 06 Sai hỏng ERP live loader; 00_Task_Schedule live remains unchanged. -->
