@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V9.44 – Smart Factory SingleTab CleanWhiteNav</title>
+<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V10.9 – Action Progress Log</title>
 <style>
 :root{
   --dark:#035D30;--green:#035A28;--gold:#E2B624;--gold2:#FFFDE7;
@@ -234,6 +234,172 @@ window.addEventListener('resize', syncStickyNavOffset);
 window.addEventListener('load', syncStickyNavOffset);
 setTimeout(syncStickyNavOffset, 250);
 </script>
+<style id="gs6-closed-loop-styles">
+/* === V10 Closed-loop Management — scoped to Group 00/03/05 === */
+.cl-primary-btn,.cl-secondary-btn{border-radius:6px;padding:8px 13px;font-family:inherit;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap}
+.cl-primary-btn{border:1px solid #035D30;background:#035D30;color:#fff}
+.cl-primary-btn:hover{background:#024A27}
+.cl-secondary-btn{border:1px solid #A5D6A7;background:#fff;color:#035D30}
+.cl-secondary-btn:hover{background:#F3F8F1}
+.cl-source-state{font-size:11px;font-weight:800;color:#92400E;margin-top:5px;line-height:1.4}
+.cl-source-state.cl-live{color:#166534}.cl-source-state.cl-error{color:#991B1B}
+.cl-empty{text-align:center;color:#6B7280;padding:18px!important;font-style:italic}
+.cl-table-wrap{width:100%;overflow-x:auto;overflow-y:visible;border:1px solid #D1D5DB;border-radius:8px;background:#fff}
+.cl-table-wrap table{min-width:960px;margin:0}
+.cl-table-wrap a{color:#035D30;font-weight:700}
+.cl-link-btn{border:0;background:transparent;color:#035D30;font-family:inherit;font-size:inherit;font-weight:900;text-decoration:underline;cursor:pointer;padding:0}
+
+/* Group 00 */
+#exec .cl-exec-summary{margin-top:14px;background:#fff;border:1px solid #A5D6A7;border-left:6px solid #E2B624;border-radius:10px;padding:14px;box-shadow:0 4px 12px rgba(3,93,48,.08)}
+#exec .cl-exec-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+#exec .cl-exec-head h2{margin:0;color:#035D30;font-size:15px}
+#exec .cl-exec-kpis{display:grid;grid-template-columns:repeat(6,minmax(125px,1fr));gap:9px}
+#exec .cl-exec-kpi{border:1px solid #D1D5DB;border-top:4px solid #035D30;border-radius:8px;background:#fff;padding:9px;text-align:left;font-family:inherit;cursor:pointer;min-height:91px}
+#exec .cl-exec-kpi:hover{background:#F3F8F1;box-shadow:0 3px 9px rgba(3,93,48,.12)}
+#exec .cl-exec-kpi span{display:block;font-size:10.5px;font-weight:800;text-transform:uppercase;color:#4B5563}
+#exec .cl-exec-kpi b{display:block;font-size:25px;color:#035D30;margin:5px 0}
+#exec .cl-exec-kpi small{display:block;font-size:10px;color:#6B7280;line-height:1.3}
+#exec .cl-exec-kpi.cl-danger{border-top-color:#DC2626}#exec .cl-exec-kpi.cl-danger b{color:#B91C1C}
+#exec .cl-exec-kpi.cl-warn{border-top-color:#F59E0B}#exec .cl-exec-kpi.cl-warn b{color:#92400E}
+#exec .cl-exec-kpi.cl-positive{border-top-color:#16A34A}
+
+/* Group 03 read-only */
+#kb-wrap .cl-kb-banner{display:flex;justify-content:space-between;align-items:center;gap:14px;background:#FFFDE7;border:1px solid #E2B624;border-left:5px solid #E2B624;border-radius:8px;padding:12px 14px;margin-bottom:14px}
+#kb-wrap .cl-kb-banner b,#kb-wrap .cl-kb-banner span{display:block}
+#kb-wrap .cl-kb-banner b{color:#035D30;margin-bottom:4px}#kb-wrap .cl-kb-banner span{font-size:12px;color:#4B5563;line-height:1.45}
+
+/* Group 05 */
+#contract-wrap .cl-control-banner{background:#F8FFF7;border:1px solid #A5D6A7;border-left:5px solid #E2B624;border-radius:8px;padding:12px 14px;margin-bottom:10px}
+#contract-wrap .cl-control-banner>div:first-child b,#contract-wrap .cl-control-banner>div:first-child span{display:block}
+#contract-wrap .cl-control-banner>div:first-child b{font-size:14px;color:#035D30;margin-bottom:4px}
+#contract-wrap .cl-control-banner>div:first-child span{font-size:11.5px;color:#4B5563;line-height:1.5}
+#contract-wrap .cl-connection{display:grid;grid-template-columns:minmax(250px,1.35fr) minmax(190px,.8fr) minmax(180px,.8fr) auto auto auto;gap:8px;margin-top:10px}
+#contract-wrap .cl-connection input{border:1px solid #A5D6A7;border-radius:6px;padding:8px 10px;font-family:inherit;font-size:11.5px;min-width:0}
+#contract-wrap .cl-subnav{display:flex;gap:5px;flex-wrap:wrap;margin:10px 0;background:#F3F8F1;border:1px solid #C8E6C9;border-radius:8px;padding:6px}
+#contract-wrap .cl-subnav button{border:1px solid #A5D6A7;background:#fff;color:#035D30;border-radius:999px;padding:7px 12px;font-family:inherit;font-size:11.5px;font-weight:800;cursor:pointer}
+#contract-wrap .cl-subnav button.cl-on{background:#E2B624;border-color:#E2B624;color:#035D30}
+#contract-wrap .cl-view{display:none}#contract-wrap .cl-view.cl-on{display:block}
+#contract-wrap .cl-kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(145px,1fr));gap:10px;margin:10px 0}
+#contract-wrap .cl-kpi-card{border:1px solid #D1D5DB;border-left:5px solid #035D30;border-radius:8px;background:#fff;padding:11px 12px;text-align:left;font-family:inherit;cursor:pointer;min-height:94px;box-shadow:0 2px 7px rgba(3,93,48,.07)}
+#contract-wrap .cl-kpi-card:hover{background:#F3F8F1}
+#contract-wrap .cl-kpi-card span{display:block;color:#4B5563;font-size:10.5px;font-weight:900;text-transform:uppercase}
+#contract-wrap .cl-kpi-card b{display:block;color:#035D30;font-size:25px;margin:5px 0}
+#contract-wrap .cl-kpi-card small{display:block;color:#6B7280;font-size:10px;line-height:1.3}
+#contract-wrap .cl-kpi-card.cl-danger{border-left-color:#DC2626}#contract-wrap .cl-kpi-card.cl-danger b{color:#B91C1C}
+#contract-wrap .cl-kpi-card.cl-warn{border-left-color:#F59E0B}#contract-wrap .cl-kpi-card.cl-warn b{color:#92400E}
+#contract-wrap .cl-kpi-card.cl-positive{border-left-color:#16A34A}
+#contract-wrap .cl-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+#contract-wrap .cl-panel{background:#fff;border:1px solid #D1D5DB;border-radius:8px;padding:13px;box-shadow:0 2px 7px rgba(3,93,48,.06);min-width:0}
+#contract-wrap .cl-panel h3{margin:0 0 10px;color:#035D30;font-size:13.5px;border-bottom:2px solid #E2B624;padding-bottom:6px}
+#contract-wrap .cl-chart-empty{min-height:140px;display:flex;align-items:center;justify-content:center;color:#6B7280;font-style:italic;background:#F9FAFB;border-radius:6px}
+#contract-wrap .cl-trend-svg{width:100%;height:auto;display:block;min-height:230px}
+#contract-wrap .cl-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:10px;color:#4B5563;margin-top:4px}
+#contract-wrap .cl-legend i{display:inline-block;width:10px;height:10px;margin-right:4px;border-radius:2px;vertical-align:-1px}
+#contract-wrap .cl-bar-row{display:grid;grid-template-columns:minmax(90px,145px) 1fr 45px;gap:8px;align-items:center;margin:8px 0;font-size:11px}
+#contract-wrap .cl-bar-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700;color:#374151}
+#contract-wrap .cl-bar-track{height:11px;background:#E5E7EB;border-radius:999px;overflow:hidden}
+#contract-wrap .cl-bar-fill{height:100%;background:#DC2626;border-radius:999px}
+#contract-wrap .cl-bar-fill.cl-amber{background:#F59E0B}#contract-wrap .cl-bar-fill.cl-green{background:#16A34A}
+#contract-wrap .cl-bar-value{text-align:right;font-weight:900;color:#374151}
+#contract-wrap .cl-holder-grid{display:grid;grid-template-columns:minmax(105px,1fr) repeat(5,52px);gap:3px;align-items:stretch;font-size:10px}
+#contract-wrap .cl-holder-grid>div{padding:6px 4px;border-radius:4px;background:#F3F8F1;text-align:center}
+#contract-wrap .cl-holder-grid .cl-holder-name{text-align:left;font-weight:800;color:#035D30;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#contract-wrap .cl-holder-grid .cl-holder-head{font-weight:900;background:#035D30;color:#fff}
+#contract-wrap .cl-filter-grid{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:9px;background:#F3F8F1;border:1px solid #C8E6C9;border-radius:8px;padding:10px;margin-bottom:10px}
+#contract-wrap .cl-filter-grid label{font-size:10px;font-weight:900;color:#035D30;text-transform:uppercase}
+#contract-wrap .cl-filter-grid input,#contract-wrap .cl-filter-grid select{display:block;width:100%;margin-top:4px;border:1px solid #A5D6A7;border-radius:5px;padding:7px 8px;font-family:inherit;font-size:11px;background:#fff;text-transform:none}
+#contract-wrap .cl-filter-action{display:flex;gap:8px;align-items:flex-end;justify-content:space-between;font-size:11px;font-weight:800;color:#035D30}
+#contract-wrap .cl-workbench-grid{align-items:start}
+#contract-wrap .cl-form{margin:0}
+#contract-wrap .cl-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px 11px;margin-bottom:12px}
+#contract-wrap .cl-form-grid label{font-size:10.5px;font-weight:800;color:#374151}
+#contract-wrap .cl-form-grid input,#contract-wrap .cl-form-grid select,#contract-wrap .cl-form-grid textarea{display:block;width:100%;margin-top:4px;border:1px solid #A5D6A7;border-radius:5px;padding:7px 8px;font-family:inherit;font-size:11.5px;background:#fff;resize:vertical}
+#contract-wrap .cl-form-grid .cl-span2{grid-column:1/-1}
+#contract-wrap .cl-open-source-row,#contract-wrap .cl-open-core-row,#contract-wrap .cl-open-impact-row,#contract-wrap .cl-reporter-row{grid-column:1/-1;display:grid;gap:9px 11px;align-items:start}
+#contract-wrap .cl-open-source-row{grid-template-columns:repeat(4,minmax(0,1fr))}
+#contract-wrap .cl-open-core-row{grid-template-columns:minmax(0,1fr) minmax(0,2fr) minmax(0,2fr)}
+#contract-wrap .cl-open-impact-row{grid-template-columns:1fr 1fr}
+#contract-wrap .cl-reporter-row{grid-template-columns:1fr 1.25fr .8fr;padding:9px;border:1px solid #C8E6C9;border-radius:7px;background:#F8FFF7}
+#contract-wrap .cl-open-source-row label,#contract-wrap .cl-open-core-row label,#contract-wrap .cl-open-impact-row label,#contract-wrap .cl-reporter-row label{font-size:10.5px;font-weight:800;color:#374151;min-width:0}
+#contract-wrap .cl-open-impact-row textarea{min-height:98px}
+#contract-wrap .cl-rule-note{font-size:10.5px;line-height:1.45;color:#92400E;background:#FFFDE7;border-left:4px solid #E2B624;padding:8px 10px;border-radius:5px;margin-bottom:10px}
+#contract-wrap .cl-operation-status{font-size:11.5px;font-weight:700;color:#4B5563;background:#F9FAFB;border:1px solid #D1D5DB;border-radius:6px;padding:9px 11px;margin-top:10px}
+#contract-wrap .cl-operation-status.cl-live{color:#166534;background:#F0FDF4}#contract-wrap .cl-operation-status.cl-error{color:#991B1B;background:#FEF2F2}
+#contract-wrap .cl-status-flow{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+#contract-wrap .cl-status-flow span{background:#035D30;color:#fff;border-radius:999px;padding:5px 8px;font-size:9.5px;font-weight:800}
+#contract-wrap .cl-status-flow i{color:#E2B624;font-style:normal;font-weight:900}
+#contract-wrap .cl-note{font-size:11px;color:#6B7280;line-height:1.5;margin:10px 0 0}
+#contract-wrap .cl-sev{display:inline-block;border-radius:999px;padding:2px 7px;font-size:9.5px;font-weight:900}
+#contract-wrap .cl-sev-critical{background:#7F1D1D;color:#fff}#contract-wrap .cl-sev-high{background:#FEE2E2;color:#991B1B}#contract-wrap .cl-sev-medium{background:#FEF3C7;color:#92400E}#contract-wrap .cl-sev-low{background:#DCFCE7;color:#166534}
+#contract-wrap .cl-status{display:inline-block;border-radius:999px;padding:2px 7px;background:#E5E7EB;color:#374151;font-size:9.5px;font-weight:800;white-space:nowrap}
+#contract-wrap .cl-status.cl-status-closed{background:#DCFCE7;color:#166534}#contract-wrap .cl-status.cl-status-waiting-verify{background:#FEF3C7;color:#92400E}#contract-wrap .cl-status.cl-status-returned,#contract-wrap .cl-status.cl-status-reopened{background:#FEE2E2;color:#991B1B}
+#contract-wrap .cl-file-box{grid-column:1/-1;background:#F8FFF7;border:1px dashed #2E7D32;border-radius:7px;padding:10px}
+#contract-wrap .cl-file-box input[type=file]{border:0;padding:5px 0;background:transparent}
+#contract-wrap .cl-file-note{display:block;margin-top:5px;color:#6B7280;font-size:10px;line-height:1.45}
+#contract-wrap .cl-auth-note{font-size:10px;color:#6B7280;line-height:1.4;margin-top:5px}
+#contract-wrap .cl-quick-actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+#contract-wrap .cl-attachment-list{display:flex;flex-direction:column;gap:3px;min-width:120px}
+#contract-wrap .cl-attachment-list small{color:#6B7280}
+#contract-wrap .cl-upload-progress{font-size:11px;font-weight:800;color:#035D30;margin:8px 0}
+#contract-wrap .cl-required::after{content:' *';color:#DC2626;font-weight:900}
+#contract-wrap .cl-invalid{border-color:#DC2626!important;background:#FEF2F2!important;box-shadow:0 0 0 1px rgba(220,38,38,.15)}
+#contract-wrap .cl-field-error{display:block;color:#B91C1C;font-size:9.5px;font-weight:700;margin-top:3px}
+#contract-wrap .cl-owner-deadline-row{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px 11px}
+#contract-wrap .cl-task-block{grid-column:1/-1;border:1px solid #C8E6C9;border-radius:8px;background:#F8FFF7;padding:10px}
+#contract-wrap .cl-task-block h4{margin:0 0 4px;color:#035D30;font-size:12px}
+#contract-wrap .cl-task-note{font-size:10px;color:#6B7280;margin-bottom:8px;line-height:1.4}
+#contract-wrap .cl-task-head,#contract-wrap .cl-task-row{display:grid;grid-template-columns:1fr 1.15fr .85fr 1.7fr .85fr;gap:6px;align-items:start}
+#contract-wrap .cl-task-head{font-size:9.5px;font-weight:900;color:#035D30;text-transform:uppercase;padding:0 3px 4px}
+#contract-wrap .cl-task-row{border-top:1px solid #E5E7EB;padding:7px 0}
+#contract-wrap .cl-task-row input{margin-top:0}
+#contract-wrap .cl-initial-pics{display:block;width:100%;color:#374151;background:#F3F8F1;border-left:3px solid #E2B624;border-radius:4px;padding:5px 6px;font-size:9.5px;line-height:1.35}
+#contract-wrap .cl-file-queue{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+#contract-wrap .cl-file-item{display:grid;grid-template-columns:minmax(160px,1fr) auto auto;gap:7px;align-items:center;background:#fff;border:1px solid #D1D5DB;border-radius:6px;padding:6px 8px;font-size:10px}
+#contract-wrap .cl-file-item b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#374151}
+#contract-wrap .cl-file-item span{color:#6B7280;white-space:nowrap}
+#contract-wrap .cl-file-item button{border:1px solid #D1D5DB;background:#fff;border-radius:5px;color:#991B1B;font-family:inherit;font-size:10px;font-weight:800;padding:3px 7px;cursor:pointer}
+#contract-wrap .cl-file-item.cl-file-ok{border-color:#86EFAC;background:#F0FDF4}.cl-file-item.cl-file-error{border-color:#FCA5A5;background:#FEF2F2}
+#contract-wrap .cl-flow-panel{margin-bottom:10px}
+#contract-wrap .cl-live-flow{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:8px}
+#contract-wrap .cl-flow-step{position:relative;border:1px solid #A5D6A7;border-top:4px solid #035D30;border-radius:8px;background:#F8FFF7;padding:8px;text-align:left;font-family:inherit;cursor:pointer;min-height:66px}
+#contract-wrap .cl-flow-step b{display:block;color:#035D30;font-size:11px}.cl-flow-step strong{display:block;font-size:21px;color:#111827;margin-top:3px}.cl-flow-step small{display:block;color:#6B7280;font-size:9px;margin-top:2px}
+#contract-wrap .cl-flow-step.cl-flow-warn{border-top-color:#F59E0B}.cl-flow-step.cl-flow-red{border-top-color:#DC2626}.cl-flow-step.cl-flow-green{border-top-color:#16A34A}
+#contract-wrap .cl-flow-branches{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px;font-size:10px;color:#6B7280;align-items:center}
+#contract-wrap .cl-flow-branches button{border:1px solid #D1D5DB;border-radius:999px;background:#fff;color:#374151;font-family:inherit;font-size:10px;font-weight:800;padding:4px 9px;cursor:pointer}
+#contract-wrap .cl-row-actions{display:flex;gap:5px;flex-wrap:wrap;min-width:150px}
+#contract-wrap .cl-mini-btn{border:1px solid #A5D6A7;background:#fff;color:#035D30;border-radius:5px;font-family:inherit;font-size:9.5px;font-weight:800;padding:4px 7px;cursor:pointer;white-space:nowrap}
+#contract-wrap tr.cl-row-flash{animation:clFlash 3s ease-out}
+@keyframes clFlash{0%,45%{background:#FFF3BF}100%{background:transparent}}
+#contract-wrap .cl-operation-field.cl-hidden{display:none!important}
+#contract-wrap .cl-action-summary{grid-column:1/-1;background:#F3F8F1;border-left:4px solid #035D30;border-radius:5px;padding:8px 10px;font-size:10.5px;color:#374151;line-height:1.45}
+#contract-wrap .cl-proxy-note{grid-column:1/-1;background:#FFFDE7;border-left:4px solid #E2B624;border-radius:5px;padding:8px 10px;font-size:10.5px;color:#92400E;line-height:1.45}
+#contract-wrap .cl-update-history{grid-column:1/-1;border:1px solid #D1D5DB;border-radius:7px;background:#fff;padding:8px 10px;font-size:10.5px;color:#374151;line-height:1.45;max-height:180px;overflow:auto}
+#contract-wrap .cl-update-history b{color:#035D30}#contract-wrap .cl-update-history-item{border-top:1px solid #E5E7EB;padding:6px 0}#contract-wrap .cl-update-history-item:first-child{border-top:0}
+#contract-wrap .cl-submit-group{display:flex;gap:8px;flex-wrap:wrap;align-items:center}#contract-wrap .cl-submit-group.cl-hidden,#contract-wrap .cl-default-submit.cl-hidden{display:none!important}
+#contract-wrap .cl-modal{position:fixed;inset:0;z-index:99999;background:rgba(17,24,39,.58);display:none;align-items:center;justify-content:center;padding:18px}
+#contract-wrap .cl-modal.cl-on{display:flex}
+#contract-wrap .cl-modal-card{width:min(980px,96vw);max-height:90vh;overflow:auto;background:#fff;border-radius:10px;border:1px solid #A5D6A7;box-shadow:0 20px 60px rgba(0,0,0,.25);padding:15px}
+#contract-wrap .cl-modal-head{display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:2px solid #E2B624;padding-bottom:8px;margin-bottom:10px}
+#contract-wrap .cl-modal-head h3{margin:0;border:0;padding:0}.cl-modal-head button{border:1px solid #D1D5DB;background:#fff;border-radius:5px;font-size:16px;cursor:pointer}
+#contract-wrap .cl-original-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cl-original-grid>div{border:1px solid #E5E7EB;border-radius:6px;padding:8px;min-width:0}.cl-original-grid b{display:block;color:#035D30;font-size:10px;margin-bottom:3px}.cl-original-grid span{display:block;white-space:pre-wrap;word-break:break-word;font-size:11px;line-height:1.45}
+#contract-wrap .cl-original-wide{grid-column:1/-1}
+#contract-wrap .cl-work-summary{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:8px;margin-bottom:10px}
+#contract-wrap .cl-work-summary>div{border:1px solid #C8E6C9;border-radius:7px;background:#F8FFF7;padding:8px}
+#contract-wrap .cl-work-summary b{display:block;color:#035D30;font-size:9.5px;text-transform:uppercase;margin-bottom:3px}
+#contract-wrap .cl-work-summary span{font-size:11px;line-height:1.4;white-space:pre-wrap;word-break:break-word}
+#contract-wrap .cl-stage-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:8px 0 12px}
+#contract-wrap .cl-stage-strip span{border:1px solid #D1D5DB;border-radius:999px;padding:6px 8px;text-align:center;font-size:9.5px;font-weight:800;color:#6B7280;background:#F9FAFB}
+#contract-wrap .cl-stage-strip span.cl-stage-on{border-color:#E2B624;background:#FFF8D8;color:#035D30}
+#contract-wrap .cl-stage-strip span.cl-stage-done{border-color:#86EFAC;background:#F0FDF4;color:#166534}
+#contract-wrap .cl-work-actions{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+#contract-wrap .cl-task-state{display:inline-block;border-radius:999px;padding:3px 7px;font-size:9.5px;font-weight:900;background:#FEF3C7;color:#92400E}
+#contract-wrap .cl-task-state.cl-done{background:#DCFCE7;color:#166534}
+#contract-wrap .cl-work-help{font-size:10.5px;line-height:1.45;color:#374151;background:#F3F8F1;border-left:4px solid #2E7D32;padding:8px 10px;border-radius:5px;margin:8px 0}
+
+@media(max-width:1180px){#exec .cl-exec-kpis{grid-template-columns:repeat(3,1fr)}#contract-wrap .cl-kpi-grid{grid-template-columns:repeat(2,1fr)}#contract-wrap .cl-filter-grid{grid-template-columns:repeat(2,1fr)}#contract-wrap .cl-live-flow{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:850px){#exec .cl-exec-head,#kb-wrap .cl-kb-banner{align-items:flex-start;flex-direction:column}#contract-wrap .cl-connection{grid-template-columns:1fr 1fr}#contract-wrap .cl-connection input{grid-column:1/-1}#contract-wrap .cl-grid2{grid-template-columns:1fr}#contract-wrap .cl-form-grid{grid-template-columns:1fr}#contract-wrap .cl-form-grid .cl-span2{grid-column:auto}#contract-wrap .cl-open-source-row{grid-template-columns:1fr 1fr}#contract-wrap .cl-open-core-row,#contract-wrap .cl-reporter-row{grid-template-columns:1fr}#contract-wrap .cl-owner-deadline-row{grid-template-columns:1fr}#contract-wrap .cl-task-head{display:none}#contract-wrap .cl-task-row{grid-template-columns:1fr 1fr}#contract-wrap .cl-original-grid,#contract-wrap .cl-work-summary{grid-template-columns:1fr}#contract-wrap .cl-original-wide{grid-column:auto}}
+@media(max-width:560px){#exec .cl-exec-kpis,#contract-wrap .cl-kpi-grid,#contract-wrap .cl-filter-grid,#contract-wrap .cl-live-flow,#contract-wrap .cl-task-row,#contract-wrap .cl-open-source-row,#contract-wrap .cl-open-impact-row{grid-template-columns:1fr}#contract-wrap .cl-connection{grid-template-columns:1fr}#contract-wrap .cl-connection input{grid-column:auto}#contract-wrap .cl-holder-grid{grid-template-columns:minmax(90px,1fr) repeat(5,42px)}.cl-primary-btn,.cl-secondary-btn{white-space:normal}}
+</style>
 <!-- V9.45: Group 04 P3 LTT clean tabs, removed top source/principle rows, moved source info to bottom. -->
 </head>
 <body>
@@ -269,7 +435,7 @@ setTimeout(syncStickyNavOffset, 250);
  <button data-tab="control" onclick="switchMainTab(this)">02. Tháp điều hành hiện tại<span class="nav-en">Current Control Tower</span></button>
  <button data-tab="kb" onclick="switchMainTab(this)">03. AI hiện có<span class="nav-en">AI Knowledge Base</span></button>
  <button data-tab="brand" onclick="switchMainTab(this)">04. Nhà máy thông minh<span class="nav-en">Smart Factory / Brand V2</span></button>
- <button data-tab="contract" onclick="switchMainTab(this)">05. Dữ liệu, RACI<span class="nav-en">Data Contract & Accountability</span></button>
+ <button data-tab="contract" onclick="switchMainTab(this)">05. Issue, Action & RACI<span class="nav-en">Closed-loop Control Center</span></button>
  <button data-tab="defect" onclick="switchMainTab(this)">06. Sai hỏng ERP<span class="nav-en">ERP Defect Analytics</span></button>
 </nav>
 
@@ -280,6 +446,23 @@ setTimeout(syncStickyNavOffset, 250);
   <div class="kpi"><div class="label">Dashboard phải có</div><div class="value">5 nhóm</div><div class="hint">Pipeline · SX · CL · Costing · Risk/KPI</div></div>
   <div class="kpi"><div class="label">Cơ chế điều hành</div><div class="value">Daily + Weekly</div><div class="hint">15 phút/ngày + Weekly RAG thứ 5</div></div>
   <div class="kpi"><div class="label">Điểm đỏ thật</div><div class="value">Flexo</div><div class="hint">Rủi ro kỹ thuật cao nhất; cần Hảo/CN bám trial</div></div>
+ </div>
+ <div class="cl-exec-summary" id="cl-exec-summary">
+  <div class="cl-exec-head">
+   <div>
+    <h2>Issue & Action Closed-loop — Cảnh báo điều hành</h2>
+    <div class="cl-source-state" id="cl-exec-source-state">CHƯA KẾT NỐI NGUỒN MASTER — Không sử dụng dữ liệu mẫu</div>
+   </div>
+   <div class="cl-quick-actions"><button type="button" class="cl-primary-btn" onclick="GS6ClosedLoop.openControl('create')">+ Mở Issue mới</button><button type="button" class="cl-secondary-btn" onclick="GS6ClosedLoop.openControl('overview')">Mở Closed-loop Control →</button></div>
+  </div>
+  <div class="cl-exec-kpis">
+   <button type="button" class="cl-exec-kpi" data-cl-filter="open" onclick="GS6ClosedLoop.openControl('register','open')"><span>Issue Open</span><b id="cl-exec-open">—</b><small>Chưa Closed</small></button>
+   <button type="button" class="cl-exec-kpi cl-danger" data-cl-filter="overdue" onclick="GS6ClosedLoop.openControl('register','overdue')"><span>Quá hạn</span><b id="cl-exec-overdue">—</b><small>Theo deadline đã duyệt</small></button>
+   <button type="button" class="cl-exec-kpi cl-danger" data-cl-filter="critical" onclick="GS6ClosedLoop.openControl('register','critical')"><span>Critical</span><b id="cl-exec-critical">—</b><small>Critical chưa đóng</small></button>
+   <button type="button" class="cl-exec-kpi cl-warn" data-cl-filter="waiting" onclick="GS6ClosedLoop.openControl('register','waiting')"><span>Chờ Verify</span><b id="cl-exec-waiting">—</b><small>Owner không tự đóng</small></button>
+   <button type="button" class="cl-exec-kpi" data-cl-filter="due" onclick="GS6ClosedLoop.openControl('register','due')"><span>Đến hạn</span><b id="cl-exec-due">—</b><small id="cl-exec-due-note">Hôm nay / trong tuần</small></button>
+   <button type="button" class="cl-exec-kpi cl-positive" onclick="GS6ClosedLoop.openControl('overview')"><span>Đóng đúng hạn</span><b id="cl-exec-ontime">—</b><small>Closed ≤ deadline tại lúc đóng</small></button>
+  </div>
  </div>
  <div class="grid grid2" style="margin-top:14px">
   <div class="card">
@@ -2512,92 +2695,36 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
   <div class="kb-tab" data-tab="ai" onclick="kbSwitchTab(this)">🤖 AI Query</div>
 </div>
 
-<!-- ══════════════ TAB 1: ISSUE LOG ══════════════ -->
+<!-- ══════════════ TAB 1: CLOSED-LOOP LESSON VIEW — READ ONLY ══════════════ -->
 <div id="tab-issue" class="kb-pane kb-active">
-
+  <div class="cl-kb-banner">
+    <div>
+      <b>Issue Log tại Group 03 đã chuyển sang chế độ tra cứu read-only.</b>
+      <span>Chỉ hiển thị hồ sơ Verified/Closed từ cùng nguồn Closed-loop Master; không nhập, xóa, import CSV hoặc tự đóng Issue tại đây.</span>
+    </div>
+    <button type="button" class="cl-primary-btn" onclick="GS6ClosedLoop.openControl('register')">Mở trung tâm điều hành →</button>
+  </div>
   <div class="kpi-row" id="issue-kpi-row">
-    <div class="kpi-mini"><div class="val" id="iss-total">0</div><div class="lbl">Tổng Issue</div></div>
-    <div class="kpi-mini"><div class="val" id="iss-open">0</div><div class="lbl">Đang mở</div></div>
-    <div class="kpi-mini"><div class="val" id="iss-overdue">0</div><div class="lbl" style="color:var(--red)">Quá hạn 🔴</div></div>
-    <div class="kpi-mini"><div class="val" id="iss-closed">0</div><div class="lbl">Đã đóng ✅</div></div>
+    <div class="kpi-mini"><div class="val" id="cl-kb-verified">—</div><div class="lbl">Verified</div></div>
+    <div class="kpi-mini"><div class="val" id="cl-kb-closed">—</div><div class="lbl">Closed</div></div>
+    <div class="kpi-mini"><div class="val" id="cl-kb-sop">—</div><div class="lbl">Đã cập nhật SOP/đào tạo</div></div>
+    <div class="kpi-mini"><div class="val" id="cl-kb-reopened">—</div><div class="lbl">Reopened / tái diễn</div></div>
   </div>
-
-  <div id="issue-rag-alerts"></div>
-
   <div class="card">
-    <h2>➕ Ghi nhận Issue mới</h2>
-    <div class="form-grid">
-      <label>Ngày phát sinh</label><input type="date" id="iss-date" value="">
-      <label>Mảng</label>
-      <select id="iss-mang">
-        <option>Túi Giấy</option><option>Khay Giấy</option><option>Toàn GS6</option>
-      </select>
-      <label>Loại vấn đề</label>
-      <select id="iss-type">
-        <option>Chất lượng</option><option>Máy móc/Thiết bị</option><option>Kế hoạch</option>
-        <option>Nguyên vật liệu</option><option>Nhân sự</option><option>Khách hàng</option><option>Khác</option>
-      </select>
-      <label>Mô tả Issue</label><textarea id="iss-desc" rows="3" placeholder="Mô tả cụ thể vấn đề, hiện tượng, vị trí xảy ra…"></textarea>
-      <label>Nguyên nhân sơ bộ</label><textarea id="iss-cause" rows="2" placeholder="Nguyên nhân sơ bộ xác định ban đầu…"></textarea>
-      <label>Hành động xử lý</label><textarea id="iss-action" rows="2" placeholder="Hành động cụ thể đã hoặc cần thực hiện…"></textarea>
-      <label>Owner</label>
-      <select id="iss-owner">
-        <option>Trần Văn Mạnh</option><option>Lâm Văn Trường</option><option>Hảo</option>
-        <option>Trường (QC)</option><option>Luân</option><option>Thơ</option><option>Tài</option>
-        <option>Nghĩa</option><option>Đường</option><option>Long</option><option>Thành</option>
-      </select>
-      <label>Deadline xử lý</label><input type="date" id="iss-deadline">
-      <label>Mức độ ưu tiên</label>
-      <select id="iss-priority">
-        <option value="R">🔴 Cao – Ảnh hưởng sản xuất/KH ngay</option>
-        <option value="Y">🟡 Trung bình – Xử lý trong tuần</option>
-        <option value="G">🟢 Thấp – Theo dõi thường quy</option>
-      </select>
-      <label>Trạng thái</label>
-      <select id="iss-status">
-        <option>Đang xử lý</option><option>Chờ phê duyệt</option><option>Đã đóng</option>
-      </select>
-    </div>
-    <div class="form-actions">
-      <button class="btn" onclick="saveIssue()">💾 Lưu Issue</button>
-      <button class="btn sec" onclick="clearForm('issue')">🗑 Xóa form</button>
-    </div>
-    <div id="iss-save-msg" style="font-size:12px;color:var(--md);margin-top:6px"></div>
-  </div>
-
-  <div class="card">
-    <h2>📋 Danh sách Issue</h2>
+    <h2>🔎 Bài học từ Issue đã Verify/Closed</h2>
     <div class="search-bar">
-      <input id="q-issue" placeholder="Tìm issue, owner, mô tả…" oninput="renderIssueTable()">
-      <select id="f-issue-mang" onchange="renderIssueTable()">
-        <option value="">-- Tất cả mảng --</option>
-        <option>Túi Giấy</option><option>Khay Giấy</option><option>Toàn GS6</option>
-      </select>
-      <select id="f-issue-status" onchange="renderIssueTable()">
-        <option value="">-- Tất cả trạng thái --</option>
-        <option>Đang xử lý</option><option>Chờ phê duyệt</option><option>Đã đóng</option>
-      </select>
-      <select id="f-issue-rag" onchange="renderIssueTable()">
-        <option value="">-- Tất cả RAG --</option>
-        <option value="R">🔴 Đỏ</option><option value="Y">🟡 Vàng</option><option value="G">🟢 Xanh</option>
-      </select>
+      <input id="q-issue" placeholder="Tìm Issue ID, mô tả, root cause, CAPA, Owner…" oninput="GS6ClosedLoop.renderKnowledge()">
+      <select id="f-issue-mang" onchange="GS6ClosedLoop.renderKnowledge()"><option value="">-- Tất cả mảng --</option></select>
+      <select id="f-issue-status" onchange="GS6ClosedLoop.renderKnowledge()"><option value="">-- Verified và Closed --</option><option>Verified</option><option>Closed</option></select>
+      <select id="f-issue-rag" onchange="GS6ClosedLoop.renderKnowledge()"><option value="">-- Tất cả mức độ --</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select>
     </div>
-    <div style="overflow-x:auto">
+    <div class="cl-table-wrap">
       <table class="dt" id="tbl-issue">
-        <thead><tr>
-          <th style="width:36px">#</th><th>Ngày</th><th>Mảng</th><th>Loại</th>
-          <th>Mô tả</th><th>Owner</th><th>Deadline</th><th>Trạng thái</th><th>RAG</th><th>Action</th>
-        </tr></thead>
-        <tbody id="body-issue"></tbody>
+        <thead><tr><th>Issue ID</th><th>Mảng</th><th>Vấn đề</th><th>Root Cause</th><th>CAPA đã duyệt</th><th>Owner</th><th>Verify</th><th>Closed</th><th>SOP / Đào tạo</th></tr></thead>
+        <tbody id="body-issue"><tr><td colspan="9" class="cl-empty">Chưa kết nối nguồn Closed-loop Master.</td></tr></tbody>
       </table>
     </div>
-    <div class="io-row">
-      <button class="btn sec" style="font-size:11px;padding:5px 12px" onclick="exportData('issue')">⬇ Xuất CSV</button>
-      <input type="file" id="imp-issue" accept=".csv" onchange="importData('issue')" style="font-size:11px">
-      <button class="btn sec" style="font-size:11px;padding:5px 12px" onclick="document.getElementById('imp-issue').click()">⬆ Nhập CSV</button>
-    </div>
   </div>
-
   <div id="issue-detail" class="detail-panel"></div>
 </div>
 
@@ -2860,10 +2987,17 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
 // ── TAB SWITCH handled by kbSwitchTab ──
 
 // ── LOCAL STORAGE KEYS ──
-const KEYS={issue:'gs6kb_issues',lesson:'gs6kb_lessons',cost:'gs6kb_costs',tech:'gs6kb_tech'};
+const KEYS={lesson:'gs6kb_lessons',cost:'gs6kb_costs',tech:'gs6kb_tech'};
 
-function load(k){try{return JSON.parse(localStorage.getItem(KEYS[k]))||[];}catch{return [];}}
-function save(k,d){localStorage.setItem(KEYS[k],JSON.stringify(d));}
+function load(k){
+  if(k==='issue') return Array.isArray(window.GS6_CLOSED_LOOP_READONLY)?window.GS6_CLOSED_LOOP_READONLY:[];
+  try{return JSON.parse(localStorage.getItem(KEYS[k]))||[];}catch{return [];}
+}
+function save(k,d){
+  if(k==='issue') return false;
+  localStorage.setItem(KEYS[k],JSON.stringify(d));
+  return true;
+}
 
 // ── DATE DEFAULTS ──
 ['iss-date','les-date','cost-date','tech-date'].forEach(id=>{
@@ -5505,37 +5639,235 @@ if(document.readyState===&#x27;loading&#x27;)document.addEventListener(&#x27;DOM
 #contract-wrap .badge-mang.gs6{background:#D1FAE5;color:#065F46}
 </style>
 <div id="contract-wrap">
-  <h2 class="sec-title">Dữ liệu vận hành & RACI — GS6</h2>
+  <h2 class="sec-title">Issue, Action & RACI — Closed-loop Control Center GS6</h2>
   <div class="c-tabs" id="c-nav">
-    <button class="c-tab c-on" data-cpane="c-action" onclick="cSwitch(this)">📋 Action Log</button>
+    <button class="c-tab c-on" data-cpane="c-action" onclick="cSwitch(this)">🔄 Closed-loop Control</button>
     <button class="c-tab" data-cpane="c-pipeline" onclick="cSwitch(this)">📈 Pipeline</button>
     <button class="c-tab" data-cpane="c-sx" onclick="cSwitch(this)">⚙️ SX / OEE</button>
-    <button class="c-tab" data-cpane="c-qc" onclick="cSwitch(this)">✅ QC / CAPA</button>
+    <button class="c-tab" data-cpane="c-qc" onclick="cSwitch(this)">✅ QC / CAPA tham chiếu</button>
     <button class="c-tab" data-cpane="c-nvl" onclick="cSwitch(this)">📦 Vật tư</button>
     <button class="c-tab" data-cpane="c-trial" onclick="cSwitch(this)">🔬 Trials</button>
-    <button class="c-tab" data-cpane="c-risk" onclick="cSwitch(this)">⚠️ Rủi ro</button>
+    <button class="c-tab" data-cpane="c-risk" onclick="cSwitch(this)">⚠️ Rủi ro tham chiếu</button>
     <button class="c-tab" data-cpane="c-dec" onclick="cSwitch(this)">🎯 Quyết định</button>
     <button class="c-tab" data-cpane="c-raci" onclick="cSwitch(this)">👥 RACI</button>
   </div>
 
-  <!-- ACTION LOG -->
+  <!-- CLOSED-LOOP CONTROL CENTER -->
   <div class="c-pane c-on" id="c-action">
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>ID</th><th>Mảng</th><th>Workstream</th><th>Công việc</th><th>Owner</th><th>Milestone</th><th>Deadline</th><th>Progress</th><th>RAG</th><th>Next action</th></tr></thead>
-      <tbody>
-        <tr><td>GS6-001</td><td><span class="badge-mang gs6">GS6</span></td><td>Điều hành</td><td>Chỉ định PMO GS6 = Thành – tracker hằng ngày</td><td>Anh Mạnh</td><td>D+7</td><td>26/05</td><td><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div> 100%</td><td><span class="rb x">Xanh</span></td><td>Daily update từ 23/06</td></tr>
-        <tr><td>GS6-002</td><td><span class="badge-mang gs6">GS6</span></td><td>Điều hành</td><td>Chốt data owner 5 nhóm theo tên người thật</td><td>Anh Mạnh</td><td>D+7</td><td>26/05</td><td><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div> 100%</td><td><span class="rb x">Xanh</span></td><td>Owner cập nhật source tuần 25</td></tr>
-        <tr><td>GS6-003</td><td><span class="badge-mang gs6">GS6</span></td><td>Điều hành</td><td>Daily stand-up 08:00 – 15 phút</td><td>Lâm Văn Trường</td><td>D+7</td><td>02/06</td><td><div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div> 70%</td><td><span class="rb v">Vàng</span></td><td>Nhắc Long tham gia Flexo từ 22/06</td></tr>
-        <tr><td>GS6-010</td><td><span class="badge-mang tui">Túi giấy</span></td><td>Công nghệ</td><td>Parameter Sheet + RFQ checklist Túi giấy</td><td>Hảo</td><td>D+30</td><td>09/07</td><td><div class="progress-bar"><div class="progress-fill" style="width:45%"></div></div> 45%</td><td><span class="rb v">Vàng</span></td><td>Hảo gửi draft trước 25/06</td></tr>
-        <tr><td>GS6-020</td><td><span class="badge-mang flex">Flexo</span></td><td>Công nghệ</td><td><b>Input Standard + Parameter Sheet Flexo – bắt buộc trước trial</b></td><td>Hảo</td><td>D+30</td><td>09/07</td><td><div class="progress-bar"><div class="progress-fill" style="width:30%;background:#DC2626"></div></div> 30%</td><td><span class="rb d">Đỏ</span></td><td>Hảo + Tài đo thông số máy 21-22/06</td></tr>
-        <tr><td>GS6-030</td><td><span class="badge-mang khay">Khay</span></td><td>Sản xuất</td><td><b>Chuẩn hóa khuôn dập KG01 – giảm scrap</b></td><td>Hảo + Thanh</td><td>D+30</td><td>09/07</td><td><div class="progress-bar"><div class="progress-fill" style="width:20%;background:#DC2626"></div></div> 20%</td><td><span class="rb d">Đỏ</span></td><td>Hảo kiểm tra khuôn 22/06</td></tr>
-        <tr><td>GS6-040</td><td><span class="badge-mang gs6">GS6</span></td><td>QC</td><td>CAPA log live – top 5 lỗi / mảng + mã lỗi chuẩn</td><td>Trường-QC</td><td>D+30</td><td>09/07</td><td><div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div> 50%</td><td><span class="rb v">Vàng</span></td><td>Mã lỗi Khay xong trước 26/06</td></tr>
-        <tr><td>GS6-050</td><td><span class="badge-mang gs6">GS6</span></td><td>Tài chính</td><td>Costing template 3 mảng – GM% baseline</td><td>Quyên</td><td>D+30</td><td>09/07</td><td><div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div> 35%</td><td><span class="rb v">Vàng</span></td><td>Hảo gửi định mức Flexo trước 25/06</td></tr>
-        <tr><td>GS6-060</td><td><span class="badge-mang tui">Túi giấy</span></td><td>Nhân sự</td><td>Tuyển Tổ trưởng Túi giấy – JD → phỏng vấn → onboard</td><td>Anh Mạnh</td><td>D+60</td><td>09/08</td><td><div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div> 25%</td><td><span class="rb v">Vàng</span></td><td>HCNS đăng JD trước 22/06</td></tr>
-        <tr><td>GS6-070</td><td><span class="badge-mang flex">Flexo</span></td><td>Kinh doanh</td><td>Phân loại Flexo: nên làm / có điều kiện / chưa làm</td><td>Long</td><td>D+60</td><td>09/08</td><td><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div> 0%</td><td><span class="rb v">Vàng</span></td><td>Long + Hảo workshop tuần 27</td></tr>
-        <tr><td>GS6-080</td><td><span class="badge-mang gs6">GS6</span></td><td>Data/AI</td><td>Dashboard live – kết nối Google Sheets 4 tab</td><td>Ngân + Thành</td><td>D+30</td><td>09/07</td><td><div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div> 40%</td><td><span class="rb v">Vàng</span></td><td>Ngân gửi hướng dẫn cho Đường + Lâm trước 21/06</td></tr>
-      </tbody>
-    </table></div>
+    <div class="cl-control-banner">
+      <div>
+        <b>Một Dashboard · Một nguồn Master · Một vòng trách nhiệm.</b>
+        <span>Người mở Issue giao việc · PIC gửi bằng chứng và đóng việc của mình · Người mở Issue duyệt kết quả · GĐNM duyệt đóng cuối cùng.</span>
+      </div>
+      <div class="cl-connection">
+        <input id="cl-api-url" type="url" placeholder="Apps Script Web App URL kết thúc bằng /exec" autocomplete="off">
+        <input id="cl-auth-email" type="email" value="manh.tranvan021981@gmail.com" placeholder="Email xác thực">
+        <input id="cl-auth-token" type="password" placeholder="Access Token (Gmail cá nhân)" autocomplete="current-password">
+        <button type="button" class="cl-primary-btn" id="cl-connect-btn">Kết nối LIVE</button>
+        <button type="button" class="cl-secondary-btn" id="cl-refresh-btn">Cập nhật</button>
+        <button type="button" class="cl-primary-btn" id="cl-open-create-btn">+ Mở Issue mới</button>
+      </div>
+      <div class="cl-auth-note">Kênh V2.4 Receipt: mỗi người dùng email + Access Token cá nhân. Token chỉ gửi trong POST body, không đưa lên URL. Bộ URL/email/token được lưu trên trình duyệt này sau khi bấm Kết nối LIVE để dùng cho lần mở sau.</div>
+      <div class="cl-source-state" id="cl-source-state">CHƯA KẾT NỐI — KPI không dùng dữ liệu mẫu</div>
+    </div>
+
+    <div class="cl-subnav" id="cl-subnav">
+      <button type="button" class="cl-on" data-clview="overview">Tổng quan điều hành</button>
+      <button type="button" data-clview="create">+ Mở Issue mới</button>
+      <button type="button" data-clview="update">Xử lý Issue & công việc</button>
+      <button type="button" data-clview="register">Danh sách Issue</button>
+      <button type="button" data-clview="governance">Audit Trail · SOP · RACI</button>
+    </div>
+
+    <div class="cl-view cl-on" id="cl-view-overview">
+      <div class="cl-panel cl-flow-panel">
+        <h3>Luồng xử lý Issue LIVE — bấm trạng thái để lọc Danh sách Issue</h3>
+        <div class="cl-live-flow" id="cl-live-flow">
+          <button type="button" class="cl-flow-step" data-clstatus="In Progress"><b>1. Đang thực hiện</b><strong id="cl-flow-in-progress">—</strong><small>PIC xử lý từng công việc</small></button>
+          <button type="button" class="cl-flow-step cl-flow-warn" data-clstatus="Waiting Verify"><b>2. Chờ người mở Issue duyệt</b><strong id="cl-flow-waiting-verify">—</strong><small>Đủ mọi bằng chứng PIC</small></button>
+          <button type="button" class="cl-flow-step cl-flow-warn" data-clstatus="Verified"><b>3. Chờ GĐNM đóng</b><strong id="cl-flow-verified">—</strong><small>Người mở Issue đã duyệt</small></button>
+          <button type="button" class="cl-flow-step cl-flow-green" data-clstatus="Closed"><b>4. Đã đóng</b><strong id="cl-flow-closed">—</strong><small>GĐNM duyệt cuối cùng</small></button>
+        </div>
+        <div class="cl-flow-branches">Nhánh kiểm soát:
+          <button type="button" data-clstatus="Assigned">Chưa giao PIC <b id="cl-flow-assigned">—</b></button>
+          <button type="button" data-clstatus="Returned">Returned <b id="cl-flow-returned">—</b></button>
+          <button type="button" data-clstatus="Reopened">Reopened <b id="cl-flow-reopened">—</b></button>
+          <button type="button" data-clstatus="On Hold">On Hold <b id="cl-flow-on-hold">—</b></button>
+        </div>
+      </div>
+      <div class="cl-kpi-grid">
+        <button type="button" class="cl-kpi-card" data-clmetric="open"><span>Issue Open</span><b id="cl-kpi-open">—</b><small>Distinct Issue chưa Closed</small></button>
+        <button type="button" class="cl-kpi-card cl-danger" data-clmetric="overdue"><span>Quá hạn</span><b id="cl-kpi-overdue">—</b><small>Current Approved Deadline &lt; Today</small></button>
+        <button type="button" class="cl-kpi-card cl-danger" data-clmetric="critical"><span>Issue Critical</span><b id="cl-kpi-critical">—</b><small>Critical chưa Closed</small></button>
+        <button type="button" class="cl-kpi-card cl-warn" data-clmetric="waiting"><span>Chờ người mở duyệt</span><b id="cl-kpi-waiting">—</b><small>Đã đủ công việc PIC</small></button>
+        <button type="button" class="cl-kpi-card cl-warn" data-clmetric="director"><span>Chờ GĐNM đóng</span><b id="cl-kpi-director">—</b><small>Người mở Issue đã duyệt</small></button>
+        <button type="button" class="cl-kpi-card" data-clmetric="today"><span>Đến hạn hôm nay</span><b id="cl-kpi-today">—</b><small>Deadline đúng ngày hiện tại</small></button>
+        <button type="button" class="cl-kpi-card cl-positive"><span>Đóng đúng hạn</span><b id="cl-kpi-ontime">—</b><small id="cl-kpi-ontime-note">Tử số / mẫu số</small></button>
+        <button type="button" class="cl-kpi-card cl-warn" data-clmetric="reopened"><span>Tái diễn / Reopened</span><b id="cl-kpi-recurrence">—</b><small id="cl-kpi-recurrence-note">Theo Issue có liên kết gốc</small></button>
+      </div>
+      <div class="cl-grid2">
+        <div class="cl-panel"><h3>Open · Closed · Backlog — 8 tuần</h3><div id="cl-trend-chart" class="cl-chart-empty">Chưa có dữ liệu live.</div></div>
+        <div class="cl-panel"><h3>Top Owner quá hạn</h3><div id="cl-owner-bars" class="cl-chart-empty">Chưa có dữ liệu live.</div></div>
+      </div>
+      <div class="cl-grid2">
+        <div class="cl-panel"><h3>Current Holder × Aging</h3><div id="cl-aging-holder"></div></div>
+        <div class="cl-panel"><h3>Tái diễn theo Owner</h3><div id="cl-recurrence-owner"></div></div>
+      </div>
+      <div class="cl-panel">
+        <h3>Danh sách cần điều hành ngay</h3>
+        <div class="cl-table-wrap"><table><thead><tr><th>Issue ID</th><th>Mức độ</th><th>Vấn đề</th><th>Owner</th><th>Current Holder</th><th>Deadline</th><th>Aging</th><th>Trạng thái</th></tr></thead><tbody id="cl-priority-body"><tr><td colspan="8" class="cl-empty">Chưa kết nối nguồn Master.</td></tr></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="cl-view" id="cl-view-register">
+      <div class="cl-filter-grid">
+        <label>Tìm kiếm<input id="cl-filter-search" placeholder="Issue ID, mô tả, Owner, CAPA…"></label>
+        <label>Trạng thái<select id="cl-filter-status"><option value="">Tất cả trạng thái</option></select></label>
+        <label>Mảng<select id="cl-filter-segment"><option value="">Tất cả mảng</option></select></label>
+        <label>Owner<select id="cl-filter-owner"><option value="">Tất cả Owner</option></select></label>
+        <label>Current Holder<select id="cl-filter-holder"><option value="">Tất cả Holder</option></select></label>
+        <label>Mức độ<select id="cl-filter-severity"><option value="">Tất cả mức độ</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select></label>
+        <label>Cảnh báo<select id="cl-filter-alert"><option value="">Tất cả</option><option value="overdue">Quá hạn</option><option value="today">Đến hạn hôm nay</option><option value="week">Đến hạn trong tuần</option><option value="waiting">Chờ người mở duyệt</option><option value="director">Chờ GĐNM đóng</option><option value="reopened">Reopened / tái diễn</option></select></label>
+        <div class="cl-filter-action"><button type="button" class="cl-secondary-btn" id="cl-reset-filter">Xóa bộ lọc</button><span id="cl-filter-count">0 Issue</span></div>
+      </div>
+      <div class="cl-table-wrap"><table><thead><tr><th>Issue ID</th><th>Nguồn</th><th>Mảng</th><th>Mức độ</th><th>Vấn đề</th><th>Owner</th><th>Current Holder</th><th>Deadline gốc</th><th>Deadline hiện tại</th><th>Aging</th><th>Trạng thái</th><th>Evidence</th><th>Thao tác</th></tr></thead><tbody id="cl-register-body"><tr><td colspan="13" class="cl-empty">Chưa kết nối nguồn Master.</td></tr></tbody></table></div>
+    </div>
+
+    <div class="cl-view" id="cl-view-create">
+      <div class="cl-quick-actions">
+        <button type="button" class="cl-secondary-btn" data-cl-goto="register">Xem danh sách Issue</button>
+        <button type="button" class="cl-secondary-btn" data-cl-goto="update">Cập nhật Issue đã có</button>
+      </div>
+      <form class="cl-panel cl-form" id="cl-create-form">
+        <h3>Mở Issue mới — ghi trực tiếp vào Google Sheet Master</h3>
+        <div class="cl-form-grid">
+          <div class="cl-reporter-row">
+            <label class="cl-required">Người mở Issue<input name="reporterName" value="Trần Văn Mạnh" maxlength="160" required placeholder="Nhập họ tên người mở Issue"></label>
+            <label class="cl-required">Email người mở Issue<input name="reporterEmail" type="email" value="manh.tranvan021981@gmail.com" required placeholder="Email phải trùng tài khoản đang kết nối"></label>
+            <label class="cl-required">Ngày mở Issue<input name="openDate" type="date" required></label>
+          </div>
+          <div class="cl-open-source-row">
+            <label class="cl-required">Nguồn phát sinh<select name="sourceType" required><option>Audit</option><option>Họp</option><option>NCR/CAR</option><option>Hiện trường</option><option>Phản ánh</option><option>Chỉ đạo lãnh đạo</option><option>Báo cáo</option></select></label>
+            <label class="cl-required">Nhà máy<input name="factory" value="GS6" required></label>
+            <label>Mã nguồn / Biên bản<input name="sourceRef" placeholder="Audit / Meeting / NCR ID"></label>
+            <label class="cl-required">Mảng<select name="segment" required><option>Toàn GS6</option><option>Túi giấy</option><option>Khay giấy</option><option>Flexo cuộn 6 màu</option><option>Kho</option><option>Khác</option></select></label>
+          </div>
+          <div class="cl-open-core-row">
+            <label>Workstream<select name="workstream"><option>Operation</option><option>Digital & AI</option><option>System & KPI</option><option>People & Culture</option><option>Sales</option><option>Brand</option></select></label>
+            <label>Khu vực / Máy / Mã hàng<input name="areaMachineProduct" placeholder="Kho, máy, line, mã hàng…"></label>
+            <label class="cl-required">Tiêu đề Issue<input name="title" maxlength="500" required placeholder="Nêu ngắn gọn bất thường phải xử lý"></label>
+          </div>
+          <label class="cl-required">Mô tả vấn đề<textarea name="description" rows="6" required placeholder="Mô tả hiện tượng, vị trí, thời điểm, bằng chứng và phạm vi ảnh hưởng"></textarea></label>
+          <label class="cl-required">Nguyên nhân sơ bộ<textarea name="preliminaryCause" rows="6" required placeholder="Nhận định ban đầu; nếu chưa xác định ghi: Chưa xác định – cần Owner phân tích"></textarea></label>
+          <div class="cl-open-impact-row">
+            <label>Ảnh hưởng<textarea name="impact" rows="5" placeholder="Khách hàng, chất lượng, tiến độ, chi phí, an toàn…"></textarea></label>
+            <label>Ngăn chặn ban đầu<textarea name="immediateContainment" rows="5" placeholder="Hành động tức thời để cô lập hoặc giảm ảnh hưởng"></textarea></label>
+          </div>
+          <label class="cl-required">Mức độ<select name="severity" required><option>Critical</option><option>High</option><option selected>Medium</option><option>Low</option></select></label>
+          <label>Điểm rủi ro<input name="riskScore" type="number" min="0" max="25" placeholder="P × I"></label>
+          <div class="cl-owner-deadline-row">
+            <label class="cl-required">Owner — Họ tên<input name="ownerName" value="Trần Văn Mạnh" required></label>
+            <label class="cl-required">Owner — Email<input name="ownerEmail" type="email" value="manh.tranvan021981@gmail.com" list="cl-role-emails" required></label>
+            <label class="cl-required">Thời hạn đóng Issue<input name="proposedDeadline" type="date" required></label>
+          </div>
+          <div class="cl-task-block">
+            <h4>Người thực hiện ban đầu — tối đa 4 người</h4>
+            <div class="cl-task-note">Ưu tiên chọn Họ tên từ sheet <b>Nhan_Su</b> để hệ thống tự điền Email và Bộ phận. Vẫn có thể tự nhập người ngoài danh sách. Có thể để trống cả dòng; khi đã nhập một ô thì phải nhập đủ các thông tin và deadline không được vượt Thời hạn đóng Issue.</div>
+            <div class="cl-task-head"><span>Họ tên *</span><span>Email *</span><span>Bộ phận *</span><span>Nội dung cần thực hiện *</span><span>Deadline *</span></div>
+            <div class="cl-task-row" data-task-row="1"><input data-task-field="name" list="cl-person-names" placeholder="Chọn hoặc nhập người 1"><input data-task-field="email" type="email" list="cl-role-emails" placeholder="Email"><input data-task-field="department" placeholder="Bộ phận"><input data-task-field="description" placeholder="Nội dung cần thực hiện"><input data-task-field="deadline" type="date"></div>
+            <div class="cl-task-row" data-task-row="2"><input data-task-field="name" list="cl-person-names" placeholder="Chọn hoặc nhập người 2"><input data-task-field="email" type="email" list="cl-role-emails" placeholder="Email"><input data-task-field="department" placeholder="Bộ phận"><input data-task-field="description" placeholder="Nội dung cần thực hiện"><input data-task-field="deadline" type="date"></div>
+            <div class="cl-task-row" data-task-row="3"><input data-task-field="name" list="cl-person-names" placeholder="Chọn hoặc nhập người 3"><input data-task-field="email" type="email" list="cl-role-emails" placeholder="Email"><input data-task-field="department" placeholder="Bộ phận"><input data-task-field="description" placeholder="Nội dung cần thực hiện"><input data-task-field="deadline" type="date"></div>
+            <div class="cl-task-row" data-task-row="4"><input data-task-field="name" list="cl-person-names" placeholder="Chọn hoặc nhập người 4"><input data-task-field="email" type="email" list="cl-role-emails" placeholder="Email"><input data-task-field="department" placeholder="Bộ phận"><input data-task-field="description" placeholder="Nội dung cần thực hiện"><input data-task-field="deadline" type="date"></div>
+          </div>
+          <input type="hidden" name="verifyScope" value="REPORTER">
+          <label>Issue tái diễn gốc<input name="recurrenceOfIssueId" placeholder="Mã Issue gốc nếu có"></label>
+          <label class="cl-span2">Link bằng chứng đã có<input name="initialEvidenceUrl" placeholder="Link Drive nếu tệp đã nằm trên Drive"></label>
+          <label class="cl-file-box">Tải ảnh / tài liệu đính kèm
+            <input id="cl-create-files" type="file" multiple>
+            <span class="cl-file-note">Cho phép ảnh, PDF, Excel, PowerPoint, ZIP, RAR và loại khác. Không đặt giới hạn nghiệp vụ; file thực thi nguy hiểm bị chặn và quota Google vẫn áp dụng.</span>
+            <span class="cl-file-queue" id="cl-create-file-list"></span>
+          </label>
+        </div>
+        <div class="cl-upload-progress" id="cl-create-progress"></div>
+        <button type="submit" class="cl-primary-btn">Lưu Issue và tải bằng chứng</button>
+      </form>
+      <div class="cl-operation-status" id="cl-create-status">Chưa có thao tác.</div>
+    </div>
+
+    <div class="cl-view" id="cl-view-update">
+      <div class="cl-quick-actions">
+        <button type="button" class="cl-secondary-btn" data-cl-goto="create">+ Mở Issue mới</button>
+        <button type="button" class="cl-secondary-btn" data-cl-goto="register">Chọn Issue từ danh sách</button>
+      </div>
+      <form class="cl-panel cl-form" id="cl-operation-form">
+        <h3>Xử lý Issue & công việc — hệ thống chỉ hiện thao tác đúng quyền</h3>
+        <div class="cl-work-help">Cách nhanh nhất: vào <b>Danh sách Issue → Xem công việc</b>. PIC cập nhật việc của mình; Owner/GĐNM có thể nhập hỗ trợ thay PIC nhưng hệ thống luôn ghi đúng người nhập trong Audit Trail.</div>
+        <div class="cl-form-grid">
+          <label class="cl-required">Thao tác<select name="operation" id="cl-operation" required><option value="">Chọn Issue trước hoặc mở từ Danh sách công việc</option></select></label>
+          <label class="cl-required">Mã Issue<input name="issueId" id="cl-operation-issue" list="cl-issue-list" required></label>
+          <label class="cl-operation-field cl-required" data-ops="updateAction" data-required-ops="updateAction">PIC được giao việc<select id="cl-operation-pic"><option value="">Chọn PIC của Issue</option></select></label>
+          <label class="cl-operation-field cl-required" data-ops="updateAction,reporterReturn" data-required-ops="updateAction,reporterReturn">Công việc được giao<select name="actionId" id="cl-operation-action"><option value="">Chọn công việc của Issue</option></select></label>
+          <label class="cl-operation-field" id="cl-operation-deadline-label" data-ops="addAction,onHold" data-required-ops="addAction,onHold">Deadline / Ngày hiệu lực<input name="deadline" id="cl-operation-deadline" type="date"></label>
+          <div class="cl-action-summary cl-operation-field" id="cl-action-summary" data-ops="updateAction,reporterReturn">Chọn PIC và công việc để xem nội dung giao, deadline và lịch sử cập nhật.</div>
+          <div class="cl-proxy-note cl-operation-field" id="cl-proxy-note" data-ops="updateAction">PIC tự cập nhật việc của mình. Nếu Owner/GĐNM nhập hỗ trợ, Audit Trail sẽ ghi người nhập thật và PIC được nhập thay.</div>
+          <div class="cl-update-history cl-operation-field" id="cl-action-history" data-ops="updateAction">Chưa có lịch sử cập nhật.</div>
+          <label class="cl-span2 cl-operation-field" data-ops="rootCauseCapa" data-required-ops="rootCauseCapa">Nguyên nhân gốc<textarea name="rootCause" rows="3"></textarea></label>
+          <label class="cl-span2 cl-operation-field" data-ops="rootCauseCapa,addAction" data-required-ops="rootCauseCapa,addAction">CAPA / Nội dung công việc<textarea name="capa" rows="3"></textarea></label>
+          <label class="cl-operation-field" data-ops="addAction" data-required-ops="addAction">PIC — Họ tên<input name="picName"></label>
+          <label class="cl-operation-field" data-ops="addAction" data-required-ops="addAction">PIC — Email<input name="picEmail" type="email" list="cl-role-emails"></label>
+          <label class="cl-operation-field" data-ops="addAction" data-required-ops="addAction">PIC — Bộ phận<input name="picDepartment"></label>
+          <label class="cl-span2 cl-operation-field" data-ops="updateAction" data-required-ops="updateAction">Nội dung công việc đã thực hiện<textarea name="workPerformed" rows="3" placeholder="Mô tả việc đã làm, thông số, phạm vi và đầu ra thực tế"></textarea></label>
+          <label class="cl-span2 cl-operation-field" data-ops="updateAction" data-required-ops="updateAction">Kết quả đạt được<textarea name="resultAchieved" rows="3" placeholder="Nêu kết quả đo được, tồn tại và bước tiếp theo nếu chưa hoàn thành"></textarea></label>
+          <label class="cl-operation-field" data-ops="updateAction" data-required-ops="updateAction">Tỷ lệ hoàn thành (%)<input name="progressPercent" id="cl-progress-percent" type="number" min="0" max="100" step="1" value="0"></label>
+          <label class="cl-operation-field" data-ops="updateAction">Ngày hoàn thành thực tế — chỉ dùng khi hoàn thành<input name="actualCompletionDate" id="cl-actual-completion-date" type="date"></label>
+          <label class="cl-span2 cl-operation-field" data-ops="reporterApprove,reporterReturn,close,directorReturn,reopen,onHold,resume" data-required-ops="reporterApprove,reporterReturn,close,directorReturn,reopen,onHold,resume">Kết quả / Kết luận / Lý do<textarea name="resultNote" rows="3"></textarea></label>
+          <label class="cl-span2 cl-operation-field" data-ops="updateAction,close">Link bằng chứng đã có<textarea name="evidenceUrl" rows="2"></textarea></label>
+          <label class="cl-operation-field" data-ops="updateAction,close">Loại tệp đính kèm<select name="attachmentType" id="cl-attachment-type"><option value="EXECUTION">Thực hiện</option><option value="CLOSURE">Đóng Issue</option><option value="OTHER">Khác</option></select></label>
+          <label class="cl-file-box cl-operation-field" data-ops="updateAction,close">Tải tài liệu / bằng chứng mới
+            <input id="cl-operation-files" type="file" multiple>
+            <span class="cl-file-note">Tệp được lưu theo đúng Issue và loại bằng chứng; ATTACHMENT_INDEX tự ghi người tải, thời gian, dung lượng và link Drive.</span>
+            <span class="cl-file-queue" id="cl-operation-file-list"></span>
+          </label>
+        </div>
+        <div class="cl-rule-note">PIC cập nhật việc của mình; Owner/GĐNM được nhập hỗ trợ thay PIC và hệ thống ghi đúng người nhập. Hoàn thành công việc bắt buộc có bằng chứng. Thao tác này không có quyền đóng Issue; chỉ GĐNM được đóng Issue ở cổng cuối. Critical/High phải có Nguyên nhân gốc và CAPA.</div>
+        <div class="cl-upload-progress" id="cl-operation-progress"></div>
+        <div class="cl-submit-group cl-hidden" id="cl-update-submit-group"><button type="submit" class="cl-secondary-btn" data-update-mode="PROGRESS">Lưu cập nhật tiến độ</button><button type="submit" class="cl-primary-btn" data-update-mode="COMPLETE">Hoàn thành công việc của tôi</button></div>
+        <button type="submit" class="cl-primary-btn cl-default-submit" id="cl-default-submit">Tải bằng chứng và gửi cập nhật</button>
+      </form>
+      <div class="cl-operation-status" id="cl-operation-status">Chưa có thao tác.</div>
+      <iframe name="cl-api-target" id="cl-api-target" title="Closed-loop API response" hidden></iframe>
+      <datalist id="cl-issue-list"></datalist><datalist id="cl-role-emails"></datalist><datalist id="cl-person-names"></datalist>
+    </div>
+
+    <div class="cl-modal" id="cl-original-modal" role="dialog" aria-modal="true" aria-labelledby="cl-original-title">
+      <div class="cl-modal-card">
+        <div class="cl-modal-head"><h3 id="cl-original-title">Issue gốc</h3><button type="button" id="cl-original-close" aria-label="Đóng">×</button></div>
+        <div id="cl-original-content"></div>
+      </div>
+    </div>
+
+    <div class="cl-modal" id="cl-work-modal" role="dialog" aria-modal="true" aria-labelledby="cl-work-title">
+      <div class="cl-modal-card">
+        <div class="cl-modal-head"><h3 id="cl-work-title">Danh sách công việc</h3><button type="button" id="cl-work-close" aria-label="Đóng">×</button></div>
+        <div id="cl-work-content"></div>
+      </div>
+    </div>
+
+    <div class="cl-view" id="cl-view-governance">
+      <div class="cl-grid2">
+        <div class="cl-panel"><h3>Chu trình bắt buộc — giai đoạn 1</h3><div class="cl-status-flow" id="cl-status-flow"><span>PIC thực hiện</span><i>→</i><span>Người mở Issue duyệt</span><i>→</i><span>GĐNM duyệt đóng</span><i>→</i><span>Closed</span></div><p class="cl-note">Owner điều phối và có thể giao thêm việc, nhưng không tạo thêm cấp duyệt. Nhánh kiểm soát: Trả lại PIC · Reopened · On Hold.</p></div>
+        <div class="cl-panel"><h3>Data Quality Gate</h3><div id="cl-data-quality" class="cl-chart-empty">Chưa có dữ liệu live.</div></div>
+      </div>
+      <div class="cl-panel"><h3>RACI Closed-loop</h3><div class="cl-table-wrap"><table><thead><tr><th>Vai trò</th><th>Được làm</th><th>Không được làm</th></tr></thead><tbody>
+        <tr><td>Người mở Issue</td><td>Tạo Issue, giao PIC, duyệt kết quả hoặc trả lại đúng công việc</td><td>Đóng Issue cuối cùng</td></tr>
+        <tr><td>Owner</td><td>Điều phối, Root Cause/CAPA, giao thêm PIC; được nhập hỗ trợ thay PIC với Audit Trail đầy đủ</td><td>Duyệt thay người mở hoặc đóng Issue tổng</td></tr>
+        <tr><td>PIC</td><td>Lưu tiến độ hoặc hoàn thành đúng việc gắn email của mình</td><td>Cập nhật việc người khác hoặc đóng Issue tổng</td></tr>
+        <tr><td>GĐNM</td><td>Được nhập hỗ trợ thay PIC; duyệt đóng cuối cùng, trả người mở Issue, gia hạn, On Hold, Reopen</td><td>Đóng khi người mở Issue chưa duyệt</td></tr>
+        <tr><td>QA / KSNB / PMO / Digital</td><td>Tạm thời không nằm trong cổng duyệt giai đoạn 1</td><td>Phê duyệt hoặc đóng thay các vai trò trên</td></tr>
+      </tbody></table></div></div>
+      <div class="cl-panel"><h3>Audit Trail gần nhất</h3><div class="cl-table-wrap"><table><thead><tr><th>Thời gian</th><th>Issue</th><th>Sự kiện</th><th>Từ</th><th>Đến</th><th>Người thao tác</th><th>Ghi chú</th></tr></thead><tbody id="cl-event-body"><tr><td colspan="7" class="cl-empty">Chưa kết nối nguồn Master.</td></tr></tbody></table></div></div>
+      <div class="cl-panel"><h3>SOP & Training</h3><div class="cl-table-wrap"><table><thead><tr><th>Issue</th><th>SOP</th><th>Revision</th><th>Đào tạo</th><th>Owner</th><th>Ngày hoàn thành</th><th>Bằng chứng</th></tr></thead><tbody id="cl-sop-body"><tr><td colspan="7" class="cl-empty">Chưa kết nối nguồn Master.</td></tr></tbody></table></div></div>
+    </div>
   </div>
 
   <!-- PIPELINE -->
@@ -9222,6 +9554,298 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
   // setInterval vẽ lại mỗi giây (nguồn chính gây giật/nhấp nháy biểu đồ). renderMonthV942 vẫn được
   // gọi lại khi: dữ liệu Kế hoạch BH/Đơn đặt hàng/Đã giao tải xong, hoặc khi đổi bộ lọc ngành hàng/nhà máy.
   [80,200,500,1000,2000,4000,7000,12000].forEach(function(t){setTimeout(apply,t)});
+})();
+</script>
+<script id="gs6-closed-loop-controller" data-version="V10.9-action-progress-log">
+(function(){
+  'use strict';
+  var STATUS=['Open','Assigned','Root Cause','CAPA Proposed','CAPA Approved','In Progress','Waiting Verify','Verified','Closed','Returned','Reopened','On Hold'];
+  var DEFAULT_API_URL='https://script.google.com/macros/s/AKfycbymuR_VfKZW-Bl_ABf3FyxjIoZfzsONCc3LUFM_g_BqgjAqai5e_k0Av0iDQQ7mP1hd/exec';
+  var DEFAULT_AUTH_EMAIL='manh.tranvan021981@gmail.com';
+  var DEFAULT_AUTH_TOKEN='701f599515d24502bcd2f0325eeed59dec3ab1dc437f45c49aef9914fee67c07';
+  var CONFIG=window.GS6_CLOSED_LOOP_CONFIG||{apiUrl:DEFAULT_API_URL};
+  window.GS6_CLOSED_LOOP_CONFIG=CONFIG;
+  var state={apiUrl:String(CONFIG.apiUrl||DEFAULT_API_URL).trim(),loaded:false,loading:false,transportVerified:false,issues:[],actions:[],actionUpdates:[],attachments:[],verifies:[],events:[],sop:[],roles:[],people:[],openSnapshots:[],actor:null,alertFilter:'',view:'overview',flashIssueId:'',pendingCreateIssueId:'',fileQueues:{create:[],operation:[]}};
+  var $=function(id){return document.getElementById(id);};
+  function esc(v){return String(v==null?'':v).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function key(v){return String(v==null?'':v).trim();}
+  function lower(v){return key(v).toLowerCase();}
+  function num(v){var n=Number(v);return isFinite(n)?n:0;}
+  function val(o,names){for(var i=0;i<names.length;i++){if(o&&o[names[i]]!==undefined&&o[names[i]]!==null)return o[names[i]];}return '';}
+  function txt(id,v){var e=$(id);if(e)e.textContent=v;}
+  function unique(a){return Array.from(new Set((a||[]).map(key).filter(Boolean))).sort(function(x,y){return x.localeCompare(y,'vi');});}
+  function todayVN(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Ho_Chi_Minh',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());}
+  function dayNo(s){var m=key(s).match(/^(\d{4})-(\d{2})-(\d{2})/);return m?Date.UTC(+m[1],+m[2]-1,+m[3])/86400000:null;}
+  function isoDate(v){var s=key(v);if(!s)return '';var m=s.match(/^(\d{4})-(\d{2})-(\d{2})/);if(m)return m[1]+'-'+m[2]+'-'+m[3];var d=new Date(s);return isNaN(d)?'':d.toISOString().slice(0,10);}
+  function dateVN(v){var s=isoDate(v);if(!s)return '—';var p=s.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
+  function dateTimeVN(v){var s=key(v);if(!s)return '—';var d=new Date(s);return isNaN(d)?esc(s):d.toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh'});}
+  function status(i){return key(val(i,['Status','status']))||'Open';}
+  function issueId(i){return key(val(i,['IssueId','Issue ID','issueId','id']));}
+  function ownerName(i){return key(val(i,['OwnerName','Owner','ownerName','owner']))||'Chưa gán';}
+  function ownerEmail(i){return lower(val(i,['OwnerEmail','ownerEmail']));}
+  function reporterName(i){return key(val(i,['ReporterName','reporterName']))||key(val(i,['ReporterEmail','reporterEmail']))||'Người mở Issue';}
+  function reporterEmail(i){return lower(val(i,['ReporterEmail','reporterEmail']));}
+  function actorEmail(){return lower(state.actor&&state.actor.email);}
+  function actorRoles(){return (state.actor&&Array.isArray(state.actor.roles)?state.actor.roles:[]).map(function(r){return key(r).toUpperCase();});}
+  function actorHas(role){return actorRoles().indexOf(key(role).toUpperCase())>=0;}
+  function severity(i){return key(val(i,['Severity','severity']))||'Medium';}
+  function deadline(i){return isoDate(val(i,['CurrentApprovedDeadline','Current Deadline','ProposedDeadline','Deadline','deadline']));}
+  function originalDeadline(i){return isoDate(val(i,['OriginalDeadline','Original Deadline']));}
+  function openDate(i){return isoDate(val(i,['OpenDate','CreatedAt','Date','date']));}
+  function closedDate(i){return isoDate(val(i,['ClosedDate','closedDate']));}
+  function isClosed(i){return status(i)==='Closed';}
+  function isOverdue(i){var d=dayNo(deadline(i)),t=dayNo(todayVN());return !isClosed(i)&&d!==null&&d<t;}
+  function isCritical(i){return lower(severity(i))==='critical'&&!isClosed(i);}
+  function aging(i){var o=dayNo(openDate(i)),e=dayNo(isClosed(i)?closedDate(i):todayVN());return o===null||e===null?null:Math.max(0,e-o);}
+  function agingBucket(a){if(a===null)return 'N/A';if(a<=3)return '0–3';if(a<=7)return '4–7';if(a<=14)return '8–14';if(a<=30)return '15–30';return '>30';}
+  function actionsFor(id){return state.actions.filter(function(a){return key(val(a,['IssueId','issueId']))===id;});}
+  function initialActionsFor(id){return actionsFor(id).filter(function(a){return key(val(a,['AssignmentOrigin']))==='ISSUE_OPEN'||key(val(a,['ActionType']))==='INITIAL_TASK';});}
+  function initialAssigneeNames(id){return unique(initialActionsFor(id).map(function(a){return val(a,['PICName','PICEmail']);}));}
+  function attachmentsFor(id){return state.attachments.filter(function(a){return key(val(a,['IssueId','issueId']))===id;});}
+  function attachmentLinks(id){var rows=attachmentsFor(id),shown=rows.slice(0,3),h=shown.map(function(a){return safeLink(val(a,['DriveUrl','driveUrl']),val(a,['FileName','fileName'])||'Tệp');}).join('');if(rows.length>shown.length)h+='<small>+'+(rows.length-shown.length)+' tệp khác</small>';return rows.length?'<div class="cl-attachment-list">'+h+'</div>':'—';}
+  function currentHolder(i){
+    var preset=key(val(i,['CurrentHolderName','Current Holder']));if(preset)return preset;
+    var s=status(i),id=issueId(i),aa=actionsFor(id),active=aa.find(function(a){return lower(val(a,['Status','status']))!=='completed'&&lower(val(a,['Status','status']))!=='closed';});
+    if(['Open','Assigned'].indexOf(s)>=0)return ownerName(i);
+    if(['Root Cause','CAPA Proposed','CAPA Approved','Returned','Reopened','In Progress'].indexOf(s)>=0)return key(val(active||{},['PICName','PIC','picName']))||ownerName(i);
+    if(s==='Waiting Verify')return reporterName(i);
+    if(s==='Verified'||s==='On Hold')return 'GĐNM';
+    return '—';
+  }
+  function recurrence(i){return !!key(val(i,['RecurrenceOfIssueId','Recurrence Of Issue ID','recurrenceOfIssueId']))||num(val(i,['ReopenCount','reopenCount']))>0||status(i)==='Reopened';}
+  function deadlineAtClose(i){return isoDate(val(i,['DeadlineAtClose','deadlineAtClose']))||deadline(i);}
+  function weekEndNo(){var t=dayNo(todayVN()),d=new Date(t*86400000),dow=d.getUTCDay(),add=(7-dow)%7;return t+add;}
+  function dueToday(i){return !isClosed(i)&&deadline(i)===todayVN();}
+  function dueWeek(i){var d=dayNo(deadline(i)),t=dayNo(todayVN());return !isClosed(i)&&d!==null&&d>=t&&d<=weekEndNo();}
+  function severityBadge(v){var s=key(v)||'Medium',c='cl-sev-'+lower(s).replace(/\s+/g,'-');return '<span class="cl-sev '+c+'">'+esc(s)+'</span>';}
+  function statusLabel(v){var s=key(v)||'Open';return {'Open':'Mới mở','Assigned':'Chưa giao PIC','Root Cause':'Hồ sơ cũ · Root Cause','CAPA Proposed':'Hồ sơ cũ · CAPA đề xuất','CAPA Approved':'Hồ sơ cũ · CAPA đã duyệt','In Progress':'Đang thực hiện','Waiting Verify':'Chờ người mở Issue duyệt','Verified':'Chờ GĐNM đóng','Closed':'Đã đóng','Returned':'Trả lại','Reopened':'Mở lại','On Hold':'Tạm dừng'}[s]||s;}
+  function statusBadge(v){var s=key(v)||'Open',c='cl-status-'+lower(s).replace(/\s+/g,'-');return '<span class="cl-status '+c+'">'+esc(statusLabel(s))+'</span>';}
+  function safeLink(v,label){var s=key(v);if(!/^https?:\/\//i.test(s))return s?esc(s):'—';return '<a href="'+esc(s)+'" target="_blank" rel="noopener noreferrer">'+esc(label||'Mở bằng chứng')+'</a>';}
+  function setSource(message,kind){['cl-source-state','cl-exec-source-state'].forEach(function(id){var e=$(id);if(e){e.textContent=message;e.classList.remove('cl-live','cl-error');if(kind)e.classList.add(kind);}});}
+  function syncReporterFields(){var form=$('cl-create-form');if(!form)return;var name=form.querySelector('[name="reporterName"]'),email=form.querySelector('[name="reporterEmail"]'),date=form.querySelector('[name="openDate"]');if(state.actor){if(name)name.value=key(state.actor.name)||name.value;if(email)email.value=key(state.actor.email)||email.value;}else if(email){email.value=key(($('cl-auth-email')||{}).value)||DEFAULT_AUTH_EMAIL;}if(date&&!key(date.value))date.value=todayVN();}
+  function normalizeSnapshot(payload){
+    var d=payload&&payload.data?payload.data:payload||{};
+    state.issues=Array.isArray(d.issues)?d.issues:[];state.actions=Array.isArray(d.actions)?d.actions:[];state.actionUpdates=Array.isArray(d.actionUpdates)?d.actionUpdates:[];state.attachments=Array.isArray(d.attachments)?d.attachments:[];state.verifies=Array.isArray(d.verifies)?d.verifies:[];state.events=Array.isArray(d.events)?d.events:[];state.sop=Array.isArray(d.sopTraining)?d.sopTraining:(Array.isArray(d.sop)?d.sop:[]);state.roles=Array.isArray(d.roles)?d.roles:[];state.people=Array.isArray(d.people)?d.people:[];state.openSnapshots=Array.isArray(d.openSnapshots)?d.openSnapshots:[];state.actor=payload.actor||d.actor||null;state.loaded=true;state.loading=false;syncReporterFields();
+  }
+  function metrics(){
+    var open=state.issues.filter(function(i){return !isClosed(i);}),closed=state.issues.filter(isClosed),overdue=open.filter(isOverdue),critical=open.filter(isCritical),waiting=open.filter(function(i){return status(i)==='Waiting Verify';}),director=open.filter(function(i){return status(i)==='Verified';}),today=open.filter(dueToday),week=open.filter(dueWeek),recur=state.issues.filter(recurrence);
+    var eligible=closed.filter(function(i){return closedDate(i)&&deadlineAtClose(i);}),onTime=eligible.filter(function(i){return dayNo(closedDate(i))<=dayNo(deadlineAtClose(i));});
+    return {open:open.length,closed:closed.length,overdue:overdue.length,critical:critical.length,waiting:waiting.length,director:director.length,today:today.length,week:week.length,recur:recur.length,eligible:eligible.length,onTime:onTime.length,onTimeRate:eligible.length?onTime.length/eligible.length:null};
+  }
+  function renderKpis(){
+    var m=metrics(),dash=state.loaded?String(m.open):'—';txt('cl-kpi-open',dash);txt('cl-kpi-overdue',state.loaded?m.overdue:'—');txt('cl-kpi-critical',state.loaded?m.critical:'—');txt('cl-kpi-waiting',state.loaded?m.waiting:'—');txt('cl-kpi-director',state.loaded?m.director:'—');txt('cl-kpi-today',state.loaded?m.today:'—');txt('cl-kpi-week',state.loaded?m.week:'—');txt('cl-kpi-ontime',state.loaded&&m.onTimeRate!==null?Math.round(m.onTimeRate*100)+'%':'—');txt('cl-kpi-ontime-note',state.loaded?m.onTime+' / '+m.eligible+' Issue Closed':'Tử số / mẫu số');txt('cl-kpi-recurrence',state.loaded?m.recur:'—');txt('cl-kpi-recurrence-note',state.loaded?'Issue có liên kết gốc hoặc Reopened':'Theo Issue có liên kết gốc');
+    txt('cl-exec-open',state.loaded?m.open:'—');txt('cl-exec-overdue',state.loaded?m.overdue:'—');txt('cl-exec-critical',state.loaded?m.critical:'—');txt('cl-exec-waiting',state.loaded?m.waiting:'—');txt('cl-exec-due',state.loaded?(m.today+' / '+m.week):'—');txt('cl-exec-due-note','Hôm nay / trong tuần');txt('cl-exec-ontime',state.loaded&&m.onTimeRate!==null?Math.round(m.onTimeRate*100)+'%':'—');
+  }
+  function renderStatusFlow(){
+    var ids={'Assigned':'cl-flow-assigned','In Progress':'cl-flow-in-progress','Waiting Verify':'cl-flow-waiting-verify','Verified':'cl-flow-verified','Closed':'cl-flow-closed','Returned':'cl-flow-returned','Reopened':'cl-flow-reopened','On Hold':'cl-flow-on-hold'},counts={};
+    STATUS.forEach(function(s){counts[s]=0;});state.issues.forEach(function(i){var s=status(i);counts[s]=(counts[s]||0)+1;});Object.keys(ids).forEach(function(s){txt(ids[s],state.loaded?counts[s]||0:'—');});
+  }
+  function mondayNo(s){var n=dayNo(s),d=new Date(n*86400000),dow=d.getUTCDay();return n-((dow+6)%7);}
+  function renderTrend(){
+    var box=$('cl-trend-chart');if(!box)return;if(!state.loaded||!state.issues.length){box.className='cl-chart-empty';box.textContent=state.loaded?'Chưa có Issue trong nguồn Master.':'Chưa có dữ liệu live.';return;}
+    var end=mondayNo(todayVN()),weeks=[];for(var x=7;x>=0;x--)weeks.push(end-x*7);
+    var data=weeks.map(function(w){var o=0,c=0,b=0;state.issues.forEach(function(i){var od=dayNo(openDate(i)),cd=dayNo(closedDate(i));if(od!==null&&od>=w&&od<w+7)o++;if(cd!==null&&cd>=w&&cd<w+7)c++;if(od!==null&&od<w+7&&(cd===null||cd>=w+7))b++;});return {w:w,o:o,c:c,b:b};});
+    var max=Math.max.apply(null,data.reduce(function(a,d){return a.concat([d.o,d.c,d.b]);},[1])),W=760,H=270,ml=40,mr=20,mt=25,mb=45,pw=W-ml-mr,ph=H-mt-mb,step=pw/data.length,bw=Math.min(18,step*.22),svg=['<svg class="cl-trend-svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Xu hướng Open Closed Backlog 8 tuần">'];
+    for(var g=0;g<=4;g++){var gy=mt+ph-g*ph/4;svg.push('<line x1="'+ml+'" y1="'+gy+'" x2="'+(W-mr)+'" y2="'+gy+'" stroke="#E5E7EB"/><text x="'+(ml-7)+'" y="'+(gy+4)+'" text-anchor="end" font-size="9" fill="#6B7280">'+Math.round(max*g/4)+'</text>');}
+    var pts=[];data.forEach(function(d,i){var cx=ml+step*i+step/2,oh=d.o/max*ph,ch=d.c/max*ph,by=mt+ph-d.b/max*ph,dt=new Date(d.w*86400000),lab=('0'+dt.getUTCDate()).slice(-2)+'/'+('0'+(dt.getUTCMonth()+1)).slice(-2);svg.push('<rect x="'+(cx-bw-2)+'" y="'+(mt+ph-oh)+'" width="'+bw+'" height="'+oh+'" fill="#DC2626" rx="2"><title>Open: '+d.o+'</title></rect><rect x="'+(cx+2)+'" y="'+(mt+ph-ch)+'" width="'+bw+'" height="'+ch+'" fill="#16A34A" rx="2"><title>Closed: '+d.c+'</title></rect><text x="'+cx+'" y="'+(H-18)+'" text-anchor="middle" font-size="9" fill="#4B5563">'+lab+'</text>');pts.push(cx+','+by);});
+    svg.push('<polyline points="'+pts.join(' ')+'" fill="none" stroke="#D6A300" stroke-width="3"/>');data.forEach(function(d,i){var cx=ml+step*i+step/2,y=mt+ph-d.b/max*ph;svg.push('<circle cx="'+cx+'" cy="'+y+'" r="3.2" fill="#D6A300"><title>Backlog: '+d.b+'</title></circle>');});svg.push('</svg><div class="cl-legend"><span><i style="background:#DC2626"></i>Open mới</span><span><i style="background:#16A34A"></i>Closed</span><span><i style="background:#D6A300"></i>Backlog cuối tuần</span></div>');box.className='';box.innerHTML=svg.join('');
+  }
+  function barsHtml(rows,color){if(!rows.length)return '<div class="cl-chart-empty">Không có dữ liệu.</div>';var mx=Math.max.apply(null,rows.map(function(r){return r.v;}).concat([1]));return rows.map(function(r){return '<div class="cl-bar-row"><div class="cl-bar-label" title="'+esc(r.n)+'">'+esc(r.n)+'</div><div class="cl-bar-track"><div class="cl-bar-fill '+(color||'')+'" style="width:'+((r.v/mx)*100).toFixed(1)+'%"></div></div><div class="cl-bar-value">'+r.v+'</div></div>';}).join('');}
+  function renderOwnerBars(){var map={};state.issues.filter(isOverdue).forEach(function(i){var n=ownerName(i);map[n]=(map[n]||0)+1;});var rows=Object.keys(map).map(function(n){return {n:n,v:map[n]};}).sort(function(a,b){return b.v-a.v;}).slice(0,8);var e=$('cl-owner-bars');if(e){e.className='';e.innerHTML=state.loaded?barsHtml(rows):'<div class="cl-chart-empty">Chưa có dữ liệu live.</div>';}}
+  function renderHolderAging(){var box=$('cl-aging-holder');if(!box)return;var buckets=['0–3','4–7','8–14','15–30','>30'],map={};state.issues.filter(function(i){return !isClosed(i);}).forEach(function(i){var h=currentHolder(i),b=agingBucket(aging(i));if(b==='N/A')return;if(!map[h])map[h]={'0–3':0,'4–7':0,'8–14':0,'15–30':0,'>30':0};map[h][b]++;});var holders=Object.keys(map).sort(function(a,b){var sa=buckets.reduce(function(s,k){return s+map[a][k];},0),sb=buckets.reduce(function(s,k){return s+map[b][k];},0);return sb-sa;}).slice(0,10);if(!holders.length){box.innerHTML='<div class="cl-chart-empty">Không có Issue Open.</div>';return;}var h='<div class="cl-holder-grid"><div class="cl-holder-head">Holder</div>'+buckets.map(function(b){return '<div class="cl-holder-head">'+b+'</div>';}).join('');holders.forEach(function(n){h+='<div class="cl-holder-name" title="'+esc(n)+'">'+esc(n)+'</div>'+buckets.map(function(b){return '<div>'+map[n][b]+'</div>';}).join('');});box.innerHTML=h+'</div>';}
+  function renderRecurrenceOwner(){var closed={},rec={};state.issues.forEach(function(i){var o=ownerName(i);if(isClosed(i))closed[o]=(closed[o]||0)+1;if(recurrence(i))rec[o]=(rec[o]||0)+1;});var owners=unique(Object.keys(closed).concat(Object.keys(rec))),rows=owners.map(function(o){var d=closed[o]||0,n=rec[o]||0;return {n:o,v:n,den:d,rate:d?n/d:null};}).sort(function(a,b){return b.v-a.v;}).slice(0,8),box=$('cl-recurrence-owner');if(!box)return;if(!rows.length){box.innerHTML='<div class="cl-chart-empty">Chưa đủ dữ liệu tái diễn.</div>';return;}var mx=Math.max.apply(null,rows.map(function(r){return r.v;}).concat([1]));box.innerHTML=rows.map(function(r){return '<div class="cl-bar-row"><div class="cl-bar-label" title="'+esc(r.n)+'">'+esc(r.n)+'</div><div class="cl-bar-track"><div class="cl-bar-fill cl-amber" style="width:'+((r.v/mx)*100).toFixed(1)+'%"></div></div><div class="cl-bar-value" title="Tái diễn / Closed">'+r.v+'/'+r.den+'</div></div>';}).join('');}
+  function priorityRows(){return state.issues.filter(function(i){return !isClosed(i)&&(isCritical(i)||isOverdue(i)||status(i)==='Waiting Verify'||dueWeek(i));}).sort(function(a,b){return (isCritical(b)-isCritical(a))||(isOverdue(b)-isOverdue(a))||((aging(b)||0)-(aging(a)||0));}).slice(0,30);}
+  function renderPriority(){var body=$('cl-priority-body');if(!body)return;var rows=priorityRows();body.innerHTML=rows.length?rows.map(function(i){var a=aging(i);return '<tr><td><button type="button" class="cl-link-btn" data-clissue="'+esc(issueId(i))+'">'+esc(issueId(i))+'</button></td><td>'+severityBadge(severity(i))+'</td><td>'+esc(val(i,['Description','description']))+'</td><td>'+esc(ownerName(i))+'</td><td>'+esc(currentHolder(i))+'</td><td style="color:'+(isOverdue(i)?'#B91C1C':'inherit')+';font-weight:'+(isOverdue(i)?'900':'400')+'">'+dateVN(deadline(i))+'</td><td>'+(a===null?'—':a+' ngày')+'</td><td>'+statusBadge(status(i))+'</td></tr>';}).join(''):'<tr><td colspan="8" class="cl-empty">'+(state.loaded?'Không có Issue Critical/quá hạn/chờ Verify/đến hạn trong tuần.':'Chưa kết nối nguồn Master.')+'</td></tr>';}
+  function fillSelect(id,values,placeholder){var e=$(id);if(!e)return;var cur=e.value;e.innerHTML='<option value="">'+esc(placeholder)+'</option>'+values.map(function(v){return '<option value="'+esc(v)+'">'+esc(v)+'</option>';}).join('');e.value=cur;}
+  function filteredIssues(){var q=lower(($('cl-filter-search')||{}).value),s=key(($('cl-filter-status')||{}).value),seg=key(($('cl-filter-segment')||{}).value),own=key(($('cl-filter-owner')||{}).value),hold=key(($('cl-filter-holder')||{}).value),sev=key(($('cl-filter-severity')||{}).value),alert=key(($('cl-filter-alert')||{}).value)||state.alertFilter;return state.issues.filter(function(i){if(q&&lower(JSON.stringify(i)).indexOf(q)<0)return false;if(s&&status(i)!==s)return false;if(seg&&key(val(i,['Segment','segment']))!==seg)return false;if(own&&ownerName(i)!==own)return false;if(hold&&currentHolder(i)!==hold)return false;if(sev&&severity(i)!==sev)return false;if(alert==='open'&&isClosed(i))return false;if(alert==='overdue'&&!isOverdue(i))return false;if(alert==='critical'&&!isCritical(i))return false;if(alert==='waiting'&&status(i)!=='Waiting Verify')return false;if(alert==='director'&&status(i)!=='Verified')return false;if(alert==='today'&&!dueToday(i))return false;if((alert==='week'||alert==='due')&&!dueWeek(i))return false;if(alert==='reopened'&&!recurrence(i))return false;return true;});}
+  function renderRegister(){var body=$('cl-register-body');if(!body)return;var rows=filteredIssues();txt('cl-filter-count',rows.length+' Issue');body.innerHTML=rows.length?rows.map(function(i){var id=issueId(i),a=aging(i),pics=initialAssigneeNames(id),flash=state.flashIssueId===id?' class="cl-row-flash"':'';return '<tr data-issue-row="'+esc(id)+'"'+flash+'><td><button type="button" class="cl-link-btn" data-clwork="'+esc(id)+'">'+esc(id)+'</button></td><td>'+esc(val(i,['SourceType','sourceType']))+'<br><small>'+esc(val(i,['SourceRef','sourceRef']))+'</small></td><td>'+esc(val(i,['Segment','segment']))+'</td><td>'+severityBadge(severity(i))+'</td><td><b>'+esc(val(i,['Title','title']))+'</b><br><small>'+esc(val(i,['Description','description']))+'</small></td><td>'+esc(ownerName(i))+'</td><td>'+esc(currentHolder(i))+'</td><td>'+dateVN(originalDeadline(i))+'</td><td style="color:'+(isOverdue(i)?'#B91C1C':'inherit')+';font-weight:'+(isOverdue(i)?'900':'400')+'">'+dateVN(deadline(i))+'</td><td>'+(a===null?'—':a+' ngày')+'</td><td>'+statusBadge(status(i))+'</td><td>'+attachmentLinks(id)+'</td><td><div class="cl-row-actions"><span class="cl-initial-pics"><b>Người thực hiện ban đầu:</b> '+esc(pics.length?pics.join(' · '):'Chưa giao')+'</span><button type="button" class="cl-mini-btn" data-clwork="'+esc(id)+'">Xem công việc</button><button type="button" class="cl-mini-btn" data-cloriginal="'+esc(id)+'">Xem Issue gốc</button></div></td></tr>';}).join(''):'<tr><td colspan="13" class="cl-empty">'+(state.loaded?'Không có Issue phù hợp bộ lọc.':'Chưa kết nối nguồn Master.')+'</td></tr>';if(state.flashIssueId){setTimeout(function(){state.flashIssueId='';var row=body.querySelector('.cl-row-flash');if(row)row.classList.remove('cl-row-flash');},3200);}}
+  function parseJsonArray(v){try{var x=JSON.parse(key(v)||'[]');return Array.isArray(x)?x:[];}catch(ignore){return [];}}
+  function originalCell(label,value,wide){return '<div'+(wide?' class="cl-original-wide"':'')+'><b>'+esc(label)+'</b><span>'+esc(value||'—')+'</span></div>';}
+  function openOriginal(id){
+    var issue=state.issues.find(function(i){return issueId(i)===id;})||{},snap=state.openSnapshots.find(function(s){return key(val(s,['IssueId']))===id;})||{},source=Object.keys(snap).length?snap:issue,tasks=parseJsonArray(val(snap,['InitialTasksJson'])),initialFiles=attachmentsFor(id).filter(function(a){return key(val(a,['AttachmentType']))==='INITIAL';}),mode=key(val(snap,['SnapshotMode']))||'FALLBACK';
+    var h='<div class="cl-original-grid">'+originalCell('Mã Issue',id)+originalCell('Loại hồ sơ',mode==='BACKFILLED'?'BACKFILLED – tạo từ dữ liệu hiện có':'ORIGINAL – bất biến từ lúc mở')+originalCell('Nguồn / Biên bản',key(val(source,['SourceType']))+' · '+key(val(source,['SourceRef'])))+originalCell('Nhà máy / Mảng',key(val(source,['Factory']))+' · '+key(val(source,['Segment'])))+originalCell('Tiêu đề',val(source,['Title']),true)+originalCell('Mô tả vấn đề',val(source,['Description']),true)+originalCell('Nguyên nhân sơ bộ',val(source,['PreliminaryCause']),true)+originalCell('Ảnh hưởng',val(source,['Impact']),true)+originalCell('Mức độ / Điểm rủi ro',key(val(source,['Severity']))+' / '+key(val(source,['RiskScore'])))+originalCell('Ngăn chặn ban đầu',val(source,['ImmediateContainment']),true)+originalCell('Owner lúc mở',key(val(source,['OwnerName']))+' · '+key(val(source,['OwnerEmail'])))+originalCell('Thời hạn đóng Issue lúc mở',dateVN(val(source,['InitialIssueDeadline','ProposedDeadline'])))+originalCell('Người tạo',key(val(source,['ReporterName']))+' · '+key(val(source,['ReporterEmail'])))+originalCell('Thời điểm tạo',dateTimeVN(val(source,['CapturedAt','CreatedAt'])))+'</div>';
+    h+='<h3 style="margin-top:12px">Người thực hiện / công việc ban đầu</h3><div class="cl-table-wrap"><table><thead><tr><th>#</th><th>Họ tên</th><th>Email</th><th>Bộ phận</th><th>Nội dung</th><th>Deadline</th></tr></thead><tbody>'+(tasks.length?tasks.map(function(t,n){return '<tr><td>'+esc(t.SequenceNo||n+1)+'</td><td>'+esc(t.PICName)+'</td><td>'+esc(t.PICEmail)+'</td><td>'+esc(t.PICDepartment)+'</td><td>'+esc(t.ActionDescription)+'</td><td>'+dateVN(t.Deadline)+'</td></tr>';}).join(''):'<tr><td colspan="6" class="cl-empty">Không giao công việc ban đầu.</td></tr>')+'</tbody></table></div>';
+    h+='<h3 style="margin-top:12px">Tài liệu khởi tạo</h3><div class="cl-attachment-list">'+(initialFiles.length?initialFiles.map(function(a){return safeLink(val(a,['DriveUrl']),val(a,['FileName'])||'Tệp khởi tạo');}).join(''):(safeLink(val(source,['InitialEvidenceUrl']),'Bằng chứng ban đầu')||'—'))+'</div>';
+    txt('cl-original-title','Issue gốc · '+id);var content=$('cl-original-content');if(content)content.innerHTML=h;var modal=$('cl-original-modal');if(modal)modal.classList.add('cl-on');
+  }
+  function closeOriginal(){var modal=$('cl-original-modal');if(modal)modal.classList.remove('cl-on');}
+  function issueById(id){return state.issues.find(function(i){return issueId(i)===id;})||null;}
+  function taskDone(a){return lower(val(a,['Status']))==='completed';}
+  function taskEvidence(a){var aid=key(val(a,['ActionId'])),links=[],direct=key(val(a,['EvidenceUrl']));if(direct)links.push(safeLink(direct,'Bằng chứng công việc'));attachmentsFor(key(val(a,['IssueId']))).filter(function(x){return key(val(x,['ActionId']))===aid;}).forEach(function(x){links.push(safeLink(val(x,['DriveUrl']),val(x,['FileName'])||'Tệp'));});return links.length?links.join('<br>'):'—';}
+  function stageStrip(i){var s=status(i),idx=s==='Closed'?4:s==='Verified'?3:s==='Waiting Verify'?2:s==='In Progress'?1:0,names=['1. PIC thực hiện','2. Người mở duyệt','3. GĐNM đóng','4. Closed'];return '<div class="cl-stage-strip">'+names.map(function(n,k){var cls=k+1<idx?' cl-stage-done':k+1===idx?' cl-stage-on':'';return '<span class="'+cls.trim()+'">'+n+'</span>';}).join('')+'</div>';}
+  function updatesForAction(actionId){return state.actionUpdates.filter(function(u){return key(val(u,['ActionId']))===key(actionId);}).sort(function(a,b){return key(val(b,['CreatedAt'])).localeCompare(key(val(a,['CreatedAt'])));});}
+  function latestActionUpdate(actionId){return updatesForAction(actionId)[0]||null;}
+  function canUpdateAction(i,a){var email=actorEmail();return !!(email&&lower(val(a,['PICEmail']))===email)||!!(email&&email===ownerEmail(i))||actorHas('PLANT_DIRECTOR');}
+  function operationLabel(op){return {rootCauseCapa:'Owner: Cập nhật Nguyên nhân gốc & CAPA',addAction:'Owner: Giao thêm công việc / PIC',updateAction:'Cập nhật công việc được giao',reporterApprove:'Người mở Issue: Duyệt kết quả',reporterReturn:'Người mở Issue: Trả lại PIC',close:'GĐNM: Duyệt đóng Issue',directorReturn:'GĐNM: Không duyệt – trả người mở Issue',onHold:'GĐNM: Tạm dừng Issue',resume:'GĐNM: Tiếp tục Issue',reopen:'GĐNM: Mở lại Issue'}[op]||op;}
+  function availableOperationChoices(i){if(!i)return [];var s=status(i),email=actorEmail(),list=[],director=actorHas('PLANT_DIRECTOR'),owner=email&&email===ownerEmail(i),reporter=email&&email===reporterEmail(i),aa=actionsFor(issueId(i));if((owner||director)&&['Closed','On Hold'].indexOf(s)<0)list.push('rootCauseCapa');if((owner||director)&&['Assigned','In Progress','Returned','Reopened'].indexOf(s)>=0)list.push('addAction');if(['Assigned','In Progress','Returned','Reopened'].indexOf(s)>=0&&aa.some(function(a){return !taskDone(a)&&canUpdateAction(i,a);})){list.push('updateAction');}if(reporter&&s==='Waiting Verify'){list.push('reporterApprove');list.push('reporterReturn');}if(director&&s==='Verified'){list.push('close');list.push('directorReturn');}if(director&&s!=='Closed'&&s!=='On Hold')list.push('onHold');if(director&&s==='On Hold')list.push('resume');if(director&&s==='Closed')list.push('reopen');return list;}
+  function openOperation(op,id,actionId){closeWork();var input=$('cl-operation-issue');if(input)input.value=id;setView('update');refreshOperationOptions(op);var select=$('cl-operation');if(select)select.value=op;updateOperationFields();if(actionId){var action=state.actions.find(function(a){return key(val(a,['ActionId']))===key(actionId);});var pic=$('cl-operation-pic');if(action&&pic){pic.value=lower(val(action,['PICEmail']));refreshActionSelect();}if($('cl-operation-action'))$('cl-operation-action').value=actionId;syncSelectedAction();}setTimeout(function(){var form=$('cl-operation-form');if(form)form.scrollIntoView({block:'start',behavior:'smooth'});},50);}
+  function openWork(id){
+    var i=issueById(id);if(!i)return;var aa=actionsFor(id),email=actorEmail(),choices=availableOperationChoices(i),critical=['Critical','High'].indexOf(severity(i))>=0,hasRc=!!key(val(i,['RootCause'])),hasCapa=!!key(val(i,['CAPAProposal','ApprovedCAPA']));
+    var h='<div class="cl-work-summary"><div><b>Issue</b><span>'+esc(id)+' · '+esc(val(i,['Title']))+'</span></div><div><b>Trạng thái</b><span>'+esc(statusLabel(status(i)))+'</span></div><div><b>Người mở Issue</b><span>'+esc(reporterName(i))+' · '+esc(reporterEmail(i))+'</span></div><div><b>Thời hạn đóng</b><span>'+dateVN(deadline(i))+'</span></div></div>'+stageStrip(i);
+    if(critical)h+='<div class="cl-rule-note">Issue '+esc(severity(i))+' — người mở chỉ được duyệt khi đã có <b>Nguyên nhân gốc</b> và <b>CAPA</b>. Hiện tại: Root Cause '+(hasRc?'✓':'✗')+' · CAPA '+(hasCapa?'✓':'✗')+'.</div>';
+    h+='<div class="cl-work-actions">'+(choices.indexOf('rootCauseCapa')>=0?'<button type="button" class="cl-secondary-btn" data-clop="rootCauseCapa" data-clop-issue="'+esc(id)+'">Cập nhật Root Cause & CAPA</button>':'')+(choices.indexOf('addAction')>=0?'<button type="button" class="cl-secondary-btn" data-clop="addAction" data-clop-issue="'+esc(id)+'">+ Giao thêm công việc</button>':'')+(choices.indexOf('reporterApprove')>=0?'<button type="button" class="cl-primary-btn" data-clop="reporterApprove" data-clop-issue="'+esc(id)+'">Duyệt kết quả Issue</button>':'')+(choices.indexOf('close')>=0?'<button type="button" class="cl-primary-btn" data-clop="close" data-clop-issue="'+esc(id)+'">Duyệt đóng Issue</button>':'')+(choices.indexOf('directorReturn')>=0?'<button type="button" class="cl-secondary-btn" data-clop="directorReturn" data-clop-issue="'+esc(id)+'">Không duyệt – trả người mở</button>':'')+'</div>';
+    h+='<div class="cl-table-wrap"><table><thead><tr><th>#</th><th>PIC / Bộ phận</th><th>Nội dung công việc</th><th>Deadline</th><th>Trạng thái</th><th>Bằng chứng</th><th>Thao tác đúng quyền</th></tr></thead><tbody>'+(aa.length?aa.map(function(a,n){var aid=key(val(a,['ActionId'])),done=taskDone(a),latest=latestActionUpdate(aid),buttons=[];if(!done&&choices.indexOf('updateAction')>=0&&canUpdateAction(i,a))buttons.push('<button type="button" class="cl-primary-btn" data-clop="updateAction" data-clop-issue="'+esc(id)+'" data-clop-action="'+esc(aid)+'">Cập nhật công việc</button>');if(done&&choices.indexOf('reporterReturn')>=0)buttons.push('<button type="button" class="cl-secondary-btn" data-clop="reporterReturn" data-clop-issue="'+esc(id)+'" data-clop-action="'+esc(aid)+'">Trả lại PIC</button>');var progress=latest&&!done?' · '+esc(val(latest,['ProgressPercent']))+'%':'';var lastUpdate=latest?'<br><small>Cập nhật: '+dateTimeVN(val(latest,['CreatedAt']))+' · '+esc(val(latest,['EnteredByName','EnteredByEmail']))+'</small>':'';return '<tr><td>'+esc(val(a,['SequenceNo'])||n+1)+'</td><td><b>'+esc(val(a,['PICName']))+'</b><br><small>'+esc(val(a,['PICEmail']))+' · '+esc(val(a,['PICDepartment']))+'</small></td><td>'+esc(val(a,['ActionDescription']))+'</td><td>'+dateVN(val(a,['ApprovedDeadline','ProposedDeadline']))+'</td><td><span class="cl-task-state'+(done?' cl-done':'')+'">'+(done?'Đã hoàn thành':'Đang thực hiện'+progress)+'</span>'+(done?'<br><small>'+dateVN(val(a,['CompletedDate']))+'</small>':'')+lastUpdate+'</td><td>'+taskEvidence(a)+'</td><td>'+(buttons.length?buttons.join(' '):'—')+'</td></tr>';}).join(''):'<tr><td colspan="7" class="cl-empty">Issue chưa có công việc. Owner hoặc GĐNM cần giao PIC.</td></tr>')+'</tbody></table></div>';
+    if(!choices.length)h+='<div class="cl-work-help">Tài khoản đang đăng nhập không có thao tác tại trạng thái này. Hệ thống vẫn cho xem tiến độ và bằng chứng.</div>';
+    txt('cl-work-title','Danh sách công việc · '+id);var content=$('cl-work-content');if(content)content.innerHTML=h;var modal=$('cl-work-modal');if(modal)modal.classList.add('cl-on');
+  }
+  function closeWork(){var modal=$('cl-work-modal');if(modal)modal.classList.remove('cl-on');}
+  function renderEvents(){var body=$('cl-event-body');if(!body)return;var rows=state.events.slice().sort(function(a,b){return key(val(b,['EventTime'])) .localeCompare(key(val(a,['EventTime'])));}).slice(0,100);body.innerHTML=rows.length?rows.map(function(e){return '<tr><td>'+dateTimeVN(val(e,['EventTime']))+'</td><td>'+esc(val(e,['IssueId']))+'</td><td>'+esc(val(e,['EventType']))+'</td><td>'+esc(val(e,['FromStatus']))+'</td><td>'+esc(val(e,['ToStatus']))+'</td><td>'+esc(val(e,['ActorName','ActorEmail']))+'</td><td>'+esc(val(e,['Note']))+'</td></tr>';}).join(''):'<tr><td colspan="7" class="cl-empty">Chưa có Event Log.</td></tr>';}
+  function renderSop(){var body=$('cl-sop-body');if(!body)return;body.innerHTML=state.sop.length?state.sop.map(function(s){return '<tr><td>'+esc(val(s,['IssueId']))+'</td><td>'+esc(val(s,['SopId','SOP']))+'</td><td>'+esc(val(s,['Revision']))+'</td><td>'+esc(val(s,['TrainingTopic','Training']))+'</td><td>'+esc(val(s,['OwnerName','Owner']))+'</td><td>'+dateVN(val(s,['CompletedDate']))+'</td><td>'+safeLink(val(s,['EvidenceUrl']),'Evidence')+'</td></tr>';}).join(''):'<tr><td colspan="7" class="cl-empty">Chưa có cập nhật SOP/đào tạo.</td></tr>';}
+  function renderDataQuality(){var invalid=state.issues.filter(function(i){return STATUS.indexOf(status(i))<0;}).length,noOwner=state.issues.filter(function(i){return !ownerEmail(i)||ownerName(i)==='Chưa gán';}).length,noDl=state.issues.filter(function(i){return !isClosed(i)&&!deadline(i);}).length,ids=new Set(state.issues.map(issueId)),orph=state.actions.filter(function(a){return !ids.has(key(val(a,['IssueId'])));}).length,noEvidence=state.issues.filter(function(i){return ['Waiting Verify','Verified','Closed'].indexOf(status(i))>=0&&!key(val(i,['CompletionEvidenceUrl','EvidenceUrl','InitialEvidenceUrl']));}).length,box=$('cl-data-quality');if(!box)return;var rows=[{n:'Trạng thái không chuẩn',v:invalid},{n:'Thiếu Owner/email',v:noOwner},{n:'Issue Open thiếu deadline',v:noDl},{n:'Action mồ côi',v:orph},{n:'Verify/Closed thiếu evidence',v:noEvidence}];box.className='';box.innerHTML=barsHtml(rows,rows.some(function(r){return r.v>0;})?'':'cl-green');}
+  function syncKnowledge(){window.GS6_CLOSED_LOOP_READONLY=state.issues.filter(function(i){return status(i)==='Verified'||status(i)==='Closed';}).map(function(i){return {id:issueId(i),date:openDate(i),mang:key(val(i,['Segment','segment'])),type:key(val(i,['Category','category'])),desc:key(val(i,['Description','description'])),cause:key(val(i,['RootCause','rootCause'])),action:key(val(i,['ApprovedCAPA','CAPAProposal','capa'])),owner:ownerName(i),deadline:deadline(i),priority:severity(i),status:status(i)==='Closed'?'Đã đóng':'Verified'};});}
+  function renderKnowledge(){var rows=state.issues.filter(function(i){return status(i)==='Verified'||status(i)==='Closed';}),q=lower(($('q-issue')||{}).value),seg=key(($('f-issue-mang')||{}).value),st=key(($('f-issue-status')||{}).value),sev=key(($('f-issue-rag')||{}).value);if(q)rows=rows.filter(function(i){return lower(JSON.stringify(i)).indexOf(q)>=0;});if(seg)rows=rows.filter(function(i){return key(val(i,['Segment']))===seg;});if(st)rows=rows.filter(function(i){return status(i)===st;});if(sev)rows=rows.filter(function(i){return severity(i)===sev;});var body=$('body-issue');if(body)body.innerHTML=rows.length?rows.map(function(i){var id=issueId(i),v=state.verifies.filter(function(x){return key(val(x,['IssueId']))===id;}).slice(-1)[0]||{},s=state.sop.filter(function(x){return key(val(x,['IssueId']))===id;});return '<tr><td>'+esc(id)+'</td><td>'+esc(val(i,['Segment']))+'</td><td>'+esc(val(i,['Description']))+'</td><td>'+esc(val(i,['RootCause']))+'</td><td>'+esc(val(i,['ApprovedCAPA','CAPAProposal']))+'</td><td>'+esc(ownerName(i))+'</td><td>'+esc(val(v,['Result']))+'<br><small>'+esc(val(v,['VerifierName']))+'</small></td><td>'+dateVN(closedDate(i))+'</td><td>'+(s.length?esc(s.map(function(x){return key(val(x,['SopId','SOP']))||key(val(x,['TrainingTopic']));}).filter(Boolean).join('; ')):'—')+'</td></tr>';}).join(''):'<tr><td colspan="9" class="cl-empty">'+(state.loaded?'Chưa có Issue Verified/Closed phù hợp.':'Chưa kết nối nguồn Closed-loop Master.')+'</td></tr>';fillSelect('f-issue-mang',unique(state.issues.map(function(i){return val(i,['Segment']);})),'-- Tất cả mảng --');txt('cl-kb-verified',state.loaded?state.issues.filter(function(i){return status(i)==='Verified';}).length:'—');txt('cl-kb-closed',state.loaded?state.issues.filter(isClosed).length:'—');txt('cl-kb-sop',state.loaded?unique(state.sop.map(function(s){return val(s,['IssueId']);})).length:'—');txt('cl-kb-reopened',state.loaded?state.issues.filter(recurrence).length:'—');}
+  function renderAll(){renderKpis();renderStatusFlow();renderTrend();renderOwnerBars();renderHolderAging();renderRecurrenceOwner();renderPriority();fillSelect('cl-filter-status',STATUS,'Tất cả trạng thái');fillSelect('cl-filter-segment',unique(state.issues.map(function(i){return val(i,['Segment','segment']);})),'Tất cả mảng');fillSelect('cl-filter-owner',unique(state.issues.map(ownerName)),'Tất cả Owner');fillSelect('cl-filter-holder',unique(state.issues.map(currentHolder)),'Tất cả Holder');renderRegister();renderEvents();renderSop();renderDataQuality();syncKnowledge();renderKnowledge();}
+  function apiValid(u){return /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec(?:\?|$)/.test(u);}
+  async function loadSnapshot(){
+    var input=$('cl-api-url'),u=key(input&&input.value)||state.apiUrl;if(!apiValid(u)){state.loading=false;setSource('CHƯA KẾT NỐI — Cần Apps Script Web App URL kết thúc bằng /exec.','cl-error');renderAll();return;}
+    if(state.apiUrl!==u)state.transportVerified=false;state.apiUrl=u;state.loading=true;saveAuth();setSource('Đang kiểm tra API V2.5.0 và nạp Closed-loop Master…','');
+    try{var payload=await postOperation('snapshot',{});normalizeSnapshot(payload);setSource('LIVE OK — API '+key(payload.apiVersion||'')+' · '+state.issues.length.toLocaleString('vi-VN')+' Issue · '+new Date().toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh'}),'cl-live');renderAll();fillDataLists();}
+    catch(err){state.loading=false;setSource('LIVE ERROR — '+key(err&&err.message||err),'cl-error');renderAll();}
+  }
+  function setView(v){state.view=v||'overview';document.querySelectorAll('#cl-subnav [data-clview]').forEach(function(b){b.classList.toggle('cl-on',b.getAttribute('data-clview')===state.view);});document.querySelectorAll('#contract-wrap .cl-view').forEach(function(p){p.classList.toggle('cl-on',p.id==='cl-view-'+state.view);});}
+  function setAlertFilter(f){state.alertFilter=f||'';var e=$('cl-filter-alert');if(e)e.value=state.alertFilter;renderRegister();}
+  function openControl(view,filter){var b=document.querySelector('#nav button[data-tab="contract"]');if(b&&typeof switchMainTab==='function')switchMainTab(b);var cb=document.querySelector('#c-nav [data-cpane="c-action"]');if(cb&&typeof cSwitch==='function')cSwitch(cb);setView(view||'overview');setAlertFilter(filter||'');setTimeout(function(){var x=$('contract');if(x)x.scrollIntoView({block:'start'});},60);}
+  function formData(form){var out={};new FormData(form).forEach(function(v,k){if(!(v instanceof File))out[k]=key(v);});return out;}
+  function authPayload(){return {authEmail:key(($('cl-auth-email')||{}).value),authToken:key(($('cl-auth-token')||{}).value)};}
+  function saveAuth(){var values={gs6_cl_api_url:state.apiUrl,gs6_cl_auth_email:key(($('cl-auth-email')||{}).value),gs6_cl_auth_token:key(($('cl-auth-token')||{}).value)};try{Object.keys(values).forEach(function(k){localStorage.setItem(k,values[k]);sessionStorage.setItem(k,values[k]);});}catch(e){try{Object.keys(values).forEach(function(k){sessionStorage.setItem(k,values[k]);});}catch(ignore){}}}
+  function sleep(ms){return new Promise(function(resolve){setTimeout(resolve,ms);});}
+  function secureToken(prefix,bytes){
+    var a=new Uint8Array(bytes||16);if(window.crypto&&window.crypto.getRandomValues)window.crypto.getRandomValues(a);else for(var i=0;i<a.length;i++)a[i]=Math.floor(Math.random()*256);
+    return prefix+'-'+Date.now()+'-'+Array.prototype.map.call(a,function(x){return ('0'+x.toString(16)).slice(-2);}).join('');
+  }
+  function shortHash(s){var h=2166136261,t=String(s||'');for(var i=0;i<t.length;i++){h^=t.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0).toString(16);}
+  function receiptUrl(params){var q=Object.keys(params).map(function(k){return encodeURIComponent(k)+'='+encodeURIComponent(params[k]);}).join('&');return state.apiUrl+(state.apiUrl.indexOf('?')>=0?'&':'?')+q;}
+  function jsonpCall(params,timeoutMs){
+    return new Promise(function(resolve,reject){
+      var callback='__gs6cl_'+Date.now()+'_'+Math.floor(Math.random()*1e9),script=document.createElement('script'),done=false,timer;
+      function finish(err,value){if(done)return;done=true;clearTimeout(timer);try{delete window[callback];}catch(ignore){window[callback]=undefined;}if(script.parentNode)script.parentNode.removeChild(script);if(err)reject(err);else resolve(value);}
+      window[callback]=function(value){finish(null,value);};
+      script.async=true;script.src=receiptUrl(Object.assign({},params,{callback:callback,_:Date.now()+''+Math.floor(Math.random()*1e6)}));
+      script.onerror=function(){finish(new Error('Không tải được kênh JSONP từ Apps Script.'));};
+      timer=setTimeout(function(){finish(new Error('JSONP timeout.'));},timeoutMs||15000);
+      document.head.appendChild(script);
+    });
+  }
+  async function ensureTransport(){
+    if(state.transportVerified)return;
+    var h=await jsonpCall({transport:'health'},15000);
+    if(!h||!h.ok||h.apiVersion!=='V2.5.0'||h.transport!=='FORM_POST_JSONP_RECEIPT_V1'){
+      throw new Error('Web App chưa chạy API V2.5.0 Receipt. Phiên bản nhận được: '+key(h&&h.apiVersion||'không xác định')+'. Hãy cập nhật deployment hiện có sang phiên bản mới.');
+    }
+    state.transportVerified=true;
+  }
+  function pendingMutationKey(op,payload){return 'gs6_cl_pending_'+op+'_'+shortHash(JSON.stringify(payload||{}));}
+  function idempotencyFor(op,payload){
+    if(op==='snapshot'||op==='health')return secureToken('IDEMP',16);
+    var storageKey=pendingMutationKey(op,payload),existing='';
+    try{existing=sessionStorage.getItem(storageKey)||'';}catch(ignore){}
+    if(existing)return existing;
+    var created=secureToken('IDEMP',20);try{sessionStorage.setItem(storageKey,created);}catch(ignore){}return created;
+  }
+  function clearIdempotency(op,payload){if(op==='snapshot'||op==='health')return;try{sessionStorage.removeItem(pendingMutationKey(op,payload));}catch(ignore){}}
+  function submitPost(op,payload,requestId,replyChannel){
+    var target='cl-api-target-'+String(requestId).replace(/[^A-Za-z0-9_-]/g,''),frame=document.querySelector('iframe[name="'+target+'"]'),newFrame=!frame;if(!frame){frame=document.createElement('iframe');frame.name=target;frame.title='Closed-loop API '+requestId;frame.hidden=true;document.body.appendChild(frame);}
+    var form=document.createElement('form');form.method='POST';form.action=state.apiUrl;form.target=target;form.style.display='none';
+    [['op',op],['requestId',requestId],['replyChannel',replyChannel],['payload',JSON.stringify(payload)]].forEach(function(pair){var i=document.createElement('input');i.type='hidden';i.name=pair[0];i.value=pair[1];form.appendChild(i);});
+    document.body.appendChild(form);form.submit();setTimeout(function(){if(form.parentNode)form.parentNode.removeChild(form);},2000);if(newFrame)setTimeout(function(){if(frame.parentNode)frame.parentNode.removeChild(frame);},390000);
+  }
+  function decodeBase64Utf8(base64){
+    var bin=atob(base64),bytes=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+    if(window.TextDecoder)return new TextDecoder('utf-8').decode(bytes);
+    var encoded='';for(var j=0;j<bytes.length;j++)encoded+='%'+('0'+bytes[j].toString(16)).slice(-2);return decodeURIComponent(encoded);
+  }
+  async function getReceiptPart(requestId,replyChannel,part,deadline){
+    var lastError=null;
+    while(Date.now()<deadline){
+      try{var r=await jsonpCall({transport:'poll',requestId:requestId,replyChannel:replyChannel,part:part},15000);if(r&&r.status==='PART'&&Number(r.part)===part)return r.data;if(r&&!r.ok)throw new Error(key(r.error||'Biên nhận không hợp lệ.'));}
+      catch(err){lastError=err;}
+      await sleep(450);
+    }
+    throw lastError||new Error('Thiếu phần '+part+' của biên nhận.');
+  }
+  async function waitReceipt(op,payload,requestId,replyChannel,timeoutMs){
+    var retryDelay=op==='snapshot'?20000:(op==='uploadAttachment'?180000:60000),deadline=Date.now()+timeoutMs,retryAt=Date.now()+retryDelay,retried=false,lastError=null;
+    while(Date.now()<deadline){
+      try{
+        var m=await jsonpCall({transport:'poll',requestId:requestId,replyChannel:replyChannel},15000);
+        if(m&&!m.ok)throw new Error(key(m.error||'Không đọc được biên nhận.'));
+        if(m&&m.status==='READY'){
+          var count=Number(m.parts||0);if(!count||count>900)throw new Error('Số phần biên nhận không hợp lệ: '+count);
+          var chunks=new Array(count);
+          for(var start=0;start<count;start+=6){
+            var jobs=[];for(var i=start;i<Math.min(start+6,count);i++)(function(index){jobs.push(getReceiptPart(requestId,replyChannel,index,deadline).then(function(data){chunks[index]=data;}));})(i);
+            await Promise.all(jobs);
+          }
+          var base64=chunks.join('');if(m.base64Length&&base64.length!==Number(m.base64Length))throw new Error('Biên nhận thiếu dữ liệu; độ dài không khớp.');
+          var textValue=decodeBase64Utf8(base64);if(m.jsonLength&&textValue.length!==Number(m.jsonLength))throw new Error('Biên nhận lỗi mã hóa UTF-8.');
+          var result=JSON.parse(textValue);if(!result||result.requestId!==requestId||result.replyChannel!==replyChannel)throw new Error('Biên nhận không khớp mã yêu cầu.');
+          return result;
+        }
+      }catch(err){lastError=err;}
+      if(!retried&&Date.now()>=retryAt){submitPost(op,payload,requestId,replyChannel);retried=true;}
+      await sleep(700);
+    }
+    throw new Error('Không nhận được biên nhận '+op+' sau '+Math.round(timeoutMs/1000)+' giây. API đã tự gửi lại cùng khóa chống trùng; không bấm lặp. Mã yêu cầu: '+requestId+(lastError?' · '+key(lastError.message):''));
+  }
+  async function postOperation(op,payload){
+    if(!apiValid(state.apiUrl))throw new Error('Chưa kết nối Apps Script /exec.');
+    await ensureTransport();
+    var businessPayload=Object.assign({},payload||{}),requestId=secureToken('RQ',16),replyChannel=secureToken('RC',24),idempotencyKey=idempotencyFor(op,businessPayload);
+    var p=Object.assign({},businessPayload,authPayload(),{requestId:requestId,replyChannel:replyChannel,idempotencyKey:idempotencyKey});
+    submitPost(op,p,requestId,replyChannel);
+    var timeoutMs=op==='uploadAttachment'?360000:120000,result;
+    try{result=await waitReceipt(op,p,requestId,replyChannel,timeoutMs);}catch(err){throw err;}
+    clearIdempotency(op,businessPayload);
+    if(!result.ok)throw new Error(key(result.error||'Không đủ quyền hoặc sai trạng thái.'));
+    return result;
+  }
+  function fileToDataUrl(file){return new Promise(function(resolve,reject){var reader=new FileReader();reader.onload=function(){resolve(reader.result);};reader.onerror=function(){reject(new Error('Không đọc được tệp '+file.name));};reader.readAsDataURL(file);});}
+  function fileKey(file){return [file.name,file.size,file.lastModified].join('|');}
+  function formatBytes(n){n=Number(n||0);if(n<1024)return n+' B';if(n<1048576)return (n/1024).toFixed(1)+' KB';return (n/1048576).toFixed(1)+' MB';}
+  function queueId(name){return name==='create'?'cl-create-file-list':'cl-operation-file-list';}
+  function addFiles(name,files){var queue=state.fileQueues[name],seen={};queue.forEach(function(x){seen[x.key]=true;});Array.prototype.slice.call(files||[]).forEach(function(file){var k=fileKey(file);if(!seen[k]){queue.push({key:k,file:file,status:'pending',url:'',error:'',dataUrlPromise:null});seen[k]=true;}});renderFileQueue(name);}
+  function renderFileQueue(name){var box=$(queueId(name));if(!box)return;var queue=state.fileQueues[name];box.innerHTML=queue.map(function(item,index){var cls=item.status==='ok'?' cl-file-ok':item.status==='error'?' cl-file-error':'',status=item.status==='uploading'?'Đang tải…':item.status==='ok'?'Thành công':item.status==='error'?'Lỗi: '+item.error:'Sẵn sàng';return '<span class="cl-file-item'+cls+'"><b title="'+esc(item.file.name)+'">'+esc(item.file.name)+'</b><span>'+formatBytes(item.file.size)+' · '+esc(status)+'</span><button type="button" data-clfile="'+esc(name)+'" data-clfile-index="'+index+'">'+(item.status==='error'?'Tải lại':'Bỏ')+'</button></span>';}).join('');}
+  function handleFileButton(button){var name=button.getAttribute('data-clfile'),index=Number(button.getAttribute('data-clfile-index')),queue=state.fileQueues[name];if(!queue||!queue[index])return;if(queue[index].status==='error'){queue[index].status='pending';queue[index].error='';queue[index].dataUrlPromise=null;}else if(queue[index].status!=='uploading')queue.splice(index,1);renderFileQueue(name);}
+  async function uploadFiles(issueId,actionId,type,queueName,progressId){var queue=state.fileQueues[queueName],targets=queue.filter(function(x){return x.status!=='ok';}),next=0,done=0,concurrency=Math.min(2,targets.length);async function worker(){while(next<targets.length){var index=next++,item=targets[index],file=item.file;item.status='uploading';item.error='';renderFileQueue(queueName);txt(progressId,'Đang tải song song '+done+'/'+targets.length+' tệp…');try{item.dataUrlPromise=item.dataUrlPromise||fileToDataUrl(file);var dataUrl=await item.dataUrlPromise,r=await postOperation('uploadAttachment',{issueId:issueId,actionId:actionId||'',attachmentType:type||'OTHER',fileName:file.name,mimeType:file.type||'application/octet-stream',fileSizeBytes:file.size,dataUrl:dataUrl});item.url=r.driveUrl||'';item.status='ok';}catch(err){item.status='error';item.error=key(err&&err.message||err);item.dataUrlPromise=null;}done++;renderFileQueue(queueName);txt(progressId,'Đã xử lý '+done+'/'+targets.length+' tệp.');}}var workers=[];for(var w=0;w<concurrency;w++)workers.push(worker());await Promise.all(workers);var failed=queue.filter(function(x){return x.status==='error';});txt(progressId,failed.length?'Có '+failed.length+' tệp lỗi. Các tệp thành công không bị tải lại.':'Đã tải '+queue.filter(function(x){return x.status==='ok';}).length+' tệp lên Drive.');return {urls:queue.filter(function(x){return x.status==='ok'&&x.url;}).map(function(x){return x.url;}),failed:failed};}
+  function clearQueue(name){state.fileQueues[name]=[];renderFileQueue(name);}
+  function setOpStatus(m,c,target){var ids=target==='create'?['cl-create-status']:target==='operation'?['cl-operation-status']:['cl-operation-status','cl-create-status'];ids.forEach(function(id){var e=$(id);if(e){e.textContent=m;e.classList.remove('cl-live','cl-error');if(c)e.classList.add(c);}});}
+  function personnelRows(){var rows=state.people.length?state.people:state.roles.map(function(r){return {Name:val(r,['Name']),Email:val(r,['Email']),Department:val(r,['Department','Scope'])};}),seen={};return rows.filter(function(p){var email=lower(val(p,['Email','email'])),name=key(val(p,['Name','name'])),k=email||lower(name);if(!k||seen[k])return false;seen[k]=true;return !!name;});}
+  function syncTaskPerson(input){var row=input&&input.closest?input.closest('[data-task-row]'):null;if(!row)return;var wanted=lower(input.value),person=personnelRows().find(function(p){return lower(val(p,['Name','name']))===wanted;});if(!person)return;var email=row.querySelector('[data-task-field="email"]'),department=row.querySelector('[data-task-field="department"]');if(email)email.value=key(val(person,['Email','email']));if(department)department.value=key(val(person,['Department','department','Scope']));}
+  function bindPeopleInputs(){document.querySelectorAll('#cl-create-form [data-task-field="name"]').forEach(function(input){if(input.getAttribute('data-people-bound')==='1')return;input.setAttribute('data-people-bound','1');input.addEventListener('input',function(){syncTaskPerson(input);});input.addEventListener('change',function(){syncTaskPerson(input);});});}
+  function fillDataLists(){var issueList=$('cl-issue-list');if(issueList)issueList.innerHTML=state.issues.map(function(i){return '<option value="'+esc(issueId(i))+'">'+esc(statusLabel(status(i))+' · '+val(i,['Title','Description']))+'</option>';}).join('');var people=personnelRows(),roleList=$('cl-role-emails');if(roleList)roleList.innerHTML=people.map(function(p){return '<option value="'+esc(val(p,['Email','email']))+'">'+esc(key(val(p,['Name','name']))+(key(val(p,['Department','department','Scope']))?' · '+key(val(p,['Department','department','Scope'])):''))+'</option>';}).join('');var personList=$('cl-person-names');if(personList)personList.innerHTML=people.map(function(p){return '<option value="'+esc(val(p,['Name','name']))+'">'+esc(key(val(p,['Email','email']))+(key(val(p,['Department','department','Scope']))?' · '+key(val(p,['Department','department','Scope'])):''))+'</option>';}).join('');bindPeopleInputs();refreshOperationOptions();refreshPicSelect();refreshActionSelect();}
+  function clearInvalid(form){form.querySelectorAll('.cl-invalid').forEach(function(e){e.classList.remove('cl-invalid');});form.querySelectorAll('.cl-field-error').forEach(function(e){e.remove();});}
+  function invalid(input,message){if(!input)return false;input.classList.add('cl-invalid');var note=document.createElement('span');note.className='cl-field-error';note.textContent=message;input.parentNode.appendChild(note);return false;}
+  function collectInitialTasks(form){var deadlineInput=form.querySelector('[name="proposedDeadline"]'),issueDeadline=key(deadlineInput&&deadlineInput.value),tasks=[],ok=true;form.querySelectorAll('[data-task-row]').forEach(function(row,index){var task={};row.querySelectorAll('[data-task-field]').forEach(function(input){task[input.getAttribute('data-task-field')]=key(input.value);});var used=Object.keys(task).some(function(k){return !!task[k];});if(!used)return;row.querySelectorAll('[data-task-field]').forEach(function(input){if(!key(input.value)){invalid(input,'Bắt buộc khi đã sử dụng dòng Người thực hiện '+(index+1)+'.');ok=false;}});var d=row.querySelector('[data-task-field="deadline"]');if(d&&key(d.value)&&issueDeadline&&key(d.value)>issueDeadline){invalid(d,'Không được vượt Thời hạn đóng Issue.');ok=false;}tasks.push(task);});return {ok:ok,tasks:tasks};}
+  function validateCreate(form){clearInvalid(form);var ok=true;form.querySelectorAll('[required]').forEach(function(input){if(!key(input.value)){invalid(input,'Trường bắt buộc.');ok=false;}});var t=collectInitialTasks(form);return {ok:ok&&t.ok,tasks:t.tasks};}
+  function currentOperation(){return key(($('cl-operation')||{}).value);}
+  function refreshOperationOptions(preferred){var select=$('cl-operation'),id=key(($('cl-operation-issue')||{}).value),issue=issueById(id);if(!select)return;var cur=preferred||select.value,ops=availableOperationChoices(issue);select.innerHTML='<option value="">'+(issue?'Chọn thao tác đúng quyền':'Chọn Issue trước hoặc mở từ Danh sách công việc')+'</option>'+ops.map(function(op){return '<option value="'+esc(op)+'">'+esc(operationLabel(op))+'</option>';}).join('');if(ops.indexOf(cur)>=0)select.value=cur;}
+  function updateOperationFields(){var op=currentOperation();document.querySelectorAll('#cl-operation-form .cl-operation-field').forEach(function(label){var ops=key(label.getAttribute('data-ops')).split(',').filter(Boolean),show=!!op&&(!ops.length||ops.indexOf(op)>=0);label.classList.toggle('cl-hidden',!show);label.querySelectorAll('input,select,textarea').forEach(function(input){input.disabled=!show;});var req=key(label.getAttribute('data-required-ops')).split(',').filter(Boolean).indexOf(op)>=0;label.classList.toggle('cl-required',show&&req);label.querySelectorAll('input,select,textarea').forEach(function(input){input.required=show&&req;});});var type=$('cl-attachment-type');if(type){type.value=op==='close'?'CLOSURE':'EXECUTION';type.disabled=op==='updateAction';}var updateButtons=$('cl-update-submit-group'),defaultSubmit=$('cl-default-submit');if(updateButtons)updateButtons.classList.toggle('cl-hidden',op!=='updateAction');if(defaultSubmit)defaultSubmit.classList.toggle('cl-hidden',op==='updateAction');var actual=$('cl-actual-completion-date');if(actual){actual.max=todayVN();if(op==='updateAction'&&!key(actual.value))actual.value=todayVN();}refreshPicSelect();refreshActionSelect();}
+  function refreshPicSelect(){var select=$('cl-operation-pic'),id=key(($('cl-operation-issue')||{}).value),op=currentOperation(),issue=issueById(id);if(!select)return;var cur=lower(select.value),rows=op==='updateAction'&&issue?actionsFor(id).filter(function(a){return !taskDone(a)&&canUpdateAction(issue,a);}):[],seen={},pics=[];rows.forEach(function(a){var email=lower(val(a,['PICEmail']));if(!email||seen[email])return;seen[email]=true;pics.push({email:email,name:key(val(a,['PICName'])),department:key(val(a,['PICDepartment']))});});select.innerHTML='<option value="">Chọn PIC của Issue</option>'+pics.map(function(p){return '<option value="'+esc(p.email)+'">'+esc(p.name+' · '+p.email+(p.department?' · '+p.department:''))+'</option>';}).join('');if(pics.some(function(p){return p.email===cur;}))select.value=cur;else if(pics.length===1)select.value=pics[0].email;}
+  function refreshActionSelect(){var select=$('cl-operation-action'),id=key(($('cl-operation-issue')||{}).value),op=currentOperation(),issue=issueById(id),picEmail=lower(($('cl-operation-pic')||{}).value);if(!select)return;var rows=actionsFor(id);if(op==='updateAction')rows=issue?rows.filter(function(a){return !taskDone(a)&&canUpdateAction(issue,a)&&(!picEmail||lower(val(a,['PICEmail']))===picEmail);}):[];else if(op==='reporterReturn')rows=rows.filter(taskDone);else rows=[];var cur=select.value;select.innerHTML='<option value="">Chọn công việc của Issue</option>'+rows.map(function(a){var aid=key(val(a,['ActionId'])),name=key(val(a,['PICName'])),email=key(val(a,['PICEmail'])),dept=key(val(a,['PICDepartment'])),desc=key(val(a,['ActionDescription'])),dl=isoDate(val(a,['ApprovedDeadline','ProposedDeadline']));return '<option value="'+esc(aid)+'">'+esc(name+' · '+email+(dept?' · '+dept:'')+' · '+desc+' · '+dateVN(dl))+'</option>';}).join('');if(rows.some(function(a){return key(val(a,['ActionId']))===cur;}))select.value=cur;else if(rows.length===1)select.value=key(val(rows[0],['ActionId']));syncSelectedAction();}
+  function renderActionHistory(actionId){var box=$('cl-action-history');if(!box)return;var rows=updatesForAction(actionId);if(!rows.length){box.innerHTML='<b>Lịch sử cập nhật:</b> Chưa có lần cập nhật nào.';return;}box.innerHTML='<b>Lịch sử cập nhật ('+rows.length+'):</b>'+rows.map(function(u){var links=key(val(u,['EvidenceUrl'])).split(/\s+/).filter(Boolean).map(function(x){return safeLink(x,'Mở bằng chứng');}).join(' · '),proxy=String(val(u,['OnBehalfOfPIC'])).toLowerCase()==='true'?' · nhập hỗ trợ thay PIC':'';return '<div class="cl-update-history-item"><b>'+dateTimeVN(val(u,['CreatedAt']))+' · '+esc(val(u,['UpdateType'])==='COMPLETE'?'Hoàn thành':'Tiến độ '+val(u,['ProgressPercent'])+'%')+'</b><br>'+esc(val(u,['WorkPerformed']))+'<br><span>Kết quả: '+esc(val(u,['ResultAchieved']))+'</span><br><small>Người nhập: '+esc(val(u,['EnteredByName','EnteredByEmail']))+proxy+(links?' · '+links:'')+'</small></div>';}).join('');}
+  function syncSelectedAction(){var select=$('cl-operation-action'),aid=key(select&&select.value),action=state.actions.find(function(a){return key(val(a,['ActionId']))===aid;}),summary=$('cl-action-summary'),proxy=$('cl-proxy-note'),progress=$('cl-progress-percent'),actual=$('cl-actual-completion-date');if(action){var latest=latestActionUpdate(aid),picEmail=lower(val(action,['PICEmail']));if(summary)summary.textContent='PIC: '+key(val(action,['PICName']))+' · '+key(val(action,['PICEmail']))+' · '+key(val(action,['PICDepartment']))+' | Công việc được giao: '+key(val(action,['ActionDescription']))+' | Deadline: '+dateVN(val(action,['ApprovedDeadline','ProposedDeadline']));if(progress)progress.value=latest&&val(latest,['UpdateType'])!=='COMPLETE'?num(val(latest,['ProgressPercent'])):0;if(actual&&!key(actual.value))actual.value=todayVN();if(proxy)proxy.textContent=picEmail===actorEmail()?'Bạn đang cập nhật đúng công việc của mình.':'Bạn đang nhập hỗ trợ thay '+key(val(action,['PICName','PICEmail']))+'. Audit Trail sẽ ghi người nhập thật: '+key(state.actor&&state.actor.name||actorEmail())+'.';renderActionHistory(aid);}else{if(summary)summary.textContent='Chọn PIC và công việc để xem nội dung giao, deadline và lịch sử cập nhật.';if(proxy)proxy.textContent='PIC tự cập nhật việc của mình. Nếu Owner/GĐNM nhập hỗ trợ, Audit Trail sẽ ghi người nhập thật và PIC được nhập thay.';if(progress)progress.value=0;renderActionHistory('');}}
+  function operationNeedsEvidence(op,mode){return op==='updateAction'&&mode==='COMPLETE';}
+  function validateOperation(form,mode){clearInvalid(form);var ok=true,op=currentOperation();form.querySelectorAll('[required]:not([disabled])').forEach(function(input){if(!key(input.value)){invalid(input,'Trường bắt buộc cho thao tác đã chọn.');ok=false;}});if(op==='updateAction'){var progress=form.querySelector('[name="progressPercent"]'),pct=Number(progress&&progress.value),actual=form.querySelector('[name="actualCompletionDate"]'),issue=issueById(key(($('cl-operation-issue')||{}).value));if(!isFinite(pct)||pct<0||pct>100){invalid(progress,'Tỷ lệ hoàn thành phải từ 0 đến 100%.');ok=false;}if(mode==='PROGRESS'&&pct>=100){invalid(progress,'Tiến độ phải nhỏ hơn 100%; nếu đã xong hãy chọn Hoàn thành công việc của tôi.');ok=false;}if(mode==='COMPLETE'&&!key(actual&&actual.value)){invalid(actual,'Bắt buộc nhập ngày hoàn thành thực tế.');ok=false;}if(mode==='COMPLETE'&&actual&&key(actual.value)>todayVN()){invalid(actual,'Không được sau ngày hiện tại.');ok=false;}if(mode==='COMPLETE'&&issue&&key(actual&&actual.value)<openDate(issue)){invalid(actual,'Không được trước ngày mở Issue.');ok=false;}}var evidence=form.querySelector('[name="evidenceUrl"]');if(operationNeedsEvidence(op,mode)&&!key(evidence&&evidence.value)&&!state.fileQueues.operation.length){invalid(evidence,'Hoàn thành công việc cần link hoặc ít nhất một tệp bằng chứng.');ok=false;}return ok;}
+  function mergeCreatedIssue(result){if(!result||!result.createdIssue)return;var id=issueId(result.createdIssue);state.issues=state.issues.filter(function(i){return issueId(i)!==id;});state.issues.unshift(result.createdIssue);(result.createdActions||[]).forEach(function(a){var aid=key(val(a,['ActionId']));state.actions=state.actions.filter(function(x){return key(val(x,['ActionId']))!==aid;});state.actions.unshift(a);});state.loaded=true;renderAll();fillDataLists();}
+  function returnToRegister(issueId,message){state.flashIssueId=issueId;setView('register');renderRegister();setOpStatus(message,'cl-live');setTimeout(function(){var row=Array.prototype.find.call(document.querySelectorAll('[data-issue-row]'),function(x){return x.getAttribute('data-issue-row')===issueId;});if(row)row.scrollIntoView({block:'center',behavior:'smooth'});},80);}
+  function resetFilters(){state.alertFilter='';['cl-filter-search','cl-filter-status','cl-filter-segment','cl-filter-owner','cl-filter-holder','cl-filter-severity','cl-filter-alert'].forEach(function(id){var e=$(id);if(e)e.value='';});renderRegister();}
+  function bind(){
+    var api=$('cl-api-url'),saved=function(k){var v=null;try{v=localStorage.getItem(k);}catch(ignore){}if(v===null){try{v=sessionStorage.getItem(k);}catch(ignore2){}}return v;};try{var savedUrl=saved('gs6_cl_api_url');state.apiUrl=apiValid(savedUrl||'')?savedUrl:(apiValid(state.apiUrl)?state.apiUrl:DEFAULT_API_URL);var ae=saved('gs6_cl_auth_email');if(ae===null)ae=DEFAULT_AUTH_EMAIL;var at=saved('gs6_cl_auth_token');if(at===null)at=DEFAULT_AUTH_TOKEN;if($('cl-auth-email'))$('cl-auth-email').value=ae;if($('cl-auth-token'))$('cl-auth-token').value=at;}catch(e){state.apiUrl=DEFAULT_API_URL;}if(api)api.value=state.apiUrl;syncReporterFields();bindPeopleInputs();
+    var c=$('cl-connect-btn');if(c)c.addEventListener('click',loadSnapshot);var r=$('cl-refresh-btn');if(r)r.addEventListener('click',loadSnapshot);var oc=$('cl-open-create-btn');if(oc)oc.addEventListener('click',function(){setView('create');});
+    document.querySelectorAll('#cl-subnav [data-clview]').forEach(function(b){b.addEventListener('click',function(){setView(b.getAttribute('data-clview'));});});document.querySelectorAll('[data-cl-goto]').forEach(function(b){b.addEventListener('click',function(){setView(b.getAttribute('data-cl-goto'));});});
+    document.querySelectorAll('#contract-wrap [data-clmetric]').forEach(function(b){b.addEventListener('click',function(){setView('register');setAlertFilter(b.getAttribute('data-clmetric'));});});
+    document.querySelectorAll('#contract-wrap [data-clstatus]').forEach(function(b){b.addEventListener('click',function(){var s=b.getAttribute('data-clstatus'),filter=$('cl-filter-status');state.alertFilter='';if(filter)filter.value=s;setView('register');renderRegister();});});
+    ['cl-filter-search','cl-filter-status','cl-filter-segment','cl-filter-owner','cl-filter-holder','cl-filter-severity','cl-filter-alert'].forEach(function(id){var e=$(id);if(e)e.addEventListener(e.tagName==='INPUT'?'input':'change',function(){state.alertFilter='';renderRegister();});});var reset=$('cl-reset-filter');if(reset)reset.addEventListener('click',resetFilters);
+    document.addEventListener('click',function(e){var fileButton=e.target.closest&&e.target.closest('[data-clfile]');if(fileButton){handleFileButton(fileButton);return;}var opButton=e.target.closest&&e.target.closest('[data-clop]');if(opButton){openOperation(opButton.getAttribute('data-clop'),opButton.getAttribute('data-clop-issue'),opButton.getAttribute('data-clop-action')||'');return;}var original=e.target.closest&&e.target.closest('[data-cloriginal]');if(original){openOriginal(original.getAttribute('data-cloriginal'));return;}var work=e.target.closest&&e.target.closest('[data-clwork]');if(work){openWork(work.getAttribute('data-clwork'));return;}var b=e.target.closest&&e.target.closest('[data-clissue]');if(b){openWork(b.getAttribute('data-clissue'));return;}if(e.target===$('cl-original-modal'))closeOriginal();if(e.target===$('cl-work-modal'))closeWork();});
+    var modalClose=$('cl-original-close');if(modalClose)modalClose.addEventListener('click',closeOriginal);var workClose=$('cl-work-close');if(workClose)workClose.addEventListener('click',closeWork);document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeOriginal();closeWork();}});
+    var createFiles=$('cl-create-files');if(createFiles)createFiles.addEventListener('change',function(){addFiles('create',createFiles.files);createFiles.value='';});var operationFiles=$('cl-operation-files');if(operationFiles)operationFiles.addEventListener('change',function(){addFiles('operation',operationFiles.files);operationFiles.value='';});
+    var operation=$('cl-operation');if(operation)operation.addEventListener('change',function(){var d=$('cl-operation-deadline');if(d)d.value='';updateOperationFields();});var operationIssue=$('cl-operation-issue');if(operationIssue){var issueChanged=function(){refreshOperationOptions();updateOperationFields();};operationIssue.addEventListener('change',issueChanged);operationIssue.addEventListener('input',issueChanged);}var operationPic=$('cl-operation-pic');if(operationPic)operationPic.addEventListener('change',refreshActionSelect);var operationAction=$('cl-operation-action');if(operationAction)operationAction.addEventListener('change',syncSelectedAction);refreshOperationOptions();updateOperationFields();
+    var cf=$('cl-create-form');if(cf)cf.addEventListener('submit',async function(e){e.preventDefault();var submit=cf.querySelector('[type="submit"]');if(submit&&submit.disabled)return;var check=state.pendingCreateIssueId?{ok:true,tasks:[]}:validateCreate(cf);if(!check.ok){setOpStatus('Cần hoàn thành các ô có dấu * màu đỏ.','cl-error','create');return;}if(submit)submit.disabled=true;try{var issueId=state.pendingCreateIssueId,created=null;if(!issueId){setOpStatus('Đang tạo Issue, Snapshot gốc và giao công việc ban đầu…','','create');var p=formData(cf);p.initialTasks=check.tasks;created=await postOperation('createIssue',p);issueId=created.issueId;state.pendingCreateIssueId=issueId;mergeCreatedIssue(created);}var uploaded=await uploadFiles(issueId,'','INITIAL','create','cl-create-progress');if(uploaded.failed.length){setOpStatus('Issue '+issueId+' đã tạo thành công nhưng còn '+uploaded.failed.length+' tệp lỗi. Bấm Tải lại rồi gửi tiếp; hệ thống không tạo Issue trùng.','cl-error','create');return;}var count=state.fileQueues.create.filter(function(x){return x.status==='ok';}).length;state.pendingCreateIssueId='';cf.reset();syncReporterFields();clearQueue('create');returnToRegister(issueId,'Đã tạo '+issueId+', lưu '+count+' tệp và quay về Danh sách Issue.');setTimeout(function(){loadSnapshot();},120);}catch(err){setOpStatus('Từ chối/Lỗi: '+key(err&&err.message||err),'cl-error','create');}finally{if(submit)submit.disabled=false;}});
+    var of=$('cl-operation-form');if(of)of.addEventListener('submit',async function(e){e.preventDefault();var submit=e.submitter||of.querySelector('[type="submit"]'),op=currentOperation(),mode=op==='updateAction'?key(submit&&submit.getAttribute('data-update-mode')||'PROGRESS'):'';if(submit&&submit.disabled)return;if(op==='updateAction'&&mode==='COMPLETE'){if($('cl-progress-percent'))$('cl-progress-percent').value='100';if($('cl-actual-completion-date')&&!key($('cl-actual-completion-date').value))$('cl-actual-completion-date').value=todayVN();}if(!validateOperation(of,mode)){setOpStatus('Cần hoàn thành các ô bắt buộc và kiểm tra đúng lựa chọn xử lý.','cl-error','operation');return;}var submitButtons=of.querySelectorAll('[type="submit"]');submitButtons.forEach(function(b){b.disabled=true;});try{var p=formData(of),type=p.attachmentType||'EXECUTION',manual=p.evidenceUrl||'',issueId=p.issueId,fileAllowed=['updateAction','close'].indexOf(op)>=0;if(op==='updateAction')p.updateMode=mode;delete p.operation;delete p.attachmentType;setOpStatus(op==='updateAction'?(mode==='COMPLETE'?'Đang lưu hoàn thành và kiểm tra workflow…':'Đang lưu cập nhật tiến độ…'):'Đang tải bằng chứng và kiểm tra workflow…','','operation');var uploaded=fileAllowed?await uploadFiles(issueId,p.actionId,type,'operation','cl-operation-progress'):{urls:[],failed:[]};if(uploaded.failed.length){setOpStatus('Còn '+uploaded.failed.length+' tệp lỗi. Form được giữ nguyên; các tệp thành công không bị tải lại.','cl-error','operation');return;}p.evidenceUrl=[manual].concat(uploaded.urls).filter(Boolean).join('\n');var result=await postOperation(op,p);of.reset();clearQueue('operation');refreshOperationOptions();updateOperationFields();await loadSnapshot();returnToRegister(issueId,'Đã cập nhật '+issueId+': '+key(result.message||op));}catch(err){setOpStatus('Từ chối/Lỗi: '+key(err&&err.message||err),'cl-error','operation');}finally{submitButtons.forEach(function(b){b.disabled=false;});}});
+  }
+  function init(){bind();renderAll();if(state.apiUrl&&!window.GS6_CLOSED_LOOP_NO_AUTOLOAD)loadSnapshot();else setSource('CHƯA KẾT NỐI NGUỒN MASTER — Không sử dụng dữ liệu mẫu','');}
+  window.GS6ClosedLoop={load:loadSnapshot,render:renderAll,renderKnowledge:renderKnowledge,openControl:openControl,setView:setView,getState:function(){return state;}};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 </script>
 <!-- V9.49: Fix script syntax in Group 06 Sai hỏng ERP live loader; 00_Task_Schedule live remains unchanged. -->
