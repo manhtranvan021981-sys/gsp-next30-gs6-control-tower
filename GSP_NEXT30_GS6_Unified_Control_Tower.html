@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V10.13 – Group 07 LIVE · Group 08 Nguồn dữ liệu</title>
+<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V10.14 – Group 07 LIVE · Group 08 Nguồn dữ liệu</title>
 <style>
 :root{
   --dark:#035D30;--green:#035A28;--gold:#E2B624;--gold2:#FFFDE7;
@@ -10534,7 +10534,7 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
 
   // ---------- render ----------
   function render() {
-    var h = '<div class="bx-head"><div><h2 class="section-title" style="margin:0">07. Sản xuất hằng ngày – Sổ BCSX Túi · Khay · In <span class="bx-preview">V10.13</span></h2><div class="bx-sub">Nguồn: sổ ghi chép hằng ngày (Drive "BCSX 2026") → chuẩn hóa theo 10 quy tắc → dashboard. Dữ liệu tạo lúc ' + esc(RAW.meta.tao_luc) + '.</div></div><div class="bx-fresh">' + liveBadge() + freshness() + '</div></div>';
+    var h = '<div class="bx-head"><div><h2 class="section-title" style="margin:0">07. Sản xuất hằng ngày – Sổ BCSX Túi · Khay · In <span class="bx-preview">V10.14</span></h2><div class="bx-sub">Nguồn: sổ ghi chép hằng ngày (Drive "BCSX 2026") → chuẩn hóa theo 10 quy tắc → dashboard. Dữ liệu tạo lúc ' + esc(RAW.meta.tao_luc) + '.</div></div><div class="bx-fresh">' + liveBadge() + freshness() + '</div></div>';
     h += '<div class="bx-filters">' + filters() + '</div><div id="bx-body">';
     h += ST.tab === 'tong' ? viewTong() : ST.tab === 'nguon' ? viewNguon() : viewXu(ST.tab);
     h += '</div>';
@@ -10733,13 +10733,13 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
    RAG (mục 7 CLAUDE.md): độ trễ = hôm nay − max(ngày dữ liệu, ngày đồng bộ OK gần nhất); ≤3 ngày Xanh, ≤7 Vàng, >7 hoặc lỗi kết nối Đỏ.
    Lưu ý: Google xuất CSV bỏ trống ô tiêu đề cột ngày → cột ngày xác định theo VỊ TRÍ cố định của file ERP. */
 (function () {
-  var BUILD = { version: 'V10.13', ngay: '29/10/2026' };
+  var BUILD = { version: 'V10.14', ngay: '29/10/2026' };
   var S_TKSX = '1-tJcoRxBSBtmi6oN1a4yovKU-FIOpVdMaw6m1m4l7Aw';
   var NGUON = [
     { id: 'p3', ten: 'TKSX – P3 Tổng hợp lệnh thao tác', dung: '00 · 02 (SX & OEE)', boi: 'Dong_Bo_TKSX_GS6.bat (anh Mạnh) · bộ đồng bộ của Thành', loai: 'Google Sheet', sheet: S_TKSX, tab: 'P3.Tổng hợp lệnh thao tác', cot: 43, cotTen: 'Ngày TK', log: 'NHAT_KY_DONG_BO' },
     { id: 'sh', ten: 'Sai hỏng QV2 – TONGHOPSAIHONG', dung: '02 (Chất lượng) · 06', boi: 'dong_bo_sai_hong_QV2.bat · bộ đồng bộ của Thành', loai: 'Google Sheet', sheet: '1NTYFPqkcfDExkzAgTrVv52GQwm0zJyZtrDFW4G080xw', gid: '1190903695', cot: 43, cotTen: 'Ngày TK', log: 'NHAT_KY_DONG_BO' },
     { id: 'don', ten: 'DON_HANG_SO – Đơn đặt hàng', dung: '02 (Pipeline)', boi: 'Dashboard Công nghệ', loai: 'Google Sheet', sheet: '1V9kJpx6Ae-jWYSMYOjnfOoR1QxIlLsqKU5UXaQLKdGc', gid: '44615137', cot: 0, cotTen: 'Ngày' },
-    { id: 'pxb', ten: 'Phiếu xuất kho bán hàng (PXB)', dung: '02 (Giao hàng / doanh thu)', boi: 'Dong_Bo_PXB_GS6.bat', loai: 'Google Sheet', sheet: '1AHXrfW16_6PSpWVbz5WdQO6xEAPhCwBk4PieBKKn9Us', tab: 'Bảng kê phiếu xuất kho bán hàng', cot: 1, cotTen: 'Ngày', log: 'NHAT_KY_DONG_BO' },
+    { id: 'pxb', ten: 'Phiếu xuất kho bán hàng (PXB)', dung: '02 (Giao hàng / doanh thu)', boi: 'Bravo SQL tự động 9h · 15h · 21h (sync_pxb_bravo_gs6.py, kho GS6-TPO-01) · mất VPN → Excel dự phòng', loai: 'Google Sheet', sheet: '1AHXrfW16_6PSpWVbz5WdQO6xEAPhCwBk4PieBKKn9Us', tab: 'Bảng kê phiếu xuất kho bán hàng', cot: 1, cotTen: 'Ngày', log: 'NHAT_KY_DONG_BO' },
     { id: 'khkd', ten: 'KHKD_2026 – Kế hoạch kinh doanh', dung: '02 (Pipeline – kế hoạch BH)', boi: 'Kinh doanh (kế hoạch năm)', loai: 'Google Sheet', sheet: '1iQfsf3UoX7Zvn2K7-YRPhZSdbMrwGVUSfBQkFN8v8s4', gid: '670719299', kehoach: true },
     { id: 'bcsx', ten: 'Sổ BCSX Túi · Khay · In', dung: '07 (Sản xuất hằng ngày)', boi: 'Lịch tự động GS6_Dong_Bo_BCSX (5 phút)', loai: 'Google Sheet (JSON)', sheet: S_TKSX, tab: 'BCSX_JSON', bcsx: true, log: 'BCSX_NHAT_KY' },
     { id: 'api', ten: 'API Closed-loop V2.5.0', dung: '05 (Issue · Action · RACI)', boi: 'Apps Script', loai: 'API', jsonp: 'https://script.google.com/macros/s/AKfycbymuR_VfKZW-Bl_ABf3FyxjIoZfzsONCc3LUFM_g_BqgjAqai5e_k0Av0iDQQ7mP1hd/exec', q: 'transport=health' },
