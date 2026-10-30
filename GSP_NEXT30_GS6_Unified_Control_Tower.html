@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V10.17 – Group 07 LIVE · Group 08 Nguồn dữ liệu</title>
+<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V10.18 – Group 07 LIVE · Group 08 Nguồn dữ liệu</title>
 <style>
 :root{
   --dark:#035D30;--green:#035A28;--gold:#E2B624;--gold2:#FFFDE7;
@@ -532,6 +532,328 @@ setTimeout(syncStickyNavOffset, 250);
 }
 
 </style>
+<style id="g06-to-sx-style">
+/* V10.18: Group 06 – Sai hỏng theo Tổ (g06_to_sx.js) – khung biểu đồ kiểu GSQV Tab 2 */
+#defect .to-mode{display:inline-flex;border:1px solid #A5D6A7;border-radius:6px;overflow:hidden}
+#defect .to-mode-btn{border:0;background:#fff;color:#035D30;font-family:'Times New Roman',Times,serif;font-size:12px;font-weight:700;padding:6px 10px;cursor:pointer}
+#defect .to-mode-btn+.to-mode-btn{border-left:1px solid #A5D6A7}
+#defect .to-mode-btn.on{background:#035D30;color:#fff}
+#defect #def-to-card select:disabled{opacity:.55}
+#defect .to-anh-btn{margin-left:auto;border:1px solid #035D30;background:#035D30;color:#fff;border-radius:6px;padding:6px 12px;font-family:'Times New Roman',Times,serif;font-size:12.5px;font-weight:700;cursor:pointer}
+#defect .to-anh-btn:disabled{opacity:.6;cursor:wait}
+#defect .to-anh-btn.nho{margin-left:auto;padding:3px 9px;font-size:11.5px;background:#fff;color:#035D30}
+#defect .to-anh-msg{font-size:11px;color:#64748b;flex-basis:100%;text-align:right}
+#defect .to-anh-msg.loi{color:#b91c1c;font-weight:700}
+#defect .to-frame{background:#fff;border:1px solid #D9D9D9;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(3,93,48,.08);margin:12px 0;min-width:0}
+#defect .def-weekly-compare>.to-frame{margin:0}
+#defect .to-frame-h{font-size:13px;font-weight:900;color:#035D30;border-bottom:2px solid #E2B624;padding-bottom:6px;margin-bottom:6px}
+#defect .to-frame .chart-data-table{margin-top:0;border-top:0;padding-top:0}
+#defect #def-to-bang tr.to-row{cursor:pointer}
+#defect #def-to-bang tr.to-row:hover td{background:#FFFDE7}
+#defect #def-to-bang td.to-ten{font-weight:900;color:#035D30}
+#defect .to-chip{display:inline-block;border-radius:999px;padding:1px 8px;font-size:10.5px;font-weight:900;margin-left:6px;vertical-align:1px;border:1px solid transparent;white-space:nowrap}
+#defect .to-chip.do{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
+#defect .to-chip.xanh{background:#E8F5E9;color:#035D30;border-color:#A5D6A7}
+#defect .to-chip.vang{background:#FFFDE7;color:#7B4A0E;border-color:#E2B624}
+#defect .to-chip.xam{background:#F1F5F9;color:#475569;border-color:#CBD5E1}
+#defect .to-khoi{background:#FBFDF8;border:1px solid #C8E6C9;border-left:6px solid #E2B624;border-radius:12px;padding:12px 14px;margin-top:16px;box-shadow:0 4px 12px rgba(3,93,48,.08)}
+#defect .to-khoi.do{border-left-color:#dc2626}
+#defect .to-dau{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:14px;color:#035D30;margin-bottom:8px}
+#defect .to-dau b{font-size:15.5px}
+#defect .to-dau .to-so{font-size:11.5px;color:#64748b;margin-left:8px}
+#defect .to-khoi .def-weekly-compare{margin:0 0 10px}
+#defect .to-nx{background:#fff;border:1px solid #E2E8F0;border-left:4px solid #035D30;border-radius:8px;padding:8px 12px;font-size:12.5px;line-height:1.55;color:#1f2937}
+#defect .to-nx.do{border-left-color:#dc2626}
+#defect .to-nx.vang{border-left-color:#E2B624}
+#defect .to-nx ul{margin:4px 0 0 18px;padding:0}
+#defect .to-anh-dau{padding:10px 12px;margin-bottom:10px;border-left:6px solid #035D30;background:rgba(3,93,48,.07);font-size:12px;color:#334155}
+#defect .to-anh-dau b.t{font-size:16px;color:#035D30}
+
+</style>
+<script id="g06-to-sx-js">
+// V10.18 (30/10/2026, anh Mạnh duyệt phương án B + góp ý lọc Tháng/Tuần, khung biểu đồ, xuất ảnh): Group 06 – Sai hỏng theo Tổ.
+// Quy tắc tính giữ nguyên Group 06 (giống biểu đồ theo máy):
+//   AK = AH/AG cộng 1 lần theo Lệnh thao tác Q; thực tế = BF/BD cộng 1 lần theo Số thống kê AS;
+//   giá trị thực tế BG + giá trị cho phép = ΣBG_Q/ΣBF_Q × AI_Q (aggregateDefectValueGroupsByAS).
+// Tổ gây lỗi (cột BL): BF và BG của mỗi phiếu AS chia cho tổ gây lỗi theo tỷ trọng Số lượng lỗi BJ từng dòng;
+//   BL trống → tổ thực hiện AX. Sản lượng BD, AK và giá trị cho phép giữ ở tổ thực hiện (nền sản lượng của tổ).
+// Lọc: Tất cả tháng → biểu đồ theo tháng · chọn tháng → các tuần trong tháng · chọn tuần → bảng + biểu đồ tổng tính riêng tuần đó,
+//   biểu đồ từng tổ vẫn hiện các tuần của tháng (không chọn tháng: 12 tuần tính đến tuần chọn). Mặc định theo bộ lọc Tháng/Tuần chung.
+// Nhận xét tự động: 3 kỳ gần nhất vs 3 kỳ trước, 5 mức ±5% / ±15%, đột biến > TB + 2σ; không nêu tên thợ.
+// Biểu đồ: veCombo riêng (không tiền tố AK trước tỷ lệ, chú thích kiểu GSQV Tab 2) – không đụng hàm vẽ chung của Group 06.
+// Xuất ảnh: html2canvas 1.4.1 (cdnjs, chỉ tải khi bấm); SVG đổi sang ảnh trong bản chụp. Dữ liệu không gửi ra ngoài.
+// Hàm Group 06 truyền vào qua H (gọi cuối renderDefectVisualCharts); nền dữ liệu window.GS6_G06_TO_SRC.
+window.GS6_G06_TO=(function(){
+  var ST={mode:'ax',thang:'',tuan:'',to:''}, lastD=null, lastH=null, bound=false, gM=null, gW=null, KQ=null;
+  var IT_PHIEU=20, SO_TUAN=12;
+  function $(id){ return document.getElementById(id); }
+  function tenTo(s){ s=String(s||'').trim(); if(!s) return ''; var p=s.split(' - '); return p[p.length-1].trim()||s; }
+  function pctTxt(x){ return (x>0?'+':'')+(x*100).toLocaleString('vi-VN',{maximumFractionDigits:1})+'%'; }
+  function diemTxt(x){ return (x>0?'+':'')+(x*100).toLocaleString('vi-VN',{minimumFractionDigits:2,maximumFractionDigits:2})+' điểm %'; }
+  function khongDau(s){ return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').replace(/[^A-Za-z0-9]+/g,''); }
+  function sx(a,b){ return a.start<b.start?-1:(a.start>b.start?1:0); }
+
+  function tinh(src,H){
+    var m=src.m, recs=[];
+    (src.rows||[]).forEach(function(r,idx){
+      var dt=H.parseDate(H.cell(r,m.dateTk)); if(!dt) return;
+      var wk=H.weekInfo(dt), mk=H.monthKeyOf(dt);
+      var th=tenTo(H.cell(r,m.department))||'Không rõ tổ', gl=tenTo(H.cell(r,m.faultDept))||th;
+      var allowedQty=H.num(H.cell(r,m.allowedQty));
+      var prodLtt=(m.actualProductionLtt>=0)?H.num(H.cell(r,m.actualProductionLtt)):0, qtyLtt=(m.actualQtyLtt>=0)?H.num(H.cell(r,m.actualQtyLtt)):0;
+      var prod=(m.actualProduction>=0)?H.num(H.cell(r,m.actualProduction)):prodLtt;
+      recs.push({mk:mk,ml:H.monthLabelOfDate(dt),wk:wk,th:th,gl:gl,it:{rowNo:(src.hi||0)+idx+2,ltt:String(H.cell(r,m.ltt)||H.cell(r,m.lcd)||'').trim(),statNo:String(H.cell(r,m.statNo)||'').trim(),
+        targetQty:(m.targetQty>=0?H.num(H.cell(r,m.targetQty)):0),needSx:H.num(H.cell(r,m.needSx)),allowedQty:allowedQty,
+        allowedScaledQty:(m.allowedScaledQty>=0)?H.num(H.cell(r,m.allowedScaledQty)):allowedQty,actualProduction:prod,
+        actualOkQty:(m.actualOkQty>=0)?H.num(H.cell(r,m.actualOkQty)):Math.max(0,prod-qtyLtt),
+        actualQty:(m.actualQty>=0)?H.num(H.cell(r,m.actualQty)):qtyLtt,actualDefectValue:(m.statDefectValue>=0)?H.num(H.cell(r,m.statDefectValue)):0},
+        dq:H.num(H.cell(r,m.defectQty)),dv:H.num(H.cell(r,m.defectValue)),loi:String(H.cell(r,m.defectName)||'').trim(),maLoi:String(m.defectCode>=0?H.cell(r,m.defectCode):'').trim()});
+    });
+    // Danh sách tháng / tuần cho ô lọc (tuần chỉ trong tháng đang chọn)
+    var mMap={}, wMap={};
+    recs.forEach(function(x){ mMap[x.mk]={key:x.mk,name:x.ml,full:x.ml,start:x.mk}; });
+    var thangs=Object.keys(mMap).map(function(k){return mMap[k];}).sort(sx);
+    if(ST.thang && !mMap[ST.thang]){ ST.thang=''; ST.tuan=''; }
+    recs.forEach(function(x){ if(!ST.thang || x.mk===ST.thang) wMap[x.wk.key]={key:x.wk.key,name:'W'+String(x.wk.key).slice(-2),full:x.wk.label,start:x.wk.start}; });
+    var tuans=Object.keys(wMap).map(function(k){return wMap[k];}).sort(sx);
+    if(ST.tuan && !wMap[ST.tuan]) ST.tuan='';
+
+    // Kỳ của biểu đồ (series) và phạm vi bảng (table)
+    var ky=(ST.thang||ST.tuan)?'tuan':'thang', kys;
+    if(ky==='thang') kys=thangs;
+    else if(ST.thang) kys=tuans;
+    else { var end=tuans.length; tuans.forEach(function(p,i){ if(p.key===ST.tuan) end=i+1; }); kys=tuans.slice(Math.max(0,end-SO_TUAN),end); }
+    var kySet={}; kys.forEach(function(p){ kySet[p.key]=p; });
+    recs.forEach(function(x){ x.p=kySet[ky==='thang'?x.mk:x.wk.key]||null; if(x.p && ky==='tuan' && ST.thang && x.mk!==ST.thang) x.p=null; x.inT=!!x.p && (!ST.tuan || x.wk.key===ST.tuan); });
+    recs=recs.filter(function(x){ return !!x.p; });
+
+    // Tỷ lệ: nền sản lượng + AK theo tổ thực hiện (addMetric của Group 06)
+    var agg={}, tong={};
+    function g(map,key,name){ if(!map[key]) map[key]=H.emptyAgg(name); return map[key]; }
+    recs.forEach(function(x){ H.addMetric(g(agg,x.th+'|'+x.p.key,x.p.name),x.it); if(x.inT) H.addMetric(g(tong,x.th,x.th),x.it); });
+    Object.keys(agg).forEach(function(k){ H.finalize(agg[k]); }); Object.keys(tong).forEach(function(k){ H.finalize(tong[k]); });
+
+    // Phiếu AS: tổ thực hiện, kỳ, BF và tỷ trọng lỗi theo tổ gây lỗi
+    var asMap={};
+    recs.forEach(function(x){
+      var st=x.it.statNo||('ROW_STAT_'+x.it.rowNo);
+      if(!asMap[st]) asMap[st]={th:x.th,p:x.p.key,inT:x.inT,bf:x.it.actualQty||0,lines:{},tot:0};
+      var a=asMap[st]; if(x.dq>0){ a.lines[x.gl]=(a.lines[x.gl]||0)+x.dq; a.tot+=x.dq; }
+    });
+    function chia(a){ if(ST.mode!=='bl' || !(a.tot>0)){ var o={}; o[a.th]=1; return o; } var s={}; Object.keys(a.lines).forEach(function(k){ s[k]=a.lines[k]/a.tot; }); return s; }
+
+    // Giá trị: nền phân bổ đủ lịch sử LTT như Group 06, lấy theo từng AS rồi gom về tổ
+    var vRows=(src.rows||[]).map(function(r,idx){ var dt=H.parseDate(H.cell(r,m.dateTk));
+      return {rowNo:(src.hi||0)+idx+2,ltt:String(H.cell(r,m.ltt)||H.cell(r,m.lcd)||'').trim(),statNo:String(H.cell(r,m.statNo)||'').trim(),
+        allowedScaledQty:(m.allowedScaledQty>=0)?H.num(H.cell(r,m.allowedScaledQty)):H.num(H.cell(r,m.allowedQty)),
+        actualQty:(m.actualQty>=0)?H.num(H.cell(r,m.actualQty)):H.num(H.cell(r,m.actualQtyLtt)),
+        actualDefectValue:(m.statDefectValue>=0)?H.num(H.cell(r,m.statDefectValue)):0,segment:'',monthKey:dt?H.monthKeyOf(dt):''}; });
+    var vAS={}; H.valueByAS(vRows,function(r){return {key:r.statNo,name:r.statNo,fullName:r.statNo};},function(r){ return !!asMap[r.statNo]; }).groups.forEach(function(x){ vAS[x.fullName]=x; });
+
+    var bfTo={}, bgTo={}, alTo={};
+    function cong(map,k,v){ map[k]=(map[k]||0)+v; }
+    Object.keys(asMap).forEach(function(st){
+      var a=asMap[st], s=chia(a), v=vAS[st];
+      Object.keys(s).forEach(function(k){
+        cong(bfTo,k+'|'+a.p,a.bf*s[k]); if(a.inT) cong(bfTo,k,a.bf*s[k]);
+        if(v){ cong(bgTo,k+'|'+a.p,v.actualDefectValue*s[k]); if(a.inT) cong(bgTo,k,v.actualDefectValue*s[k]); }
+      });
+      if(v){ cong(alTo,a.th+'|'+a.p,v.allowedDefectValue); if(a.inT) cong(alTo,a.th,v.allowedDefectValue); }
+    });
+    function chot(x,key){
+      x.actualQty=bfTo[key]||0; x.actualRate=x.actualProduction?x.actualQty/x.actualProduction:0;
+      x.diffQty=x.actualQty-(x.baselineQty||0); x.diffRate=x.actualRate-x.baselineRate;
+      x.actualDefectValue=bgTo[key]||0; x.allowedDefectValue=alTo[key]||0; x.diffDefectValue=x.actualDefectValue-x.allowedDefectValue;
+      x.rag=(x.diffQty>0||x.diffDefectValue>0)?'Đỏ':'Xanh'; return x;
+    }
+    var toList={};
+    recs.forEach(function(x){ toList[x.th]=true; });
+    Object.keys(bfTo).forEach(function(k){ var t=k.split('|')[0]; if(bfTo[k]>0) toList[t]=true; });
+    var loiTo={};
+    recs.forEach(function(x){ var k=ST.mode==='bl'?x.gl:x.th; if(!loiTo[k]) loiTo[k]=[]; loiTo[k].push(x); });
+    var out=Object.keys(toList).map(function(t){
+      var tg=chot(tong[t]||H.finalize(H.emptyAgg(t)),t); tg.name=t; tg.fullName=t;
+      var series=kys.map(function(p){ var x=agg[t+'|'+p.key]||H.finalize(H.emptyAgg(p.name)); x=chot(x,t+'|'+p.key); x.name=p.name+(ST.tuan&&p.key===ST.tuan?' ◆':''); x.fullName=t+' · '+p.full; x.kyKey=p.key; return x; })
+        .filter(function(x){ return x.actualProduction||x.needSx||x.actualQty||x.actualDefectValue; });
+      return {ten:t,tong:tg,series:series,loi:loiTo[t]||[],it:(tg.statCount||0)<IT_PHIEU};
+    });
+    var tongBG=out.reduce(function(s,x){return s+x.tong.actualDefectValue;},0);
+    out.forEach(function(x){ x.nx=nhanXet(x,tongBG,H); });
+    out.sort(function(a,b){ if(a.it!==b.it) return a.it?1:-1; return b.tong.diffDefectValue-a.tong.diffDefectValue; });
+    return {ky:ky,kys:kys,thangs:thangs,tuans:tuans,to:out,tongBG:tongBG};
+  }
+
+  function nhanXet(x,tongBG,H){
+    var s=x.series, n=s.length, t=x.tong, o={muc:'',cls:'xam',kl:'',y:[]};
+    function gop(a){ var bf=0,bd=0,ah=0,ag=0; a.forEach(function(z){bf+=z.actualQty;bd+=z.actualProduction;ah+=z.baselineQty||0;ag+=z.needSx||0;}); return {tl:bd?bf/bd:0,ak:ag?ah/ag:0}; }
+    if(x.it){ o.muc='Ít dữ liệu'; o.kl='Chỉ có '+H.fmtNum(t.statCount)+' phiếu thống kê trong phạm vi (< '+IT_PHIEU+') – hiển thị số liệu, không đánh giá xu hướng.'; return o; }
+    var last=s[n-1];
+    if(n>=4){
+      var r=n>=6?3:Math.floor(n/2), gr=gop(s.slice(n-r)), gp=gop(s.slice(Math.max(0,n-2*r),n-r)), ch=gp.tl?gr.tl/gp.tl-1:0;
+      o.muc=ch<=-0.15?'Cải thiện rõ':(ch<=-0.05?'Cải thiện nhẹ':(ch<0.05?'Ổn định':(ch<0.15?'Xấu đi nhẹ':'Xấu đi rõ')));
+      o.cls=ch<=-0.05?'xanh':(ch<0.05?'xam':(ch<0.15?'vang':'do'));
+      o.kl=o.muc+': tỷ lệ sai hỏng '+r+' kỳ gần nhất '+H.fmtPct(gr.tl)+' so với '+r+' kỳ trước '+H.fmtPct(gp.tl)+' ('+pctTxt(ch)+')'
+        +'; cho phép AK cùng kỳ '+H.fmtPct(gr.ak)+(gr.tl>gr.ak?' → <b>đang vượt</b>.':' → trong ngưỡng.');
+    }else{ o.muc='Chưa đủ kỳ'; o.kl='Mới có '+n+' kỳ có dữ liệu – cần ≥ 4 kỳ để so xu hướng.'; }
+    if(last){
+      var vk=s.filter(function(z){return z.actualRate>z.baselineRate;}).length;
+      o.y.push('So định mức: kỳ gần nhất '+last.name+' thực tế '+H.fmtPct(last.actualRate)+' / cho phép AK '+H.fmtPct(last.baselineRate)+' ('+diemTxt(last.actualRate-last.baselineRate)+'); '+vk+'/'+n+' kỳ vượt AK.');
+    }
+    o.y.push('Giá trị trong phạm vi lọc: thực tế '+H.fmtMoney(t.actualDefectValue)+' / cho phép '+H.fmtMoney(t.allowedDefectValue)+' → '+(t.diffDefectValue>0?'vượt '+H.fmtMoney(t.diffDefectValue):'trong ngưỡng')
+      +'; chiếm '+(tongBG?(t.actualDefectValue/tongBG*100).toLocaleString('vi-VN',{maximumFractionDigits:1}):'0')+'% giá trị sai hỏng các tổ.');
+    if(n>=4){
+      var tl=s.map(function(z){return z.actualRate;}), tb=tl.reduce(function(a,b){return a+b;},0)/n, sd=Math.sqrt(tl.reduce(function(a,b){return a+(b-tb)*(b-tb);},0)/n);
+      var dbien=s.filter(function(z){return sd>0 && z.actualRate>tb+2*sd;}).map(function(z){return z.name+' ('+H.fmtPct(z.actualRate)+')';});
+      o.y.push(dbien.length?'Đột biến (> TB + 2σ = '+H.fmtPct(tb+2*sd)+'): <b>'+dbien.join(', ')+'</b> – cần truy nguyên.':'Không có kỳ đột biến (ngưỡng TB + 2σ = '+H.fmtPct(tb+2*sd)+').');
+    }
+    var gan={}; s.slice(Math.max(0,n-3)).forEach(function(z){gan[z.kyKey]=true;});
+    var loi={}, tot=0, coMa=0, coLoi=0;
+    x.loi.forEach(function(z){ if(!gan[z.p.key] || !(z.dq>0)) return; coLoi++; if(z.maLoi||z.loi) coMa++; var k=z.loi||'Không rõ lỗi'; loi[k]=(loi[k]||0)+z.dv; tot+=z.dv; });
+    if(coLoi && coMa/coLoi<0.05){ o.y.push('Mã lỗi phủ < 5% số dòng lỗi – thiếu dữ liệu để chỉ ra lỗi chính.'); }
+    else if(tot>0){
+      var top=Object.keys(loi).sort(function(a,b){return loi[b]-loi[a];}).slice(0,2).map(function(k){return '<b>'+H.esc(k)+'</b> '+(loi[k]/tot*100).toLocaleString('vi-VN',{maximumFractionDigits:0})+'%';});
+      o.y.push('Lỗi chính 3 kỳ gần nhất (theo giá trị BQ): '+top.join(' · ')+'.');
+    }
+    return o;
+  }
+
+  function veBang(kq,H){
+    var h='<table><thead><tr><th>#</th><th>Tổ</th><th>Phiếu TK</th><th>BD SX thực tế</th><th>AK cho phép</th><th>BF/BD thực tế</th><th>Chênh TL</th><th>BF − AH</th><th>GT thực tế BG</th><th>GT cho phép</th><th>GT vượt</th><th>Xu hướng</th><th>RAG</th></tr></thead><tbody>';
+    kq.to.forEach(function(x,i){ var t=x.tong;
+      h+='<tr class="to-row" data-i="'+i+'"><td>'+(i+1)+'</td><td class="to-ten">'+H.esc(x.ten)+(x.it?'<span class="to-chip xam">ít dữ liệu</span>':'')+'</td><td>'+H.fmtNum(t.statCount)+'</td><td>'+H.fmtNum(t.actualProduction)+'</td><td>'+H.fmtPct(t.baselineRate)+'</td><td>'+H.fmtPct(t.actualRate)+'</td><td>'+diemTxt(t.diffRate)+'</td><td>'+H.fmtNum(t.diffQty)+'</td><td>'+H.fmtMoney(t.actualDefectValue)+'</td><td>'+H.fmtMoney(t.allowedDefectValue)+'</td><td>'+H.fmtMoney(t.diffDefectValue)+'</td><td><span class="to-chip '+x.nx.cls+'">'+H.esc(x.nx.muc)+'</span></td><td><span class="to-chip '+(t.rag==='Đỏ'?'do':'xanh')+'">'+t.rag+'</span></td></tr>';
+    });
+    return h+'</tbody></table>';
+  }
+
+  function nhanPhamVi(kq){
+    var th=kq.thangs.filter(function(p){return p.key===ST.thang;})[0], tu=kq.tuans.filter(function(p){return p.key===ST.tuan;})[0];
+    return {bang:(tu?tu.full:(th?'Tháng '+th.full:'Tất cả tháng')), bieuDo:(kq.ky==='thang'?'theo tháng':(th?'theo tuần trong tháng '+th.full:SO_TUAN+' tuần tính đến '+(tu?tu.name:'tuần cuối'))), th:th, tu:tu};
+  }
+
+  function render(d,H){
+    lastD=d; lastH=H||lastH; H=lastH;
+    var src=window.GS6_G06_TO_SRC; if(!H || !src || !$('def-to-card')) return;
+    bind();
+    if(src.month!==gM || src.week!==gW){ gM=src.month; gW=src.week; ST.thang=src.month||''; ST.tuan=src.week||''; }   // theo bộ lọc chung khi bộ lọc chung đổi
+    var kq=tinh(src,H); KQ=kq;
+    function dien(id,list,cur,all){ var el=$(id); if(!el) return; el.innerHTML='<option value="">'+all+'</option>'+list.map(function(p){return '<option value="'+H.esc(p.key)+'">'+H.esc(p.full)+'</option>';}).join(''); el.value=cur||''; }
+    dien('def-to-thang',kq.thangs,ST.thang,'Tất cả tháng');
+    dien('def-to-tuan',kq.tuans,ST.tuan,ST.thang?'Tất cả tuần trong tháng':'Tất cả tuần');
+    var sel=$('def-to-chon'); if(sel){ var cur=ST.to; sel.innerHTML='<option value="">Tất cả tổ</option>'+kq.to.map(function(x){return '<option value="'+H.esc(x.ten)+'">'+H.esc(x.ten)+'</option>';}).join(''); if(kq.to.some(function(x){return x.ten===cur;})) sel.value=cur; else { ST.to=''; sel.value=''; } }
+    Array.prototype.forEach.call(document.querySelectorAll('#def-to-card .to-mode-btn'),function(b){ b.classList.toggle('on',b.getAttribute('data-mode')===ST.mode); });
+    var pv=nhanPhamVi(kq), kyTen=(kq.ky==='tuan'?'tuần':'tháng');
+    H.setHTML('def-to-note','<b>Phạm vi bảng + biểu đồ tổng:</b> '+H.esc(pv.bang)+' · <b>biểu đồ từng tổ:</b> '+H.esc(pv.bieuDo)+(ST.tuan?' (◆ = tuần đang chọn)':'')+'; theo bộ lọc chung Mảng / Mã thao tác. '
+      +(ST.mode==='bl'?'<b>Tổ gây lỗi – cột BL:</b> BF và giá trị BG của mỗi phiếu AS chia cho tổ gây lỗi theo tỷ trọng Số lượng lỗi BJ; BL trống → tổ thực hiện. Sản lượng BD, AK và giá trị cho phép vẫn tính theo tổ thực hiện (cột AX) – tỷ lệ = lỗi do tổ gây ra / sản lượng của chính tổ.'
+        :'<b>Tổ thực hiện – cột AX:</b> AK = AH/AG cộng 1 lần theo LTT Q; thực tế BF/BD cộng 1 lần theo AS; giá trị cho phép = ΣBG_Q/ΣBF_Q × AI_Q – đúng quy tắc biểu đồ theo máy.')
+      +' AK theo kỳ có thể nhảy khi 1 LTT kéo dài nhiều kỳ (AH chỉ tính 1 lần). Tổ < '+IT_PHIEU+' phiếu gắn nhãn “ít dữ liệu”, không đánh giá xu hướng, không vẽ ở 2 biểu đồ tổng. Bấm 1 dòng để xem tổ đó.');
+    H.setHTML('def-to-cap-r','Tỷ lệ sai hỏng theo tổ – '+H.esc(pv.bang)+': thực tế BF/BD vs cho phép AK');
+    H.setHTML('def-to-cap-v','Giá trị sai hỏng theo tổ – '+H.esc(pv.bang)+': thực tế BG vs cho phép');
+    H.setHTML('def-to-bang',veBang(kq,H));
+    var tongRows=kq.to.filter(function(x){return !x.it;}).map(function(x){return x.tong;});   // tổ ít dữ liệu chỉ ở bảng, không kéo giãn trục biểu đồ tổng
+    veCombo('def-to-tong-r',tongRows,'tl',{minWidth:620,height:320,stepW:120,barW:52,labelLen:24,title:'Tỷ lệ theo tổ'});
+    veCombo('def-to-tong-v',tongRows,'gt',{minWidth:620,height:320,stepW:120,barW:52,labelLen:24,title:'Giá trị theo tổ'});
+    var ds=kq.to.map(function(x,i){return {x:x,i:i};}).filter(function(o){return !ST.to || o.x.ten===ST.to;});
+    H.setHTML('def-to-ds',ds.map(function(o){ var x=o.x, t=x.tong;
+      return '<div class="to-khoi'+(t.rag==='Đỏ'?' do':'')+'" id="def-to-k-'+o.i+'"><div class="to-dau"><b>'+(o.i+1)+'. '+H.esc(x.ten)+'</b><span class="to-chip '+(t.rag==='Đỏ'?'do':'xanh')+'">'+t.rag+'</span><span class="to-chip '+x.nx.cls+'">'+H.esc(x.nx.muc)+'</span>'
+        +'<span class="to-so">'+H.esc(pv.bang)+': '+H.fmtNum(t.statCount)+' phiếu · BD '+H.fmtNum(t.actualProduction)+' · AK '+H.fmtPct(t.baselineRate)+' · thực tế '+H.fmtPct(t.actualRate)+' · GT '+H.fmtMoney(t.actualDefectValue)+'</span>'
+        +'<button type="button" class="to-anh-btn nho" data-noanh="1" data-anh="'+o.i+'">📷 Ảnh tổ này</button></div>'
+        +'<div class="def-weekly-compare"><div class="to-frame"><div class="to-frame-h">① Tỷ lệ theo '+kyTen+': BF/BD vs AK</div><div class="def-chart-box" id="def-to-r-'+o.i+'"></div></div>'
+        +'<div class="to-frame"><div class="to-frame-h">② Giá trị theo '+kyTen+': BG vs cho phép</div><div class="def-chart-box" id="def-to-v-'+o.i+'"></div></div></div>'
+        +'<div class="to-nx '+(x.nx.cls==='do'?'do':(x.nx.cls==='vang'?'vang':''))+'"><b>Kết luận:</b> '+x.nx.kl+(x.nx.y.length?'<ul><li>'+x.nx.y.join('</li><li>')+'</li></ul>':'')+'</div></div>';
+    }).join('')||'<div class="small">Không có dữ liệu tổ theo điều kiện lọc.</div>');
+    ds.forEach(function(o){
+      veCombo('def-to-r-'+o.i,o.x.series,'tl',{minWidth:520,height:300,stepW:56,barW:34,labelLen:12,title:o.x.ten+' – tỷ lệ'});
+      veCombo('def-to-v-'+o.i,o.x.series,'gt',{minWidth:520,height:300,stepW:56,barW:34,labelLen:12,title:o.x.ten+' – giá trị'});
+    });
+  }
+
+  // ---------- Biểu đồ riêng của mục (chú thích kiểu GSQV Tab 2: ô màu căn giữa trên; nhãn cho phép không có tiền tố AK/CP) ----------
+  function veCombo(id,rows,loai,opts){
+    var H=lastH; opts=opts||{};
+    var gt=loai==='gt', A=gt?'actualDefectValue':'actualRate', B=gt?'allowedDefectValue':'baselineRate';
+    rows=(rows||[]).filter(function(x){ return gt?(x.actualDefectValue||x.allowedDefectValue):(x.needSx||x.actualProduction||x.baselineQty||x.actualQty); });
+    if(!rows.length){ H.setHTML(id,'<div class="small">Không có dữ liệu theo điều kiện lọc.</div>'); return; }
+    var fmt=gt?H.fmtMoney:H.fmtPct, n=rows.length;
+    var w=Math.max(opts.minWidth||480,n*(opts.stepW||56)+90), h=opts.height||300, left=54, right=16, top=46, bottom=n>8?74:58, iw=w-left-right, ih=h-top-bottom;
+    var mx=Math.max.apply(null,rows.map(function(x){return Math.max(Number(x[A])||0,Number(x[B])||0);})); mx=Math.max(mx*1.18,gt?1:0.0001);
+    var step=iw/n, bw=Math.max(8,Math.min(opts.barW||38,step*0.56)), fs=step<44?8.4:9.6;
+    function y(v){ return top+ih-((Number(v)||0)/mx*ih); } function xp(i){ return left+step*i+step/2; }
+    var o='', line='', dots='';
+    for(var g=0;g<=4;g++){ var gy=top+ih*g/4, gv=mx*(4-g)/4; o+='<line x1="'+left+'" y1="'+gy+'" x2="'+(w-right)+'" y2="'+gy+'" stroke="#E5E7EB"/><text x="'+(left-6)+'" y="'+(gy+3)+'" font-size="9" text-anchor="end" fill="#64748b">'+(gt?H.fmtMoney(gv):(gv*100).toLocaleString('vi-VN',{maximumFractionDigits:1})+'%')+'</text>'; }
+    rows.forEach(function(x,i){
+      var a=Number(x[A])||0, b=Number(x[B])||0, X=xp(i), ya=y(a), yb=y(b), vuot=a>b, fill=vuot?'#dc2626':'#035D30';
+      var tip=H.esc(x.fullName||x.name)+'&#10;'+(gt?'GT thực tế BG: '+H.fmtNum(a)+' đ&#10;GT cho phép: '+H.fmtNum(b)+' đ&#10;Chênh: '+H.fmtNum(a-b)+' đ'
+        :'Thực tế BF/BD: '+H.fmtPct(a)+'&#10;Cho phép AK: '+H.fmtPct(b)+'&#10;BD: '+H.fmtNum(x.actualProduction)+' · BF: '+H.fmtNum(x.actualQty)+' · AH: '+H.fmtNum(x.baselineQty));
+      o+='<rect x="'+(X-bw/2)+'" y="'+ya+'" width="'+bw+'" height="'+Math.max(0,top+ih-ya)+'" rx="3" fill="'+fill+'" opacity="0.85"><title>'+tip+'</title></rect>';
+      var la=Math.max(top-2,ya-5), lb=yb-7;
+      if(Math.abs(lb-la)<12){ if(yb>ya){ lb=Math.min(top+ih-4,yb+13); } else { la=Math.max(top-2,Math.min(ya-5,yb-19)); if(Math.abs(lb-la)<12) lb=Math.min(top+ih-4,yb+13); } }
+      var tb=fmt(b), bwT=String(tb).length*(fs-0.6)*0.56+8;
+      o+='<text x="'+X+'" y="'+la+'" font-size="'+fs+'" font-weight="700" text-anchor="middle" fill="'+fill+'">'+fmt(a)+'</text>';
+      dots+='<circle cx="'+X+'" cy="'+yb+'" r="3.4" fill="#E2B624" stroke="#7B4A0E" stroke-width="1"><title>'+tip+'</title></circle><rect x="'+(X-bwT/2)+'" y="'+(lb-fs+0.5)+'" width="'+bwT+'" height="'+(fs+3.5)+'" rx="3" fill="#fff" fill-opacity="0.92" stroke="#E2B624" stroke-width="0.8"/><text x="'+X+'" y="'+lb+'" font-size="'+(fs-0.6)+'" text-anchor="middle" fill="#7B4A0E" font-weight="700">'+tb+'</text>';
+      line+=(i?' ':'')+X+','+yb;
+      var rot=n>8?-35:0, ly=top+ih+14, nm=String(x.name||''), ll=opts.labelLen||16;
+      o+='<text x="'+X+'" y="'+ly+'" font-size="'+(n>12?8.6:9.8)+'" text-anchor="'+(rot?'end':'middle')+'"'+(rot?' transform="rotate('+rot+' '+X+' '+ly+')"':'')+'>'+H.esc(nm.length>ll?nm.slice(0,ll-1)+'…':nm)+'</text>';
+    });
+    var l1=gt?'Giá trị sai hỏng thực tế BG':'Tỷ lệ sai hỏng thực tế BF/BD', l2=gt?'Giá trị sai hỏng cho phép':'Tỷ lệ sai hỏng cho phép AK';
+    var lw=[l1.length*5.6+30,58,l2.length*5.6+34], tw=lw[0]+lw[1]+lw[2], lx=Math.max(4,(w-tw)/2), ly2=16;
+    var leg='<rect x="'+lx+'" y="'+(ly2-8)+'" width="11" height="11" rx="2" fill="#035D30"/><text x="'+(lx+15)+'" y="'+(ly2+1)+'" font-size="10.5" fill="#334155">'+l1+'</text>'
+      +'<rect x="'+(lx+lw[0])+'" y="'+(ly2-8)+'" width="11" height="11" rx="2" fill="#dc2626"/><text x="'+(lx+lw[0]+15)+'" y="'+(ly2+1)+'" font-size="10.5" fill="#334155">Vượt</text>'
+      +'<line x1="'+(lx+lw[0]+lw[1])+'" y1="'+(ly2-3)+'" x2="'+(lx+lw[0]+lw[1]+22)+'" y2="'+(ly2-3)+'" stroke="#E2B624" stroke-width="3"/><circle cx="'+(lx+lw[0]+lw[1]+11)+'" cy="'+(ly2-3)+'" r="3.4" fill="#E2B624" stroke="#7B4A0E"/><text x="'+(lx+lw[0]+lw[1]+28)+'" y="'+(ly2+1)+'" font-size="10.5" fill="#334155">'+l2+'</text>';
+    var svg='<svg width="100%" height="'+h+'" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid meet" role="img" aria-label="'+H.esc(opts.title||'')+'" font-family="Times New Roman, Times, serif"><rect width="'+w+'" height="'+h+'" fill="#fff"/>'
+      +leg+o+'<polyline points="'+line+'" fill="none" stroke="#E2B624" stroke-width="2.5"/>'+dots+'</svg>';
+    H.setHTML(id,'<div class="def-svg-scroll-inner">'+svg+'</div>');
+  }
+
+  // ---------- Xuất ảnh (cách làm như GSQV: html2canvas cdnjs, tải khi bấm) ----------
+  function taiH2C(){ return window.html2canvas?Promise.resolve():new Promise(function(res,rej){ var s=document.createElement('script'); s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    s.onload=res; s.onerror=function(){ rej(new Error('không tải được thư viện chụp ảnh (cần mạng)')); }; document.head.appendChild(s); }); }
+  function baoAnh(msg,loi){ var e=$('def-to-anh-msg'); if(e){ e.innerHTML=msg; e.className='to-anh-msg'+(loi?' loi':''); } }
+  function xuatAnh(el,tenTo_,btn){
+    if(!el || !KQ) return;
+    var H=lastH, d=lastD||{}, pv=nhanPhamVi(KQ), now=new Date(), p2=function(n){return String(n).padStart(2,'0');};
+    var ts=p2(now.getDate())+'/'+p2(now.getMonth()+1)+'/'+now.getFullYear()+' '+p2(now.getHours())+':'+p2(now.getMinutes());
+    var nhanBtn=btn?btn.textContent:''; if(btn){ btn.disabled=true; btn.textContent='⏳ Đang xuất…'; }
+    var hd=document.createElement('div'); hd.className='to-anh-dau';
+    hd.innerHTML='<b class="t">GOLDSUN · GSP NEXT 30 GS6 · Sai hỏng theo Tổ'+(tenTo_?' – '+H.esc(tenTo_):'')+'</b><br>Phân theo: <b>'+(ST.mode==='bl'?'Tổ gây lỗi (cột BL)':'Tổ thực hiện (cột AX)')+'</b> · Phạm vi: <b>'+H.esc(pv.bang)+'</b> · Biểu đồ: <b>'+H.esc(pv.bieuDo)+'</b>'
+      +' · Mảng: <b>'+H.esc(d.selectedSegment||'Tất cả')+'</b> · Mã thao tác: <b>'+H.esc(d.selectedOperationCode||'Tất cả')+'</b> · Nguồn: Bravo → Google Sheet TONGHOPSAIHONG · Xuất lúc '+ts+' · <b>C3 – Confidential</b>';
+    el.insertBefore(hd,el.firstChild);
+    var goc=el.querySelectorAll('svg'), kt=[];
+    Array.prototype.forEach.call(goc,function(s){ var r=s.getBoundingClientRect(); kt.push({w:Math.round(r.width),h:Math.round(r.height)}); });
+    taiH2C().then(function(){
+      return window.html2canvas(el,{backgroundColor:'#ffffff',scale:Math.min(2,window.devicePixelRatio||1.5),useCORS:true,
+        ignoreElements:function(n){ return !!(n.hasAttribute && n.hasAttribute('data-noanh')); },
+        onclone:function(doc){ var c=doc.getElementById(el.id); if(!c) return;
+          Array.prototype.forEach.call(c.querySelectorAll('svg'),function(s,i){ var k=kt[i]; if(!k || !k.w) return;
+            var x=s.cloneNode(true); x.setAttribute('xmlns','http://www.w3.org/2000/svg'); x.setAttribute('width',k.w); x.setAttribute('height',k.h); x.setAttribute('font-family','Times New Roman, Times, serif');
+            var img=doc.createElement('img'); img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(new XMLSerializer().serializeToString(x)); img.style.width=k.w+'px'; img.style.height=k.h+'px'; img.style.display='block';
+            s.parentNode.replaceChild(img,s); }); } });
+    }).then(function(cv){
+      var ten='GSP_OPS_SaiHongTheoTo_GS6_'+(ST.mode==='bl'?'ToGayLoi':'ToThucHien')+'_'+(pv.tu?pv.tu.key.replace('-',''):(pv.th?'T'+pv.th.key.replace('-',''):'TatCaThang'))+(tenTo_?'_'+khongDau(tenTo_):'')
+        +'_'+now.getFullYear()+p2(now.getMonth()+1)+p2(now.getDate())+'_v1.0.png';
+      return new Promise(function(res){ cv.toBlob(function(b){ var a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=ten; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); res(); },500); },'image/png'); })
+        .then(function(){ baoAnh('Đã xuất ảnh <b>'+H.esc(ten)+'</b> ('+cv.width+' × '+cv.height+' px) – thư mục Tải về của trình duyệt.'); });
+    }).catch(function(e){ baoAnh('Không xuất được ảnh: '+H.esc(e&&e.message||e),true); })
+    .then(function(){ if(hd.parentNode) hd.parentNode.removeChild(hd); if(btn){ btn.disabled=false; btn.textContent=nhanBtn; } });
+  }
+
+  function lai(){ if(lastD) try{ render(lastD); }catch(e){ console.error('Group 06 – Sai hỏng theo tổ',e); } }
+  function bind(){
+    if(bound) return; bound=true;
+    var card=$('def-to-card');
+    card.addEventListener('click',function(e){
+      var b=e.target.closest('.to-mode-btn'); if(b){ ST.mode=b.getAttribute('data-mode'); lai(); return; }
+      var a=e.target.closest('[data-anh]'); if(a){ var k=$('def-to-k-'+a.getAttribute('data-anh')), x=KQ&&KQ.to[+a.getAttribute('data-anh')]; xuatAnh(k,x?x.ten:'',a); return; }
+      if(e.target.id==='def-to-anh'){ xuatAnh(card,'',e.target); return; }
+      var tr=e.target.closest('tr.to-row'); if(tr){ var el=$('def-to-k-'+tr.getAttribute('data-i')); if(!el){ ST.to=''; lai(); el=$('def-to-k-'+tr.getAttribute('data-i')); } if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
+    });
+    $('def-to-thang').addEventListener('change',function(){ ST.thang=this.value; ST.tuan=''; lai(); });
+    $('def-to-tuan').addEventListener('change',function(){ ST.tuan=this.value; lai(); });
+    $('def-to-chon').addEventListener('change',function(){ ST.to=this.value; lai(); });
+  }
+  return {render:render};
+})();
+
+</script>
 </head>
 <body>
 <header class="top">
@@ -5028,6 +5350,25 @@ function cSwitch(btn) {
   <div class="def-chart-summary" id="def-machine-stability-summary"></div>
   <div class="chart-data-table" id="def-machine-stability-table"></div>
  </div>
+ <div class="def-card" id="def-to-card">
+  <h2>Sai hỏng theo Tổ – xu hướng tháng / tuần</h2>
+  <div class="def-filter-row" data-noanh="1">
+   <label>Phân theo</label>
+   <span class="to-mode"><button type="button" class="to-mode-btn on" data-mode="ax">Tổ thực hiện – cột AX</button><button type="button" class="to-mode-btn" data-mode="bl">Tổ gây lỗi – cột BL</button></span>
+   <label for="def-to-thang">Tháng</label><select id="def-to-thang"><option value="">Tất cả tháng</option></select>
+   <label for="def-to-tuan">Tuần</label><select id="def-to-tuan"><option value="">Tất cả tuần</option></select>
+   <label for="def-to-chon">Tổ</label><select id="def-to-chon"><option value="">Tất cả tổ</option></select>
+   <button type="button" class="to-anh-btn" id="def-to-anh">📷 Xuất ảnh</button>
+   <span class="to-anh-msg" id="def-to-anh-msg"></span>
+  </div>
+  <div class="def-chart-note" id="def-to-note"></div>
+  <div class="to-frame"><div class="to-frame-h">Bảng tổng hợp theo tổ</div><div class="chart-data-table" id="def-to-bang"></div></div>
+  <div class="def-weekly-compare">
+   <div class="to-frame"><div class="to-frame-h" id="def-to-cap-r">Tỷ lệ sai hỏng theo tổ: thực tế BF/BD vs cho phép AK</div><div class="def-chart-box" id="def-to-tong-r"></div></div>
+   <div class="to-frame"><div class="to-frame-h" id="def-to-cap-v">Giá trị sai hỏng theo tổ: thực tế BG vs cho phép</div><div class="def-chart-box" id="def-to-tong-v"></div></div>
+  </div>
+  <div id="def-to-ds"></div>
+ </div>
  <div class="defect-grid2">
   <div class="def-card"><h2>Pareto lỗi theo giá trị sai hỏng</h2><div id="def-pareto-defects"></div></div>
   <div class="def-card"><h2>Pareto lỗi theo Tên phân loại thao tác – cột T</h2><div id="def-pareto-operationT"></div></div>
@@ -5528,6 +5869,7 @@ window.GS6_DEFECT_EMBEDDED_DATA_V941 = {"updated":"21/06/2026 13:08","period":"2
         segment:segmentOf(r,m),monthKey:dt?monthKeyOf(dt):'',monthLabel:dt?monthLabelOfDate(dt):'Không rõ tháng',
         weekKey:wk?wk.key:'',weekLabel:wk?wk.label:'',weekStart:wk?wk.start:0};
     });
+    window.GS6_G06_TO_SRC={rows:valueBasisDataRows,m:m,hi:hi,month:selectedMonth,week:selectedWeek};   // V10.18: nen cho muc Sai hong theo To (g06_to_sx.js)
     dataRows=baseFiltered.map(function(x){return x.row;});
     if(selectedOpCode){ dataRows=dataRows.filter(function(r){ return String(cell(r,m.opCode)||'').trim()===selectedOpCode; }); }
     var opSeen={}, opItems=[], seg={}, mach={}, oper={}, defMap={}, operTMap={}, dates=[], raw=[];
@@ -5856,6 +6198,7 @@ window.GS6_DEFECT_EMBEDDED_DATA_V941 = {"updated":"21/06/2026 13:08","period":"2
     renderMachinePeriodSummary('def-machine-stability-summary', stGroups, 'máy sản xuất theo điều kiện lọc', 'Sắp xếp theo sản lượng BD giảm dần');
     renderMachineStabilityTable('def-machine-stability-table',stGroups);
     renderMonthlyStackedDefectValue(d);
+    if(window.GS6_G06_TO) try{ window.GS6_G06_TO.render(d,{cell:cell,num:num,parseDate:parseDate,weekInfo:weekInfo,monthKeyOf:monthKeyOf,monthLabelOfDate:monthLabelOfDate,emptyAgg:emptyAgg,addMetric:addMetric,finalize:finalize,valueByAS:aggregateDefectValueGroupsByAS,rateChart:renderRateComboChart,valueChart:renderValueComboChart,esc:esc,fmtNum:fmtNum,fmtPct:fmtPct,fmtMoney:fmtMoneyShort,setHTML:setHTML}); }catch(e){ console.error('Group 06 – Sai hỏng theo tổ',e); }   // V10.18
   }
 
 
@@ -9197,7 +9540,7 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
 
   // ---------- render ----------
   function render() {
-    var h = '<div class="bx-head"><div><h2 class="section-title" style="margin:0">07. Sản xuất hằng ngày – Sổ BCSX Túi · Khay · In <span class="bx-preview">V10.17</span></h2><div class="bx-sub">Nguồn: sổ ghi chép hằng ngày (Drive "BCSX 2026") → chuẩn hóa theo 10 quy tắc → dashboard. Dữ liệu tạo lúc ' + esc(RAW.meta.tao_luc) + '.</div></div><div class="bx-fresh">' + liveBadge() + freshness() + '</div></div>';
+    var h = '<div class="bx-head"><div><h2 class="section-title" style="margin:0">07. Sản xuất hằng ngày – Sổ BCSX Túi · Khay · In <span class="bx-preview">V10.18</span></h2><div class="bx-sub">Nguồn: sổ ghi chép hằng ngày (Drive "BCSX 2026") → chuẩn hóa theo 10 quy tắc → dashboard. Dữ liệu tạo lúc ' + esc(RAW.meta.tao_luc) + '.</div></div><div class="bx-fresh">' + liveBadge() + freshness() + '</div></div>';
     h += '<div class="bx-filters">' + filters() + '</div><div id="bx-body">';
     h += ST.tab === 'tong' ? viewTong() : ST.tab === 'nguon' ? viewNguon() : viewXu(ST.tab);
     h += '</div>';
@@ -9396,7 +9739,7 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
    RAG (mục 7 CLAUDE.md): độ trễ = hôm nay − max(ngày dữ liệu, ngày đồng bộ OK gần nhất); ≤3 ngày Xanh, ≤7 Vàng, >7 hoặc lỗi kết nối Đỏ.
    Lưu ý: Google xuất CSV bỏ trống ô tiêu đề cột ngày → cột ngày xác định theo VỊ TRÍ cố định của file ERP. */
 (function () {
-  var BUILD = { version: 'V10.17', ngay: '30/10/2026' };
+  var BUILD = { version: 'V10.18', ngay: '30/10/2026' };
   var S_TKSX = '1-tJcoRxBSBtmi6oN1a4yovKU-FIOpVdMaw6m1m4l7Aw';
   var NGUON = [
     { id: 'p3', ten: 'TKSX – P3 Tổng hợp lệnh thao tác', dung: '00 · 02 (SX & OEE)', boi: 'Dong_Bo_TKSX_GS6.bat (anh Mạnh) · bộ đồng bộ của Thành', loai: 'Google Sheet', sheet: S_TKSX, tab: 'P3.Tổng hợp lệnh thao tác', cot: 43, cotTen: 'Ngày TK', log: 'NHAT_KY_DONG_BO' },
