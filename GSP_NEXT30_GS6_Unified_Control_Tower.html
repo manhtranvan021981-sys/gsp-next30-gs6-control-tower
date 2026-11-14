@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V10.29 – Group 07 LIVE · Group 08 Nguồn dữ liệu</title>
+<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V10.30 – Group 07 LIVE · Group 08 Nguồn dữ liệu</title>
 <style>
 :root{
   --dark:#035D30;--green:#035A28;--gold:#E2B624;--gold2:#FFFDE7;
@@ -9707,7 +9707,7 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
 
   // ---------- render ----------
   function render() {
-    var h = '<div class="bx-head"><div><h2 class="section-title" style="margin:0">07. Sản xuất hằng ngày – Sổ BCSX Túi · Khay · In <span class="bx-preview">V10.29</span></h2><div class="bx-sub">Nguồn: sổ ghi chép hằng ngày (Drive "BCSX 2026") → chuẩn hóa theo 10 quy tắc → dashboard. Dữ liệu tạo lúc ' + esc(RAW.meta.tao_luc) + '.</div></div><div class="bx-fresh">' + liveBadge() + freshness() + '</div></div>';
+    var h = '<div class="bx-head"><div><h2 class="section-title" style="margin:0">07. Sản xuất hằng ngày – Sổ BCSX Túi · Khay · In <span class="bx-preview">V10.30</span></h2><div class="bx-sub">Nguồn: sổ ghi chép hằng ngày (Drive "BCSX 2026") → chuẩn hóa theo 10 quy tắc → dashboard. Dữ liệu tạo lúc ' + esc(RAW.meta.tao_luc) + '.</div></div><div class="bx-fresh">' + liveBadge() + freshness() + '</div></div>';
     h += '<div class="bx-filters">' + filters() + '</div><div id="bx-body">';
     h += ST.tab === 'tong' ? viewTong() : ST.tab === 'nguon' ? viewNguon() : viewXu(ST.tab);
     h += '</div>';
@@ -9907,7 +9907,7 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
    RAG (mục 7 CLAUDE.md): độ trễ = hôm nay − max(ngày dữ liệu, ngày đồng bộ OK gần nhất); ≤3 ngày Xanh, ≤7 Vàng, >7 hoặc lỗi kết nối Đỏ.
    Lưu ý: Google xuất CSV bỏ trống ô tiêu đề cột ngày → cột ngày xác định theo VỊ TRÍ cố định của file ERP. */
 (function () {
-  var BUILD = { version: 'V10.29', ngay: '14/11/2026' };
+  var BUILD = { version: 'V10.30', ngay: '14/11/2026' };
   var S_TKSX = '1-tJcoRxBSBtmi6oN1a4yovKU-FIOpVdMaw6m1m4l7Aw';
   var NGUON = [
     { id: 'p3', ten: 'TKSX – P3 Tổng hợp lệnh thao tác', dung: '00 · 02 (SX & OEE)', boi: 'Bravo SQL tự động 9h · 15h · 21h (sync_p3_bravo_gs6.py, REP_TK_THLTT, GS6 + PX Túi + PX Khay) · mất VPN → giữ nguyên', loai: 'Google Sheet', sheet: S_TKSX, tab: 'P3.Tổng hợp lệnh thao tác', cot: 43, cotTen: 'Ngày TK', log: 'NHAT_KY_DONG_BO' },
@@ -9918,6 +9918,7 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
     { id: 'bcsx', ten: 'Sổ BCSX Túi · Khay · In', dung: '07 (Sản xuất hằng ngày)', boi: 'Lịch tự động GS6_Dong_Bo_BCSX (5 phút)', loai: 'Google Sheet (JSON)', sheet: S_TKSX, tab: 'BCSX_JSON', bcsx: true, log: 'BCSX_NHAT_KY' },
     { id: 'api', ten: 'API Closed-loop V2.5.0', dung: '05 (Issue · Action · RACI)', boi: 'Apps Script', loai: 'API', jsonp: 'https://script.google.com/macros/s/AKfycbymuR_VfKZW-Bl_ABf3FyxjIoZfzsONCc3LUFM_g_BqgjAqai5e_k0Av0iDQQ7mP1hd/exec', q: 'transport=health' },
     { id: 'rpt', ten: 'Web app Báo cáo', dung: '00 · 03', boi: 'Apps Script', loai: 'API', jsonp: 'https://script.google.com/macros/s/AKfycbx6qCo7FCuN3cR6ktx1uT3bu-FB09dUTPrCyXYgUcsKBb57uhzSeWkSKaylI5JemGPaPw/exec', q: 'action=list' },
+    { id: 'kpif', ten: 'File chấm KPI NM6 (nhập tay)', dung: '04 (KPI tổ & cá nhân)', boi: 'Phó QĐ chấm KY_LUAT (K5) · trưởng nhóm kho nhập NHAP_HO_TRO · GĐNM/PKH xác nhận LOAI_TRU, KHONG_CHE – lịch GS6_KPI_NM6_Dashboard đọc 9h20 · 15h20 · 21h20', loai: 'Excel trên Google Drive (GSP NEXT 30-GS6/KPI) · GSP_OPS_ChamKPI_NM6_GS6_20261110_v0.3.xlsx', tay: true, link: 'https://drive.google.com/file/d/1_eNq2zqLF7r2lDZoqlkkrE6oRHg2CF8m/view' },   // V10.30 (15/11/2026)
     { id: 'emb', ten: 'Dữ liệu nhúng trong file dashboard', dung: '00 · 01 · 03 · 04', boi: 'Chỉ đổi khi phát hành phiên bản', loai: 'Nhúng sẵn', nhung: true }
   ];
   var KQ = {}, LOG = {}, DANG = false, LAN = '', KEY = 'gs6_nguon_kq_v1';
@@ -9969,6 +9970,7 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
   // ---- đánh giá ----
   function danhGia(k, n) {
     if (n.nhung) return { rag: 'n', txt: 'Cố định theo ' + BUILD.version };
+    if (n.tay) return { rag: 'n', txt: 'Nhập tay – mở file bằng link (cần quyền Drive)' };
     if (k.loi) return { rag: 'r', txt: 'Lỗi: ' + k.loi };
     if (n.jsonp) return { rag: 'g', txt: 'Phản hồi ' + (k.ms / 1000).toFixed(1) + ' giây' };
     if (n.kehoach) return { rag: 'g', txt: 'Kế hoạch năm – đọc được' };
@@ -9983,7 +9985,7 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
   function kiemMot(n, xong) {
     var k = KQ[n.id] = { dang: true };
     function fin() { k.dang = false; k.dg = danhGia(k, n); xong(); }
-    if (n.nhung) { k.ok = true; fin(); return; }
+    if (n.nhung || n.tay) { k.ok = true; fin(); return; }
     if (n.jsonp) {
       jsonp(n.jsonp + '?' + n.q, function (d, ms) { k.ms = ms; k.ok = !!(d && d.ok !== false); if (!k.ok) k.loi = 'API báo lỗi'; k.ghiChu = d && d.apiVersion ? 'Phiên bản ' + d.apiVersion : (d && d.reports ? d.reports.length + ' báo cáo' : ''); fin(); },
         function (e) { k.loi = e; fin(); });
@@ -10065,10 +10067,10 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
     h += '<div class="card"><div class="card-title">Bảng nguồn dữ liệu</div><div class="nd-scroll"><table class="nd-tbl"><thead><tr><th>Đèn</th><th>Nguồn</th><th>Dùng ở Group</th><th>Cập nhật bởi</th><th>Đồng bộ OK gần nhất</th><th>Dữ liệu đến ngày</th><th class="n">Số dòng</th><th>Kết nối</th><th>Đánh giá</th><th></th></tr></thead><tbody>';
     NGUON.forEach(function (n) {
       var k = KQ[n.id] || {}, L = LOG[n.id] || {}, dg = k.dg, r = dg ? RAG[dg.rag] : ['⏳', 'Đang kiểm'];
-      var dongBo = n.bcsx ? (k.dongBo ? tg(k.dongBo) : '–') : (n.log ? (L.okLuc ? tg(L.okLuc) : (L.khong ? 'Chưa có nhật ký' : (k.dang ? '…' : '–'))) : 'Không ghi nhật ký');
+      var dongBo = n.tay ? 'Nhập tay – lịch KPI đọc khi chạy' : n.bcsx ? (k.dongBo ? tg(k.dongBo) : '–') : (n.log ? (L.okLuc ? tg(L.okLuc) : (L.khong ? 'Chưa có nhật ký' : (k.dang ? '…' : '–'))) : 'Không ghi nhật ký');
       var loiLog = L.cuoi && L.cuoi.kq && L.cuoi.kq !== 'OK' ? ' <span class="nd-warn">Lần gần nhất: ' + esc(L.cuoi.kq) + ' (' + tg(L.cuoi.luc) + ')</span>' : '';
-      var link = n.sheet ? 'https://docs.google.com/spreadsheets/d/' + n.sheet + '/edit' + (n.gid ? '#gid=' + n.gid : '') : '';
-      h += '<tr class="nd-' + (dg ? dg.rag : 'x') + '"><td class="nd-rag">' + r[0] + '</td><td><b>' + esc(n.ten) + '</b><div class="nd-mut">' + esc(n.loai) + (n.cotTen ? ' · cột ngày: ' + esc(n.cotTen) : '') + '</div></td><td>' + esc(n.dung) + '</td><td>' + esc(n.boi) + '</td><td>' + dongBo + loiLog + '</td><td>' + (n.nhung ? esc(BUILD.ngay) : n.jsonp ? '–' : (k.ngayDL ? d2s(k.ngayDL) : (k.dang ? '…' : '–'))) + '</td><td class="n">' + (k.soDong ? Number(k.soDong).toLocaleString('vi-VN') : '–') + '</td><td>' + (n.nhung ? 'Trong file' : k.dang ? '⏳' : k.loi ? '<span class="nd-err">✕ ' + esc(k.loi) + '</span>' : '✓ ' + ((k.ms || 0) / 1000).toFixed(1) + ' s' + (k.ghiChu ? '<div class="nd-mut">' + esc(k.ghiChu) + '</div>' : '')) + '</td><td>' + (dg ? '<span class="nd-pill ' + dg.rag + '">' + esc(dg.txt) + '</span>' : '…') + '</td><td>' + (link ? '<a href="' + link + '" target="_blank" rel="noopener">Mở ↗</a>' : '') + '</td></tr>';
+      var link = n.link || (n.sheet ? 'https://docs.google.com/spreadsheets/d/' + n.sheet + '/edit' + (n.gid ? '#gid=' + n.gid : '') : '');
+      h += '<tr class="nd-' + (dg ? dg.rag : 'x') + '"><td class="nd-rag">' + r[0] + '</td><td><b>' + esc(n.ten) + '</b><div class="nd-mut">' + esc(n.loai) + (n.cotTen ? ' · cột ngày: ' + esc(n.cotTen) : '') + '</div></td><td>' + esc(n.dung) + '</td><td>' + esc(n.boi) + '</td><td>' + dongBo + loiLog + '</td><td>' + (n.nhung ? esc(BUILD.ngay) : (n.jsonp || n.tay) ? '–' : (k.ngayDL ? d2s(k.ngayDL) : (k.dang ? '…' : '–'))) + '</td><td class="n">' + (k.soDong ? Number(k.soDong).toLocaleString('vi-VN') : '–') + '</td><td>' + (n.nhung ? 'Trong file' : n.tay ? 'Trên Drive' : k.dang ? '⏳' : k.loi ? '<span class="nd-err">✕ ' + esc(k.loi) + '</span>' : '✓ ' + ((k.ms || 0) / 1000).toFixed(1) + ' s' + (k.ghiChu ? '<div class="nd-mut">' + esc(k.ghiChu) + '</div>' : '')) + '</td><td>' + (dg ? '<span class="nd-pill ' + dg.rag + '">' + esc(dg.txt) + '</span>' : '…') + '</td><td>' + (link ? '<a href="' + link + '" target="_blank" rel="noopener">' + (n.tay ? 'Xem file Excel ↗' : 'Mở ↗') + '</a>' : '') + '</td></tr>';
     });
     h += '</tbody></table></div><div class="nd-note">Độ trễ = hôm nay − ngày gần nhất giữa "dữ liệu đến ngày" và "đồng bộ OK gần nhất" (nguồn không có phát sinh mới nhưng vừa đồng bộ vẫn Xanh). Dữ liệu nhúng chỉ đổi khi phát hành phiên bản mới. Kết quả lưu tạm 10 phút; bấm "Kiểm tra lại ngay" để đo mới.</div></div>';
     var all = []; NGUON.forEach(function (n) { ((LOG[n.id] || {}).ds || []).slice(0, 20).forEach(function (r) { all.push(r); }); });
