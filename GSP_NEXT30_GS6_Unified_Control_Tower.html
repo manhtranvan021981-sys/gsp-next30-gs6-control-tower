@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V10.30 – Group 07 LIVE · Group 08 Nguồn dữ liệu</title>
+<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V10.31 – Group 07 LIVE · Group 08 Nguồn dữ liệu</title>
 <style>
 :root{
   --dark:#035D30;--green:#035A28;--gold:#E2B624;--gold2:#FFFDE7;
@@ -9707,7 +9707,7 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
 
   // ---------- render ----------
   function render() {
-    var h = '<div class="bx-head"><div><h2 class="section-title" style="margin:0">07. Sản xuất hằng ngày – Sổ BCSX Túi · Khay · In <span class="bx-preview">V10.30</span></h2><div class="bx-sub">Nguồn: sổ ghi chép hằng ngày (Drive "BCSX 2026") → chuẩn hóa theo 10 quy tắc → dashboard. Dữ liệu tạo lúc ' + esc(RAW.meta.tao_luc) + '.</div></div><div class="bx-fresh">' + liveBadge() + freshness() + '</div></div>';
+    var h = '<div class="bx-head"><div><h2 class="section-title" style="margin:0">07. Sản xuất hằng ngày – Sổ BCSX Túi · Khay · In <span class="bx-preview">V10.31</span></h2><div class="bx-sub">Nguồn: sổ ghi chép hằng ngày (Drive "BCSX 2026") → chuẩn hóa theo 10 quy tắc → dashboard. Dữ liệu tạo lúc ' + esc(RAW.meta.tao_luc) + '.</div></div><div class="bx-fresh">' + liveBadge() + freshness() + '</div></div>';
     h += '<div class="bx-filters">' + filters() + '</div><div id="bx-body">';
     h += ST.tab === 'tong' ? viewTong() : ST.tab === 'nguon' ? viewNguon() : viewXu(ST.tab);
     h += '</div>';
@@ -9907,7 +9907,7 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
    RAG (mục 7 CLAUDE.md): độ trễ = hôm nay − max(ngày dữ liệu, ngày đồng bộ OK gần nhất); ≤3 ngày Xanh, ≤7 Vàng, >7 hoặc lỗi kết nối Đỏ.
    Lưu ý: Google xuất CSV bỏ trống ô tiêu đề cột ngày → cột ngày xác định theo VỊ TRÍ cố định của file ERP. */
 (function () {
-  var BUILD = { version: 'V10.30', ngay: '14/11/2026' };
+  var BUILD = { version: 'V10.31', ngay: '15/11/2026' };
   var S_TKSX = '1-tJcoRxBSBtmi6oN1a4yovKU-FIOpVdMaw6m1m4l7Aw';
   var NGUON = [
     { id: 'p3', ten: 'TKSX – P3 Tổng hợp lệnh thao tác', dung: '00 · 02 (SX & OEE)', boi: 'Bravo SQL tự động 9h · 15h · 21h (sync_p3_bravo_gs6.py, REP_TK_THLTT, GS6 + PX Túi + PX Khay) · mất VPN → giữ nguyên', loai: 'Google Sheet', sheet: S_TKSX, tab: 'P3.Tổng hợp lệnh thao tác', cot: 43, cotTen: 'Ngày TK', log: 'NHAT_KY_DONG_BO' },
@@ -12645,10 +12645,20 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 .kp-wrap{max-height:none}
 @media (max-width:1100px){.kp-g5{grid-template-columns:repeat(3,minmax(0,1fr))}.kp-ai-grid{grid-template-columns:1fr}}
 @media (max-width:700px){.kp-g5{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* V10.31 (15/11): 📘 Hướng dẫn đánh giá KPI */
+.kp-hd-btn{background:#fff7d6!important;color:#7a5a00!important;border-color:#e2b624!important}
+.kp-hd-btn.on{background:var(--gold)!important;color:#fff!important}
+.kp-hd{border-left:6px solid #2563eb}
+.kp-hd-b{margin-top:10px}
+.kp-hd-b .kp-sub{font-size:13.5px;margin:14px 0 6px}
+.kp-hd-t td{font-size:12px;line-height:1.45;vertical-align:top}
+.kp-hd-num td:not(:first-child){text-align:center;font-weight:800}
+.kp-cong{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:8px 12px;font-size:12.5px;line-height:1.6;margin:8px 0;color:#1f2937}
+.kp-hd-ol{margin:4px 0 0 18px;padding:0;font-size:12.5px;line-height:1.55;color:#1f2937}.kp-hd-ol li{margin:3px 0}
 
 </script>
 <script id="g04-kpi-js">
-/* === Group 04 – mục "🎯 KPI tổ & cá nhân" NM6 · V10.29 (14–15/11/2026, anh Mạnh duyệt) · ES5, namespace GS6_G04KPI · C3 ===
+/* === Group 04 – mục "🎯 KPI tổ & cá nhân" NM6 · V10.29 (+ V10.31: nút 📘 Hướng dẫn đánh giá KPI) (14–15/11/2026, anh Mạnh duyệt) · ES5, namespace GS6_G04KPI · C3 ===
    Căn cứ: GSP_OPS_DacTa_TinhKPI_NM6_GS6_20261114_v1.1 + 14 MTCV ký nhận 11/11/2026.
    Số liệu: kpi_nm6_tinh.py (bản chuẩn theo file chấm Excel v0.3) → Google Sheet TKSX tab KPI_NM6_JSON → mục này đọc (10 phút/lần).
    v0.3 (15/11): biểu đồ xu hướng (chọn tháng → các tuần trong tháng; tuần → 8 tuần; kỳ thử → W46–W48) + so sánh theo tháng,
@@ -12660,7 +12670,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   'use strict';
   var SHEET = '1-tJcoRxBSBtmi6oN1a4yovKU-FIOpVdMaw6m1m4l7Aw', TAB = 'KPI_NM6_JSON', MOI = 10 * 60 * 1000;
   var PIN_KEY = 'gs6_g09_pin', QUYEN = ['PLANT_DIRECTOR', 'CHAIR', 'PMO_OC'];
-  var S = { d: null, ky: '', loi: '', pin: null, pinV: '', pinMsg: '', mo: {}, root: null, dang: false, chiSo: 'tong' };
+  var S = { d: null, ky: '', loi: '', pin: null, pinV: '', pinMsg: '', mo: {}, root: null, dang: false, chiSo: 'tong', hd: false, hdTab: 'tq' };
   var MAU_TO = { 'Tổ máy túi tự động': '#08723a', 'Tổ xoắn dây': '#7c3aed', 'Tổ nghiền ép khay': '#c48a00', 'Tổ hoàn thiện Khay': '#e2b624', 'Tổ in cuộn GSQV2': '#2563eb', 'Toàn xưởng': '#334155' };
   var NGUOI_TO = { 'Tổ máy túi tự động': 'Lê Văn Sự', 'Tổ xoắn dây': 'Lê Văn Sự', 'Tổ nghiền ép khay': 'Bùi Văn Hương / Bùi Văn Thanh', 'Tổ hoàn thiện Khay': 'Bùi Văn Hương / Bùi Văn Thanh', 'Tổ in cuộn GSQV2': 'Sái Tuấn Tài', 'Toàn xưởng': 'Nguyễn Thị Hương – Phó QĐ' };
   var TEN_K = ['K1 Hoàn thành KH', 'K2 Sai hỏng R', 'K3 OEE', 'K4 Ổn định & đồng bộ', 'K5 Kỷ luật', 'K6 Đội ngũ TT'];
@@ -13013,6 +13023,133 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     return h + '</div>';
   }
 
+  // ---------- 📘 Hướng dẫn đánh giá KPI (V10.31, 15/11/2026) – nội dung tĩnh theo đặc tả v1.1 + 14 MTCV ký nhận; không chứa điểm cá nhân ----------
+  var HD_TAB = [['tq', '1. Tổng quan & quy trình'], ['to', '2. KPI tổ (K1–K4)'], ['sx', '3. Cá nhân khối SX'], ['ht', '4. Khối hỗ trợ'], ['xl', '5. Xếp loại & quy tắc']];
+  function tb(head, rows, cls) {
+    return '<div class="table-wrap"><table class="kp-t kp-hd-t' + (cls ? ' ' + cls : '') + '"><thead><tr>' + head.map(function (x) { return '<th>' + x + '</th>'; }).join('') + '</tr></thead><tbody>' +
+      rows.map(function (r) { return '<tr' + (r.tx ? ' class="kp-tx"' : '') + '>' + r.map(function (x) { return '<td>' + x + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
+  }
+  function cong(s) { return '<div class="kp-cong">' + s + '</div>'; }
+  var HT_CT = [   // [người · chức danh · người chấm K5, [[mã, chỉ tiêu, cách tính, hướng, đích, sàn, trọng số, người nhập]]]
+    ['Hoàng Thị Ngân – Thống kê SX', 'K5 do Phó QĐ Nguyễn Thị Hương chấm', [
+      ['TK-K1', 'Phiếu thống kê đúng hạn', 'Phiếu ca trước nhập xong trước 10:00 / tổng phiếu ca', 'Cao tốt', '98%', '80%', 25, 'Thành PMO (chờ cột giờ tạo phiếu Bravo)'],
+      ['TK-K2', 'Phiếu bất thường', 'Phiếu P3 giờ ≤ 0 / &gt; 24 h, OEE &gt; 150% / tổng phiếu P3', 'Thấp tốt', '0,2%', '2%', 25, 'Tự động Bravo'],
+      ['TK-K3', 'Đủ mã lỗi & nguyên nhân dừng', '(phiếu lỗi có mã lỗi + phiếu dừng có nguyên nhân) / (phiếu có lỗi + phiếu có dừng)', 'Cao tốt', '100%', '90%', 15, 'Tự động Bravo'],
+      ['TK-K4', 'Khớp KHSX ↔ Bravo', 'Tổ-ngày lệch ≤ 5% / tổ-ngày so được (cùng ĐVT, sheet HAU_KIEM)', 'Cao tốt', '100%', '70%', 20, 'Tự động'],
+      ['TK-K5', 'Báo cáo đúng hạn & kỷ luật', 'Điểm tuần 0–100: báo cáo ngày 09:00, số liệu tuần thứ 5, tháng ngày 02; nội quy; cải tiến', 'Cao tốt', '100', '0', 15, 'Phó QĐ']]],
+    ['Nguyễn Đình Tâm – Thủ kho TP túi & khay + điều phối kho (GS6-THPO-01, GS6-TPH-02)', 'K5 do GĐNM chấm', [
+      ['KHO-TAM-K1', 'Chính xác tồn kho TP', 'Lệch tuyệt đối khi kiểm kê / kiểm chéo ÷ tồn được kiểm (kiểm chéo bởi Tình / Dũng)', 'Thấp tốt', '0,5%', '3%', 25, 'Thủ kho kiểm chéo'],
+      ['KHO-TAM-K2', 'Nhập TP từ SX & xuất đúng', 'Lần nhập / xuất đúng mã – SL – đơn hàng ÷ lần được kiểm xác suất (kể cả khiếu nại giao sai)', 'Cao tốt', '99,5%', '95%', 20, 'Thủ kho TN / OQC'],
+      ['KHO-TAM-K3', 'Xuất đúng kế hoạch giao', 'DO xuất đủ hàng, đúng giờ ÷ tổng DO', 'Cao tốt', '98%', '85%', 20, 'ĐPSX'],
+      ['KHO-TAM-K4', 'Tồn TP theo mã / đơn hàng', 'Mã TP tồn &gt; 30 ngày đã báo cáo kèm hướng xử lý ÷ mã TP tồn &gt; 30 ngày', 'Cao tốt', '95%', '60%', 15, 'NV số liệu kho'],
+      ['KHO-TAM-K5', 'Quản lý khu vực & điều phối kho', 'Điểm tuần: 3D-5S, FIFO, chứng từ trong ca, an toàn; điều phối 3 thủ kho, lịch kiểm chéo, dự phòng khi vắng', 'Cao tốt', '100', '0', 20, 'GĐNM']]],
+    ['Lương Văn Tình – Thủ kho giấy cuộn & giấy tờ (GS6-TIN-01, GS6-GCU-01)', 'K5 do trưởng nhóm kho Nguyễn Đình Tâm chấm', [
+      ['KHO-TINH-K1', 'Chính xác tồn giấy cuộn', 'Kg (số quả) lệch tuyệt đối ÷ tồn được kiểm (kiểm chéo bởi Dũng / Tâm)', 'Thấp tốt', '0,5%', '3%', 25, 'Thủ kho kiểm chéo'],
+      ['KHO-TINH-K2', 'Kiểm nhập & cấp giấy đúng', 'Lần nhập (mã, khổ, định lượng, trọng lượng) và cấp theo lệnh SX đúng ÷ lần được kiểm', 'Cao tốt', '99,5%', '95%', 20, 'Tâm'],
+      ['KHO-TINH-K3', 'Không để máy chờ giấy do kho', 'Số máy-ngày dừng / chờ vì kho cấp giấy trễ, sai (không tính hết giấy do mua hàng) – đích/sàn áp cho tháng', 'Thấp tốt', '0', '4', 20, 'Phó QĐ'],
+      ['KHO-TINH-K4', 'Giấy trả, thừa, lỗi, hao hụt', 'Lệnh đã đối chiếu trong 24 h sau khi kết thúc ÷ lệnh kết thúc', 'Cao tốt', '95%', '60%', 15, 'Tâm'],
+      ['KHO-TINH-K5', 'Quản lý khu vực giấy cuộn', 'Điểm tuần: chồng tối đa 3 quả, đúng vị trí, FIFO, che chắn ẩm, chứng từ trong ca, an toàn', 'Cao tốt', '100', '0', 20, 'Tâm']]],
+    ['Nguyễn Mạnh Dũng – Thủ kho VLP · thùng · lề (GS6-VLP-01, GS6-LIK-01, GS6-KLE-01, GS6-CXL-01)', 'K5 do trưởng nhóm kho Nguyễn Đình Tâm chấm', [
+      ['KHO-DUNG-K1', 'Chính xác tồn VLP, thùng', 'Lệch tuyệt đối ÷ tồn được kiểm (kiểm chéo bởi Tâm / Tình)', 'Thấp tốt', '0,5%', '3%', 25, 'Thủ kho kiểm chéo'],
+      ['KHO-DUNG-K2', 'Nhập/cấp VLP, thùng đúng phiếu', 'Lần nhập / cấp đúng mã – SL theo phiếu ÷ lần được kiểm', 'Cao tốt', '99,5%', '95%', 20, 'Tâm'],
+      ['KHO-DUNG-K3', 'Không để thiếu VLP, thùng', 'Số lần in / túi / đóng gói phải chờ vì kho thiếu hoặc cấp trễ – đích/sàn áp cho tháng', 'Thấp tốt', '0', '4', 20, 'Phó QĐ'],
+      ['KHO-DUNG-K4', 'Cảnh báo sắp hết / tồn lâu & thu lề', '(mã cảnh báo trước khi hết hoặc quá 90 ngày + đợt thu lề, cân bán NCC đúng kỳ) ÷ (mã chạm mức + đợt kế hoạch)', 'Cao tốt', '95%', '60%', 15, 'Tâm'],
+      ['KHO-DUNG-K5', 'Quản lý khu vực VLP, thùng, lề', 'Điểm tuần: đúng dãy giá, FIFO, khu lề gọn – cân đúng, chứng từ trong ca, an toàn', 'Cao tốt', '100', '0', 20, 'Tâm']]],
+    ['Lê Thị Diễm Lệ – NV số liệu kho', 'K5 do trưởng nhóm kho Nguyễn Đình Tâm chấm', [
+      ['SLK-K1', 'Phiếu Bravo đúng hạn', 'Giao dịch lập phiếu trong ca / trước 10:00 hôm sau ÷ tổng giao dịch', 'Cao tốt', '98%', '80%', 25, 'Tâm'],
+      ['SLK-K2', 'Sai lệch tồn do nhập liệu', 'Mã (giá trị) lệch do nhập liệu sai ÷ mã (giá trị) được đối chiếu', 'Thấp tốt', '0,2%', '2%', 25, 'Tâm'],
+      ['SLK-K3', 'Khớp chéo DO ↔ PXB, nhập kho ↔ thống kê', 'Đối chiếu khớp (DO có PXB; nhập kho TP lệch SL đạt thống kê ≤ 1%) ÷ tổng đối chiếu', 'Cao tốt', '100%', '90%', 20, 'Tâm'],
+      ['SLK-K4', 'Báo cáo tồn & aging đúng hạn', 'Báo cáo ngày / tuần / tháng nộp đúng hạn ÷ báo cáo phải nộp', 'Cao tốt', '100%', '80%', 15, 'Tâm'],
+      ['SLK-K5', 'Tuân thủ quy trình – kỷ luật – cải tiến', 'Điểm tuần 0–100', 'Cao tốt', '100', '0', 15, 'Tâm']]],
+    ['Nhân viên kho (chưa bố trí)', 'K5 do thủ kho chấm', [
+      ['NVK-K1', 'Nhập/xuất đúng chủng loại – SL', 'Lần đúng ÷ lần được kiểm xác suất', 'Cao tốt', '99,5%', '95%', 30, 'Thủ kho'],
+      ['NVK-K2', 'Đúng vị trí & kiểm kê', 'Vị trí kiểm đúng ÷ vị trí kiểm xác suất', 'Cao tốt', '98%', '90%', 20, 'Thủ kho'],
+      ['NVK-K3', 'Tuân thủ FIFO', 'Lần xuất đúng FIFO ÷ lần xuất nhóm hàng áp dụng', 'Cao tốt', '100%', '90%', 15, 'Thủ kho'],
+      ['NVK-K4', 'Soạn – xuất hàng đúng thời gian', 'Lệnh soạn – xuất ≤ 45 phút ÷ tổng lệnh', 'Cao tốt', '95%', '70%', 15, 'Thủ kho'],
+      ['NVK-K5', 'An toàn – 5S – kỷ luật', 'Điểm tuần 0–100', 'Cao tốt', '100', '0', 20, 'Thủ kho']]]
+  ];
+  function huongDan() {
+    var tab = S.hdTab || 'tq', h = '<div class="card kp-hd" style="margin-top:12px"><div class="kp-row"><div><div class="kp-h1">📘 Hướng dẫn đánh giá KPI NM6</div>' +
+      '<div class="kp-m">Căn cứ: đặc tả GSP_OPS_DacTa_TinhKPI_NM6_GS6_20261114_v1.1 + 14 MTCV ký nhận 11/11/2026 · C3 – Confidential · đích / sàn / trọng số đang áp dụng cho kỳ chấm thử 11–30/11/2026 (điều chỉnh khi GĐNM chốt 30/11)</div></div>' +
+      '<button type="button" class="live-btn" data-kp="hd">✕ Đóng hướng dẫn</button></div>' +
+      '<div class="kp-seg" style="margin-top:10px">' + HD_TAB.map(function (x) { return '<button type="button" data-kp-hd="' + x[0] + '" class="' + (x[0] === tab ? 'on' : '') + '">' + x[1] + '</button>'; }).join('') + '</div><div class="kp-hd-b">';
+    if (tab === 'tq') {
+      h += '<div class="kp-sub">Ai được chấm, bằng KPI nào</div>' + tb(['Cấp', 'Đối tượng', 'KPI dùng', 'Ai chấm / duyệt'], [
+        ['Tổ', '5 tổ (máy túi tự động · xoắn dây · nghiền ép khay · hoàn thiện Khay · in cuộn GSQV2) + dòng Toàn xưởng', 'K1, K2, K3, K4', 'K2, K3 tự động Bravo · K1, K4 GĐNM duyệt loại trừ'],
+        ['Cá nhân – khối SX', '4 tổ trưởng · thợ kỹ thuật (theo tổ) · Phó QĐ xưởng khay & túi', 'K1–K4 của tổ phụ trách + K5 kỷ luật cá nhân (Phó QĐ thêm K6)', 'Phó QĐ chấm K5 tổ trưởng / thợ KT · GĐNM chấm K5 Phó QĐ'],
+        ['Cá nhân – khối hỗ trợ', 'Thống kê SX · 3 thủ kho · NV số liệu kho · NV kho', '5 chỉ tiêu riêng từng người (K1–K5)', 'Quản lý trực tiếp chấm K5 · GĐNM duyệt']]) +
+        '<div class="kp-sub">Các bước chấm điểm</div><ol class="kp-hd-ol">' +
+        '<li><b>Hằng ngày:</b> tổ trưởng / Thống kê điền cột THỰC TẾ file KHSX của PKH trước 10:00 hôm sau; phiếu Bravo ghi đủ dừng máy, mã lỗi; kho lập phiếu trong ca.</li>' +
+        '<li><b>Tự động 9h20 · 15h20 · 21h20:</b> máy tính đọc KHSX + Bravo sai hỏng + Bravo P3 + file chấm nhập tay → tính điểm → dashboard này.</li>' +
+        '<li><b>Trong 24 h:</b> máy-ngày dừng vì lý do khách quan (hết NVL do mua hàng, hỏng máy, mất điện, PKH đổi lệnh…) → đề xuất ở sheet LOAI_TRU; chỉ dòng GĐNM / PKH ghi <b>"Đã xác nhận"</b> mới được loại khỏi K1, K4.</li>' +
+        '<li><b>Thứ 5 trước Weekly KPI Review:</b> chấm K5 ở sheet KY_LUAT (khối SX) và nhập số đo ở NHAP_HO_TRO (khối hỗ trợ), kèm bằng chứng. Người có điểm Đỏ giải trình tại họp.</li>' +
+        '<li><b>Ngày 02 tháng sau:</b> PMO chốt bảng điểm tháng, nhập KHONG_CHE (khiếu nại KH / số liệu sai) → GĐNM duyệt → công bố.</li></ol>' +
+        '<div class="kp-sub">Kỳ chấm</div><div class="kp-m" style="font-size:12.5px;color:#1f2937">Tuần ISO thứ 2 → chủ nhật. Tháng: K1–K4 theo ngày dữ liệu; K5, K6 và số đo khối hỗ trợ theo tháng của <b>thứ 5</b> trong tuần. Kỳ chấm thử: K1–K4 lọc 11/11 → 30/11/2026, K5/K6 lấy W46–W48. Chính thức theo tháng từ 01/12/2026. ' +
+        'File nhập tay: <b>GSP_OPS_ChamKPI_NM6_GS6_20261110_v0.3.xlsx</b> trên Drive (GSP NEXT 30-GS6/KPI) – nút mở ở Group 08.</div>';
+    } else if (tab === 'to') {
+      h += '<div class="kp-sub">4 KPI tổ – công thức, đích, sàn, quy điểm 0–100</div>' + tb(['KPI', 'Đo cái gì', 'Công thức chỉ số', 'Nguồn', 'Đích (100 đ)', 'Sàn (0 đ)', 'Ngưỡng Xanh (75 đ)'], [
+        ['<b>K1</b> Hoàn thành KH ngày', 'Tổ làm đủ sản lượng KH từng máy-ngày', 'Σ TT tính / Σ KH tính; TT tính = MIN(TT, KH) – làm vượt không bù máy-ngày thiếu; máy-ngày "Đã xác nhận" loại trừ bỏ khỏi cả tử và mẫu', 'File KHSX (PKH) + LOAI_TRU', '95%', '60%', '≥ 86,25%'],
+        ['<b>K2</b> Sai hỏng so định mức (R)', 'Lỗi thực tế gấp bao nhiêu lần định mức cho phép', 'R = Σ SL lỗi / Σ (SL TK × tỷ lệ ĐM theo lệnh); bỏ phiếu ĐM = 0 (phải bổ sung định mức)', 'Bravo sai hỏng, tổ = cột AX bộ phận thực hiện', 'R = 1,0', 'R = 2,0', 'R ≤ 1,25'],
+        ['<b>K3</b> OEE', 'Hiệu suất thiết bị tổng hợp, bình quân theo giờ KH', 'Σ (OEE phiếu × giờ KH) / Σ giờ KH; loại phiếu bất thường (giờ ≤ 0 hoặc &gt; 24 h, OEE &gt; 150% hoặc &lt; 0)', 'Bravo P3 lệnh thao tác', 'Đích tổ', 'Đích − 20 điểm %', '≥ đích − 5 điểm %'],
+        ['<b>K4</b> Ổn định & đồng bộ', 'Số máy-ngày đạt ≥ 95% KH; tổ nghiền ép thêm đồng bộ bộ BTP', 'X = % máy-ngày đạt ≥ 95% KH; nghiền ép khay & Toàn xưởng: X = 50% × ngày đạt + 50% × đồng bộ BTP (MIN/MAX sản lượng các chi tiết cùng mã TP)', 'File KHSX + LOAI_TRU', '90%', '50%', '≥ 80%']]) +
+        cong('Quy điểm chung: <b>điểm = (chỉ số − sàn) / (đích − sàn) × 100</b>, giới hạn 0–100, làm tròn 1 số lẻ (K2: (2,0 − R) / 1,0 × 100). Không có dữ liệu → để trống, <b>không tính 0</b>.<br>Toàn xưởng = cộng tử số, mẫu số các tổ rồi mới chia (không lấy trung bình tỷ lệ tổ).') +
+        '<div class="kp-sub">Đích OEE và người chịu trách nhiệm từng tổ</div>' + tb(['Tổ', 'Mảng', 'Đích OEE', 'Người chịu trách nhiệm', 'Nhận diện dữ liệu'], [
+          ['Tổ máy túi tự động', 'Túi giấy', '70%', 'Lê Văn Sự (TT)', 'Bravo chứa "máy túi" · KHSX nhóm HT TÚI'],
+          ['Tổ xoắn dây', 'Túi giấy', '70%', 'Lê Văn Sự (TT)', 'Bravo chứa "xoắn" · chưa có dòng KHSX'],
+          ['Tổ nghiền ép khay', 'Khay giấy', '72%', 'Bùi Văn Hương / Bùi Văn Thanh (TT) · thợ KT Lý Văn Bình, Lê', 'KHSX nhóm Khay, mã hàng bắt đầu "BTP"'],
+          ['Tổ hoàn thiện Khay', 'Khay giấy', '72%', 'Bùi Văn Hương / Bùi Văn Thanh (TT) · thợ KT Hoàng Văn Kiểm, Thái Văn Lực', 'KHSX nhóm Khay, mã hàng không bắt đầu "BTP"'],
+          ['Tổ in cuộn GSQV2', 'Flexo cuộn 6 màu', '75%', 'Sái Tuấn Tài (TT)', 'Bravo chứa "in cuộn" · KHSX nhóm IN'],
+          (function () { var r = ['<b>Toàn xưởng</b>', 'Khay & túi', '72%', 'Nguyễn Thị Hương – Phó QĐ', 'Tất cả tổ trên']; r.tx = 1; return r; })()]) +
+        '<div class="kp-sub">Tổng điểm tổ (GĐNM duyệt 15/11/2026)</div>' + cong('Tổ: <b>(30 × K1 + 25 × K2 + 15 × K3 + 10 × K4) / Q</b> (trọng số Tổ trưởng) · Toàn xưởng: <b>(25 × K1 + 20 × K2 + 15 × K3 + 10 × K4) / Q</b> (trọng số Phó QĐ).<br>Q = tổng trọng số của các KPI có dữ liệu → thiếu KPI nào tự chia lại theo phần còn lại.') +
+        '<div class="kp-m">Khống chế tháng: tổ có "Số liệu sai" đã xác nhận → K1 = 0; có "Khiếu nại KH" đã xác nhận → K2 = 0 (Toàn xưởng: bất kỳ tổ nào bị).</div>';
+    } else if (tab === 'sx') {
+      h += '<div class="kp-sub">Trọng số (%) theo vai trò</div>' + tb(['KPI', 'Tổ trưởng', 'Thợ kỹ thuật', 'Phó quản đốc'], [
+        ['K1 Hoàn thành KH', '30', '15', '25'], ['K2 Sai hỏng R', '25', '30', '20'], ['K3 OEE', '15', '30', '15'], ['K4 Ổn định & đồng bộ', '10', '5', '10'],
+        ['K5 Kỷ luật cá nhân', '20', '20', '20'], ['K6 Đội ngũ tổ trưởng', '–', '–', '10'], (function () { var r = ['<b>Tổng</b>', '<b>100</b>', '<b>100</b>', '<b>100</b>']; r.tx = 1; return r; })()], 'kp-hd-num') +
+        cong('<b>TỔNG ĐIỂM = ROUND( Σ (trọng số × điểm KPI) / Q , 1 )</b>, Q = tổng trọng số các KPI có điểm.<br>K1–K4 lấy điểm tổ phụ trách · phụ trách 2 tổ → trung bình điểm 2 tổ (tổ nào trống lấy tổ còn lại) · Phó QĐ lấy dòng Toàn xưởng.<br>Ví dụ: Bùi Văn Hương W44 – K2 = (0 hoàn thiện + 100 nghiền ép) / 2 = 50.') +
+        '<div class="kp-sub">Ma trận người – tổ (14 MTCV ký nhận 11/11/2026)</div>' + tb(['Họ tên', 'Vai trò', 'Tổ phụ trách', 'K5 do ai chấm'], [
+          ['Lê Văn Sự', 'Tổ trưởng', 'Máy túi tự động + xoắn dây', 'Phó QĐ'], ['Bùi Văn Hương', 'Tổ trưởng', 'Hoàn thiện Khay + nghiền ép khay', 'Phó QĐ'], ['Bùi Văn Thanh', 'Tổ trưởng', 'Hoàn thiện Khay + nghiền ép khay', 'Phó QĐ'],
+          ['Sái Tuấn Tài', 'Tổ trưởng', 'In cuộn GSQV2', 'Phó QĐ'], ['Hoàng Văn Kiểm', 'Thợ kỹ thuật', 'Hoàn thiện Khay', 'Phó QĐ'], ['Thái Văn Lực', 'Thợ kỹ thuật', 'Hoàn thiện Khay', 'Phó QĐ'],
+          ['Lý Văn Bình', 'Thợ kỹ thuật', 'Nghiền ép khay', 'Phó QĐ'], ['Lê (chờ Nhân sự cấp họ tên, mã NV)', 'Thợ kỹ thuật', 'Nghiền ép khay', 'Phó QĐ'], ['Nguyễn Thị Hương', 'Phó quản đốc', 'Toàn xưởng (điều tiết 4M 5 tổ)', 'GĐNM']]) +
+        '<div class="kp-sub">K5 – Kỷ luật, điều hành, 3D-5S, cải tiến (chấm hằng tuần ở sheet KY_LUAT)</div>' + tb(['Mục', 'Tổ trưởng', 'Thợ kỹ thuật', 'Phó quản đốc', 'Quy điểm'], [
+          ['(a) %', 'Báo cáo 2 h/lần đúng, đủ', 'Bàn giao setup đạt lần đầu', 'Chốt KH tổ & báo cáo ngày đúng giờ', '(a) × 100'],
+          ['(b) 0–100', 'Điểm audit 3D-5S khu vực tổ', 'Điểm audit 3D-5S khu vực tổ', '3D-5S toàn xưởng', 'giữ nguyên'],
+          ['(c) %', 'Đối sách / việc giao đúng hạn (Group 05)', 'như TT', 'như TT', '(c) × 100'],
+          ['(d) số', 'Số lần vi phạm nội quy', 'như TT', 'Số máy-ngày dừng do 4M chủ quan', 'MAX(0, 100 − 30 × d)'],
+          ['(e) số', 'Số cải tiến đăng ký trong tuần', 'như TT', 'như TT', 'Tháng không có cải tiến nào → trừ 20 điểm K5']]) +
+        cong('Điểm tuần = trung bình các mục (a)–(d) có chấm (ô trống = không chấm, không tính 0) · K5 tháng = trung bình điểm tuần − 20 nếu cả tháng Σ (e) = 0.<br><b>K6</b> (chỉ Phó QĐ) = trung bình điểm tuần K5 của các tổ trưởng trong kỳ.');
+    } else if (tab === 'ht') {
+      h += cong('Mỗi người 5 chỉ tiêu, tổng trọng số 100. Kết quả kỳ: <b>tỷ lệ</b> = Σ tử / Σ mẫu cả kỳ (không lấy trung bình tuần) · <b>điểm tuần</b> = trung bình các tuần · <b>số lần</b> = cộng cả kỳ.<br>' +
+        'Cao tốt: <b>điểm = (KQ − sàn) / (đích − sàn) × 100</b> · Thấp tốt: <b>điểm = (sàn − KQ) / (sàn − đích) × 100</b> · giới hạn 0–100. Ví dụ KHO-TINH-K2: 58/60 = 96,67% → (96,67 − 95) / (99,5 − 95) × 100 = 37,0 điểm.<br>' +
+        'Nhập ở sheet NHAP_HO_TRO: tuần · mã chỉ tiêu · tử (hoặc số lần / điểm) · mẫu · <b>người kiểm chéo / làm thay</b> (bắt buộc với chính xác tồn) · <b>bằng chứng</b> (bắt buộc). Người dự phòng làm thay → kết quả vẫn tính cho thủ kho phụ trách kho đó.');
+      HT_CT.forEach(function (p) {
+        h += '<div class="kp-sub" style="margin-top:12px">' + p[0] + ' <span class="kp-m">· ' + p[1] + ' · GĐNM duyệt</span></div>' +
+          tb(['Mã', 'Chỉ tiêu', 'Cách tính', 'Hướng', 'Đích', 'Sàn', 'Trọng số', 'Người nhập'], p[2].map(function (x) { return [x[0], '<b>' + x[1] + '</b>', x[2], x[3], x[4], x[5], x[6] + '%', x[7]]; }));
+      });
+    } else {
+      h += '<div class="kp-sub">Xếp loại & màu trạng thái</div>' + tb(['Tổng điểm', 'Xếp loại', 'Trạng thái', 'Việc phải làm'], [
+        ['≥ 90', '<b>A</b>', '<span class="kp-pill g">Xanh</span>', 'Duy trì, chia sẻ cách làm'], ['75 – &lt; 90', '<b>B</b>', '<span class="kp-pill g">Xanh</span>', 'Duy trì, cải tiến KPI thấp nhất'],
+        ['60 – &lt; 75', '<b>C</b>', '<span class="kp-pill a">Vàng</span>', 'Có kế hoạch nâng KPI kéo điểm'], ['&lt; 60', '<b>D</b>', '<span class="kp-pill r">Đỏ</span>', '<b>Giải trình tại Weekly KPI Review thứ 5</b> + đối sách có hạn'],
+        ['Q &lt; 60 (thiếu dữ liệu)', '–', '<span class="kp-pill n">TẠM TÍNH</span>', 'Bổ sung dữ liệu / chấm K5 trước khi đánh giá']]) +
+        '<div class="kp-sub">Quy tắc bắt buộc</div><ul class="kp-hd-ol">' +
+        '<li><b>Không chấm cảm tính:</b> K1–K4 lấy từ KHSX và Bravo; K5 và số đo khối hỗ trợ phải có bằng chứng (số phiếu, biên bản, ảnh 3D-5S…).</li>' +
+        '<li><b>Loại trừ khách quan</b> chỉ có hiệu lực khi LOAI_TRU ghi "Đã xác nhận" (GĐNM / PKH, trong 24 h). Quá hạn không đề xuất = lỗi của tổ.</li>' +
+        '<li><b>KH để trống thực tế</b> = tính 0 (không làm). Ô KH ghi chữ (NGHỈ, OFF, bảo dưỡng…) = KH 0.</li>' +
+        '<li><b>Khống chế tháng:</b> "Số liệu sai" đã xác nhận → K1 tổ = 0 và xếp loại người phụ trách tối đa C; "Khiếu nại KH" đã xác nhận → K2 tổ = 0. Khối hỗ trợ không áp khống chế.</li>' +
+        '<li><b>Thiếu dữ liệu ≠ 0 điểm:</b> KPI trống không vào tổng; tổng tự chia lại theo trọng số có dữ liệu (Q).</li>' +
+        '<li><b>Phân quyền:</b> KPI tổ công khai; điểm cá nhân chỉ hiện cho GĐNM / Chủ trì / PMO sau PIN. Số chính thức do GĐNM chốt ngày 02 tháng sau – dashboard không thay quyết định GĐNM.</li></ul>' +
+        '<div class="kp-sub">Lịch & trách nhiệm (RACI rút gọn)</div>' + tb(['Việc', 'Mốc', 'Thực hiện', 'Duyệt'], [
+          ['Điền THỰC TẾ vào KHSX', 'Trước 10:00 hôm sau', 'Tổ trưởng / Thống kê SX (Ngân)', 'PKH'],
+          ['Rà phiếu P3 bất thường, phiếu ĐM = 0', 'Hằng ngày', 'Thống kê SX', 'Thành PMO'],
+          ['Xác nhận LOAI_TRU', '≤ 24 h', 'Tổ trưởng đề xuất', 'GĐNM / PKH'],
+          ['Chấm KY_LUAT (K5)', 'Thứ 5 hằng tuần', 'Phó QĐ (TT, thợ KT) · GĐNM (Phó QĐ)', 'GĐNM'],
+          ['Nhập NHAP_HO_TRO', 'Thứ 5 hằng tuần', 'Người nhập theo từng chỉ tiêu (tab 4)', 'GĐNM'],
+          ['Hậu kiểm KHSX ↔ Bravo', 'Hằng tuần', 'Thành PMO', 'GĐNM'],
+          ['Nhập KHONG_CHE · chốt bảng điểm tháng', 'Ngày 02 tháng sau', 'QLCL / Thành PMO', 'GĐNM']]);
+    }
+    return h + '</div></div>';
+  }
+
   // ---------- vẽ ----------
   function chonKy() {
     var g = { THU: [], TUAN: [], THANG: [] };
@@ -13027,9 +13164,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     var D = S.d, k = kyCua(S.ky) || D.ky[0], m = D.meta, ng = m.nguon, tx = toCua(k.id, 'Toàn xưởng');
     var h = '<div class="card kp-head"><div class="kp-row"><div><div class="kp-h1">🎯 KPI tổ &amp; cá nhân – NM6 (xưởng khay &amp; túi + khối hỗ trợ)</div>' +
       '<div class="kp-m">Chấm thử 11/11 → 30/11/2026, chính thức theo tháng từ 01/12/2026 · K2, K3 tự động từ Bravo · K1, K4, K5, K6 GĐNM duyệt · đặc tả v1.1 + 14 MTCV ký nhận 11/11/2026</div></div>' +
-      '<label class="kp-ky">Kỳ ' + chonKy() + '</label><button type="button" class="live-btn" data-kp="nap">↻ Tải lại</button></div>' +
+      '<label class="kp-ky">Kỳ ' + chonKy() + '</label><button type="button" class="live-btn kp-hd-btn' + (S.hd ? ' on' : '') + '" data-kp="hd">📘 Hướng dẫn đánh giá KPI</button><button type="button" class="live-btn" data-kp="nap">↻ Tải lại</button></div>' +
       '<div class="kp-src">Tính lúc <b>' + esc(m.tao_luc) + '</b> · KHSX (PKH) đến <b>' + dmy(ng.khsx_den) + '</b> (' + ng.so_may_ngay + ' máy-ngày) · sai hỏng Bravo đến <b>' + dmy(ng.sai_hong_den) + '</b> · P3 đến <b>' + dmy(ng.p3_den) +
       '</b> · KY_LUAT ' + ng.ky_luat + ' dòng · loại trừ đã xác nhận ' + ng.loai_tru_xn + ' · nhập khối hỗ trợ ' + ng.nhap_ho_tro + ' dòng' + (S.loi ? ' · <span style="color:#b91c1c">' + esc(S.loi) + '</span>' : '') + '</div></div>';
+    if (S.hd) h += huongDan();
     if (tx) h += '<div class="grid kp-g5" style="margin-top:12px">' + [['Tổng điểm KPI – toàn xưởng', tx.tong === null || tx.tong === undefined ? '–' : vn(tx.tong, 1), tx.tong, 'K1–K4 theo trọng số Phó QĐ 25/20/15/10'],
       ['K1 Hoàn thành KH', pc(tx.k1), tx.d1, ''], ['K2 Sai hỏng R', tx.r === null ? '–' : vn(tx.r, 2), tx.d2, 'GT vượt ' + vn(tx.gtv / 1e6, 1) + ' tr'], ['K3 OEE', pc(tx.oee), tx.d3, 'đích ' + pc(tx.dich, 0)], ['K4 Ổn định & đồng bộ', pc(tx.nd), tx.d4, tx.db !== null && tx.db !== undefined ? 'đồng bộ BTP ' + pc(tx.db) : '']].map(function (x) {
       return '<div class="kpi kp-k ' + rag(x[2]) + '"><div class="kpi-label">' + esc(x[0]) + '</div><div class="kpi-val">' + x[1] + '</div><div class="kpi-note">Điểm ' + (x[2] === null || x[2] === undefined ? '–' : vn(x[2], 1)) + ' / 100' + (x[3] ? ' · ' + esc(x[3]) : '') + '</div></div>';
@@ -13062,9 +13200,11 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     var st = document.getElementById('g04-kpi-css');
     if (st) { var c = document.createElement('style'); c.textContent = st.textContent; S.root.appendChild(c); }
     S.root.addEventListener('click', function (ev) {
-      var t = ev.target, b = t.closest ? t.closest('[data-kp],[data-kp-mo],[data-kp-cs]') : null; if (!b) return;
+      var t = ev.target, b = t.closest ? t.closest('[data-kp],[data-kp-mo],[data-kp-cs],[data-kp-hd]') : null; if (!b) return;
       var a = b.getAttribute('data-kp');
       if (a === 'nap') nap();
+      else if (a === 'hd') { S.hd = !S.hd; ve(); }
+      else if (b.getAttribute('data-kp-hd')) { S.hdTab = b.getAttribute('data-kp-hd'); ve(); }
       else if (a === 'pin') dangNhap((S.root.getElementById('kp-pin') || {}).value);
       else if (b.getAttribute('data-kp-cs')) { S.chiSo = b.getAttribute('data-kp-cs'); ve(); }
       else if (b.getAttribute('data-kp-mo')) { var k = b.getAttribute('data-kp-mo'); S.mo[k] = !S.mo[k]; ve(); }
