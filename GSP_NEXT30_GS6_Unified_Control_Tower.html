@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V10.37 – Group 07 LIVE · Group 08 Nguồn dữ liệu</title>
+<title>GOLDSUN | GSP NEXT 30 GS6 – Unified Control Tower V10.38 – Group 07 LIVE · Group 08 Nguồn dữ liệu</title>
 <style>
 :root{
   --dark:#035D30;--green:#035A28;--gold:#E2B624;--gold2:#FFFDE7;
@@ -887,6 +887,14 @@ window.GS6_G06_TO=(function(){
 #contract-wrap .cl-control-banner.g5n-banner-cuoi{margin:18px 0 10px}
 
 </style>
+<style id="g05-tu-dong-bo-style">
+/* V10.38: thanh tự đồng bộ Group 05 */
+.g05-td{margin:8px 0 10px;padding:7px 12px;border-radius:8px;background:#E8F5E9;border:1px solid #A5D6A7;color:#1B5E20;font-size:13px;line-height:1.5}
+.g05-td.vang{background:#FFF8E1;border-color:#FFC107;color:#8A6D00}
+.g05-td button{font:inherit;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:6px;border:1px solid #1B5E20;background:#fff;color:#1B5E20;cursor:pointer;margin-left:4px}
+.g05-td a{color:inherit;font-weight:700}
+
+</style>
 <style id="g09-bao-cao-tuan-style">
 /* Group 09 – Báo cáo tuần (V10.20 · GĐ1) – namespace .w9 */
 #baocao .w9-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
@@ -1007,6 +1015,8 @@ window.GS6_G06_TO=(function(){
 #baocao .w9-hgv-chip span{display:inline-block;background:#E8F5E9;color:#1B5E20;border-radius:999px;padding:1px 8px;margin:0 4px 4px 0;font-size:12px;font-weight:600}
 #baocao .w9-hgv-chip a{color:#1B5E20;text-decoration:none;margin-left:2px}
 #baocao tr.w9-hgv-da td{background:#F6FBF6}
+/* V10.38: nháy dòng Issue khi mở từ 9.13 */
+#contract-wrap tr.w9-nhay td,tr.w9-nhay td{background:#FFF59D !important;transition:background .3s}
 
 </style>
 <style id="g10-ton-kho-style">
@@ -9093,14 +9103,14 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
   async function loadSnapshot(){
     var input=$('cl-api-url'),u=key(input&&input.value)||state.apiUrl;if(!apiValid(u)){state.loading=false;setSource('CHƯA KẾT NỐI — Cần Apps Script Web App URL kết thúc bằng /exec.','cl-error');renderAll();return;}
     if(state.apiUrl!==u)state.transportVerified=false;state.apiUrl=u;state.loading=true;saveAuth();setSource('Đang kiểm tra API V2.5.0 và nạp Closed-loop Master…','');
-    try{var payload=await postOperation('snapshot',{});normalizeSnapshot(payload);setSource('LIVE OK — API '+key(payload.apiVersion||'')+' · '+state.issues.length.toLocaleString('vi-VN')+' Issue · '+new Date().toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh'}),'cl-live');renderAll();fillDataLists();}
+    try{var payload=await postOperation('snapshot',{});normalizeSnapshot(payload);window.GS6_G05_LAST=Date.now();setSource('LIVE OK — API '+key(payload.apiVersion||'')+' · '+state.issues.length.toLocaleString('vi-VN')+' Issue · '+new Date().toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh'}),'cl-live');renderAll();fillDataLists();}
     catch(err){state.loading=false;setSource('LIVE ERROR — '+key(err&&err.message||err),'cl-error');renderAll();}
   }
   function setView(v){state.view=v||'overview';document.querySelectorAll('#cl-subnav [data-clview]').forEach(function(b){b.classList.toggle('cl-on',b.getAttribute('data-clview')===state.view);});document.querySelectorAll('#contract-wrap .cl-view').forEach(function(p){p.classList.toggle('cl-on',p.id==='cl-view-'+state.view);});}
   function setAlertFilter(f){state.alertFilter=f||'';var e=$('cl-filter-alert');if(e)e.value=state.alertFilter;renderRegister();}
   function openControl(view,filter){var b=document.querySelector('#nav button[data-tab="contract"]');if(b&&typeof switchMainTab==='function')switchMainTab(b);var cb=document.querySelector('#c-nav [data-cpane="c-action"]');if(cb&&typeof cSwitch==='function')cSwitch(cb);setView(view||'overview');setAlertFilter(filter||'');setTimeout(function(){var x=$('contract');if(x)x.scrollIntoView({block:'start'});},60);}
   function formData(form){var out={};new FormData(form).forEach(function(v,k){if(!(v instanceof File))out[k]=key(v);});return out;}
-  function authPayload(){return {authEmail:key(($('cl-auth-email')||{}).value),authToken:key(($('cl-auth-token')||{}).value)};}
+  function authPayload(){var o={authEmail:key(($('cl-auth-email')||{}).value),authToken:key(($('cl-auth-token')||{}).value)};if(!o.authToken){var p='';try{p=sessionStorage.getItem('gs6_g09_pin')||'';}catch(e){}if(p)o.authPin=p;}return o;}   /* V10.38: chua co token -> dung PIN Group 09 */
   function saveAuth(){var values={gs6_cl_api_url:state.apiUrl,gs6_cl_auth_email:key(($('cl-auth-email')||{}).value),gs6_cl_auth_token:key(($('cl-auth-token')||{}).value)};try{Object.keys(values).forEach(function(k){localStorage.setItem(k,values[k]);sessionStorage.setItem(k,values[k]);});}catch(e){try{Object.keys(values).forEach(function(k){sessionStorage.setItem(k,values[k]);});}catch(ignore){}}}
   function sleep(ms){return new Promise(function(resolve){setTimeout(resolve,ms);});}
   function secureToken(prefix,bytes){
@@ -9237,7 +9247,7 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
     var cf=$('cl-create-form');if(cf)cf.addEventListener('submit',async function(e){e.preventDefault();var submit=cf.querySelector('[type="submit"]');if(submit&&submit.disabled)return;var check=state.pendingCreateIssueId?{ok:true,tasks:[]}:validateCreate(cf);if(!check.ok){setOpStatus('Cần hoàn thành các ô có dấu * màu đỏ.','cl-error','create');return;}if(submit)submit.disabled=true;try{var issueId=state.pendingCreateIssueId,created=null;if(!issueId){setOpStatus('Đang tạo Issue, Snapshot gốc và giao công việc ban đầu…','','create');var p=formData(cf);p.initialTasks=check.tasks;created=await postOperation('createIssue',p);issueId=created.issueId;state.pendingCreateIssueId=issueId;mergeCreatedIssue(created);}var uploaded=await uploadFiles(issueId,'','INITIAL','create','cl-create-progress');if(uploaded.failed.length){setOpStatus('Issue '+issueId+' đã tạo thành công nhưng còn '+uploaded.failed.length+' tệp lỗi. Bấm Tải lại rồi gửi tiếp; hệ thống không tạo Issue trùng.','cl-error','create');return;}var count=state.fileQueues.create.filter(function(x){return x.status==='ok';}).length;state.pendingCreateIssueId='';cf.reset();syncReporterFields();clearQueue('create');returnToRegister(issueId,'Đã tạo '+issueId+', lưu '+count+' tệp và quay về Danh sách Issue.');setTimeout(function(){loadSnapshot();},120);}catch(err){setOpStatus('Từ chối/Lỗi: '+key(err&&err.message||err),'cl-error','create');}finally{if(submit)submit.disabled=false;}});
     var of=$('cl-operation-form');if(of)of.addEventListener('submit',async function(e){e.preventDefault();var submit=e.submitter||of.querySelector('[type="submit"]'),op=currentOperation(),mode=op==='updateAction'?key(submit&&submit.getAttribute('data-update-mode')||'PROGRESS'):'';if(submit&&submit.disabled)return;if(op==='updateAction'&&mode==='COMPLETE'){if($('cl-progress-percent'))$('cl-progress-percent').value='100';if($('cl-actual-completion-date')&&!key($('cl-actual-completion-date').value))$('cl-actual-completion-date').value=todayVN();}if(!validateOperation(of,mode)){setOpStatus('Cần hoàn thành các ô bắt buộc và kiểm tra đúng lựa chọn xử lý.','cl-error','operation');return;}var submitButtons=of.querySelectorAll('[type="submit"]');submitButtons.forEach(function(b){b.disabled=true;});try{var p=formData(of),type=p.attachmentType||'EXECUTION',manual=p.evidenceUrl||'',issueId=p.issueId,fileAllowed=['updateAction','close'].indexOf(op)>=0;if(op==='updateAction')p.updateMode=mode;delete p.operation;delete p.attachmentType;setOpStatus(op==='updateAction'?(mode==='COMPLETE'?'Đang lưu hoàn thành và kiểm tra workflow…':'Đang lưu cập nhật tiến độ…'):'Đang tải bằng chứng và kiểm tra workflow…','','operation');var uploaded=fileAllowed?await uploadFiles(issueId,p.actionId,type,'operation','cl-operation-progress'):{urls:[],failed:[]};if(uploaded.failed.length){setOpStatus('Còn '+uploaded.failed.length+' tệp lỗi. Form được giữ nguyên; các tệp thành công không bị tải lại.','cl-error','operation');return;}p.evidenceUrl=[manual].concat(uploaded.urls).filter(Boolean).join('\n');var result=await postOperation(op,p);of.reset();clearQueue('operation');refreshOperationOptions();updateOperationFields();await loadSnapshot();returnToRegister(issueId,'Đã cập nhật '+issueId+': '+key(result.message||op));}catch(err){setOpStatus('Từ chối/Lỗi: '+key(err&&err.message||err),'cl-error','operation');}finally{submitButtons.forEach(function(b){b.disabled=false;});}});
   }
-  function init(){bind();renderAll();if(state.apiUrl&&!window.GS6_CLOSED_LOOP_NO_AUTOLOAD)loadSnapshot();else setSource('CHƯA KẾT NỐI NGUỒN MASTER — Không sử dụng dữ liệu mẫu','');}
+  function init(){bind();renderAll();if(state.apiUrl&&!window.GS6_CLOSED_LOOP_NO_AUTOLOAD&&(typeof window.GS6_G05_CO_XAC_THUC!=='function'||window.GS6_G05_CO_XAC_THUC()))loadSnapshot();else setSource('CHƯA KẾT NỐI NGUỒN MASTER — Không sử dụng dữ liệu mẫu','');}
   window.GS6ClosedLoop={load:loadSnapshot,render:renderAll,renderKnowledge:renderKnowledge,openControl:openControl,setView:setView,getState:function(){return state;}};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
@@ -9854,7 +9864,7 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
 
   // ---------- render ----------
   function render() {
-    var h = '<div class="bx-head"><div><h2 class="section-title" style="margin:0">07. Sản xuất hằng ngày – Sổ BCSX Túi · Khay · In <span class="bx-preview">V10.37</span></h2><div class="bx-sub">Nguồn: sổ ghi chép hằng ngày (Drive "BCSX 2026") → chuẩn hóa theo 10 quy tắc → dashboard. Dữ liệu tạo lúc ' + esc(RAW.meta.tao_luc) + '.</div></div><div class="bx-fresh">' + liveBadge() + freshness() + '</div></div>';
+    var h = '<div class="bx-head"><div><h2 class="section-title" style="margin:0">07. Sản xuất hằng ngày – Sổ BCSX Túi · Khay · In <span class="bx-preview">V10.38</span></h2><div class="bx-sub">Nguồn: sổ ghi chép hằng ngày (Drive "BCSX 2026") → chuẩn hóa theo 10 quy tắc → dashboard. Dữ liệu tạo lúc ' + esc(RAW.meta.tao_luc) + '.</div></div><div class="bx-fresh">' + liveBadge() + freshness() + '</div></div>';
     h += '<div class="bx-filters">' + filters() + '</div><div id="bx-body">';
     h += ST.tab === 'tong' ? viewTong() : ST.tab === 'nguon' ? viewNguon() : viewXu(ST.tab);
     h += '</div>';
@@ -10054,7 +10064,7 @@ html,body{max-width:100vw!important;overflow-x:hidden!important;}
    RAG (mục 7 CLAUDE.md): độ trễ = hôm nay − max(ngày dữ liệu, ngày đồng bộ OK gần nhất); ≤3 ngày Xanh, ≤7 Vàng, >7 hoặc lỗi kết nối Đỏ.
    Lưu ý: Google xuất CSV bỏ trống ô tiêu đề cột ngày → cột ngày xác định theo VỊ TRÍ cố định của file ERP. */
 (function () {
-  var BUILD = { version: 'V10.37', ngay: '18/11/2026' };
+  var BUILD = { version: 'V10.38', ngay: '18/11/2026' };
   var S_TKSX = '1-tJcoRxBSBtmi6oN1a4yovKU-FIOpVdMaw6m1m4l7Aw';
   var NGUON = [
     { id: 'p3', ten: 'TKSX – P3 Tổng hợp lệnh thao tác', dung: '00 · 02 (SX & OEE)', boi: 'Bravo SQL tự động 9h · 15h · 21h (sync_p3_bravo_gs6.py, REP_TK_THLTT, GS6 + PX Túi + PX Khay) · mất VPN → giữ nguyên', loai: 'Google Sheet', sheet: S_TKSX, tab: 'P3.Tổng hợp lệnh thao tác', cot: 43, cotTen: 'Ngày TK', log: 'NHAT_KY_DONG_BO' },
@@ -11812,8 +11822,76 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 
 </script>
+<script id="g05-tu-dong-bo-js">
+/* === V10.38 (18/11/2026 – anh Mạnh chốt): Group 05 TỰ ĐỒNG BỘ – không cần bấm "Kết nối LIVE" · ES5 · C3 ===
+   ① Nạp khi cần: mở tab 05 mà dữ liệu cũ > 2 phút · quay lại cửa sổ · sau đăng nhập PIN · sau giao việc ở 9.13 (g09)
+   ② Tự làm mới 5 phút / lần – CHỈ khi tab 05 đang mở và cửa sổ đang hiển thị (tiết kiệm lượt Apps Script)
+   ③ Một PIN cho cả dashboard: máy chưa có Access Token → Group 05 dùng PIN đã đăng nhập ở Group 09 (vá authPayload khi build;
+      API V2.7.0+ đã nhận authPin). Quyền vẫn do máy chủ kiểm theo vai trò của người đăng nhập. */
+(function () {
+  var CHU_KY = 5 * 60 * 1000, CU = 2 * 60 * 1000, T = { last: 0, thu: 0, dang: false, loi: '', lyDo: '' };
+  function $(i) { return document.getElementById(i); }
+  function pin() { try { return sessionStorage.getItem('gs6_g09_pin') || ''; } catch (e) { return ''; } }
+  function coToken() { var e = $('cl-auth-token'); return !!(e && String(e.value || '').trim()); }
+  function coXacThuc() { return coToken() || !!pin(); }
+  window.GS6_G05_CO_XAC_THUC = coXacThuc;
+  function tab05() { var b = document.querySelector('#nav button[data-tab="contract"]'); return !!(b && b.classList.contains('active')); }
+  function last() { return Math.max(T.last, window.GS6_G05_LAST || 0); }
+  function hh(t) { var d = new Date(t); return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2); }
+  function nap(lyDo) {
+    var C = window.GS6ClosedLoop, s = C && C.getState ? C.getState() : null;
+    if (T.dang || !C || !C.load) return Promise.resolve(false);
+    if (!coXacThuc()) { ve(); return Promise.resolve(false); }
+    if (s && s.loading) return Promise.resolve(false);
+    T.dang = true; T.thu = Date.now(); T.lyDo = lyDo || ''; ve(); var truoc = window.GS6_G05_LAST || 0;
+    return Promise.resolve().then(function () { return C.load(); })
+      .then(function () { if ((window.GS6_G05_LAST || 0) > truoc) { T.last = Date.now(); T.loi = ''; } else T.loi = 'chưa nạp được – kiểm tra PIN / Access Token hoặc mạng'; },
+            function (e) { T.loi = String(e && e.message || e); })
+      .then(function () { T.dang = false; ve(); return true; });
+  }
+  function ve() {
+    var w = $('contract-wrap') || $('contract'); if (!w) return;
+    var b = $('g05-td-bar');
+    if (!b) { b = document.createElement('div'); b.id = 'g05-td-bar'; b.className = 'g05-td'; w.insertBefore(b, w.firstChild); }
+    var l = last(), con = l ? Math.max(0, Math.ceil((l + CHU_KY - Date.now()) / 60000)) : 0;
+    if (!coXacThuc()) {
+      b.className = 'g05-td vang';
+      b.innerHTML = '🔐 Chưa đăng nhập – nhập <b>mã PIN</b> ở ô 🔐 đầu <a href="#" data-g05td="g09">tab 09</a> (1 lần cho cả dashboard), tab Issue sẽ tự nạp và tự làm mới. Hoặc Kết nối LIVE bằng Access Token như cũ.';
+      return;
+    }
+    b.className = 'g05-td' + (T.loi ? ' vang' : '');
+    b.innerHTML = (T.dang ? '⏳ Đang đồng bộ Issue từ Master' + (T.lyDo ? ' (' + T.lyDo + ')' : '') + '…'
+      : '🔄 <b>Tự đồng bộ</b> · ' + (l ? 'cập nhật lúc ' + hh(l) + ' · tự làm mới sau ' + con + ' phút (khi đang mở tab này)' : 'chưa nạp')) +
+      (T.loi ? ' · <span style="color:#b45309">lỗi lần trước: ' + T.loi.replace(/[<>&]/g, '') + '</span>' : '') +
+      ' · ' + (coToken() ? 'xác thực: Access Token' : 'xác thực: PIN Group 09') +
+      (T.dang ? '' : ' <button type="button" data-g05td="lai">↻ Làm mới ngay</button>');
+  }
+  window.GS6_G05_TUDONG = { nap: nap, ve: ve, state: T };
+  // ① mở tab 05 / quay lại cửa sổ
+  document.addEventListener('click', function (ev) {
+    var t = ev.target, a = t.closest ? t.closest('[data-g05td]') : null;
+    if (a) { ev.preventDefault(); var k = a.getAttribute('data-g05td');
+      if (k === 'lai') nap('bấm làm mới');
+      else if (k === 'g09') { var nb = document.querySelector('#nav button[data-tab="baocao"]'); if (nb) nb.click(); setTimeout(function () { var p = $('w9-pin-in'); if (p) { p.scrollIntoView({ block: 'center' }); p.focus(); } }, 400); }
+      return; }
+    if (t.closest && t.closest('#nav button[data-tab="contract"]')) setTimeout(function () { ve(); if (Date.now() - last() > CU) nap('mở tab Issue'); }, 150);
+  });
+  function quayLai() { if (document.visibilityState === 'visible' && tab05() && Date.now() - last() > CU && Date.now() - T.thu >= 60000) nap('quay lại cửa sổ'); }
+  document.addEventListener('visibilitychange', quayLai); window.addEventListener('focus', quayLai);
+  // ② 5 phút / lần khi tab 05 đang mở
+  setInterval(function () {
+    if (!tab05()) return; ve();
+    if (document.visibilityState === 'visible' && Date.now() - last() >= CHU_KY && Date.now() - T.thu >= 60000) nap('định kỳ 5 phút');
+  }, 20000);
+  // ③ vừa đăng nhập PIN (Group 09) mà Group 05 chưa có dữ liệu → nạp ngay
+  var pinCu = pin();
+  setInterval(function () { var p = pin(); if (p && p !== pinCu && !coToken()) { pinCu = p; nap('đăng nhập PIN'); } else if (!p) pinCu = ''; ve(); }, 3000);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ve); else ve();
+})();
+
+</script>
 <script id="g09-bao-cao-tuan-js">
-/* === Group 09 – Báo cáo tuần quản lý nhà máy · V10.37 (18/11/2026: 9.13 GĐNM giao việc từ họp chuyên đề → Issue Group 05, API V2.10.0) · V10.36 (18/11/2026: 9.13 Biên bản họp chuyên đề – xem bằng PIN) · V10.23 (04/11/2026: trách nhiệm đích danh tổ trưởng / quản đốc + 9.1c) · V10.22 (03/11/2026: GĐNM đổi trạng thái nhanh ở 9.11c) · V10.21 (03/11/2026: PIN cá nhân · gợi ý & theo dõi giao việc · tự hiện tuần trước) · V10.20 GĐ1 (01/11/2026) · ES5, namespace W9 · C3 – Confidential ===
+/* === Group 09 – Báo cáo tuần quản lý nhà máy · V10.38 (18/11/2026: nút Mở ở tab Issue nạp lại Group 05 + bỏ lọc khác) · V10.37 (18/11/2026: 9.13 GĐNM giao việc từ họp chuyên đề → Issue Group 05, API V2.10.0) · V10.36 (18/11/2026: 9.13 Biên bản họp chuyên đề – xem bằng PIN) · V10.23 (04/11/2026: trách nhiệm đích danh tổ trưởng / quản đốc + 9.1c) · V10.22 (03/11/2026: GĐNM đổi trạng thái nhanh ở 9.11c) · V10.21 (03/11/2026: PIN cá nhân · gợi ý & theo dõi giao việc · tự hiện tuần trước) · V10.20 GĐ1 (01/11/2026) · ES5, namespace W9 · C3 – Confidential ===
    Anh Mạnh duyệt 01/11/2026: phương án B (GĐ1 tab · GĐ2 Word + infographic · GĐ3 nguồn còn thiếu);
    tuần ISO thứ 2 → chủ nhật, báo cáo sáng thứ 2 (mặc định = tuần vừa kết thúc); phạm vi GS6 + PX Túi + PX Khay, chia Túi / Khay / Flexo;
    người nhận: CEO (9.0 + infographic GĐ2) và Giám đốc nhà máy (toàn bộ); nhãn C3.
@@ -12725,16 +12803,34 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       preliminaryCause: 'Kết luận họp chuyên đề ' + o.maHop + ' do GĐNM chủ trì.', impact: 'Việc giao từ họp chuyên đề – theo dõi tại Group 09 · 9.13',
       severity: d.muc, proposedDeadline: d.han, openDate: isoD(new Date()), ownerName: owner.name, ownerEmail: owner.email, initialTasks: tasks
     }).then(function (r) { W.dongBo--; var x = W.hgvPend[ref]; if (x) { x._dongBo = false; x.IssueId = (r && r.issueId) || ''; x.Status = r && r.duplicated ? 'đã có từ trước (không tạo trùng)' : ((r && r.createdIssue && r.createdIssue.Status) || 'In Progress'); }
-        delete W.hgv[ref]; veHcd(); lamMoiSau(); })
+        delete W.hgv[ref]; veHcd(); lamMoiSau(); clearTimeout(W.g05T); W.g05T = setTimeout(g05NapLai, 2500); })
       .catch(function (e) { W.dongBo--; delete W.hgvPend[ref]; W.hgvLoi[ref] = '✕ Chưa giao được: ' + (e && e.message || e) + ' – bấm giao lại'; veHcd(); });
     return true;
   }
-  function hgvMoIssue(id) { // chuyển sang tab 05 và lọc đúng Issue
+  function g05NapLai() { // V10.38: nạp lại Issue Group 05 (dữ liệu nạp lúc mở trang không có Issue vừa giao)
+    if (window.GS6_G05_TUDONG) return window.GS6_G05_TUDONG.nap('vừa giao việc');   // V10.38: qua mô-đun tự đồng bộ
+    var C = window.GS6ClosedLoop; if (!C || !C.load) return Promise.resolve(false);
+    try { return Promise.resolve(C.load()).then(function () { return true; }, function () { return false; }); } catch (e) { return Promise.resolve(false); } }
+  function hgvMoIssue(id) { // chuyển sang tab 05, nạp lại dữ liệu, bỏ các bộ lọc khác, lọc đúng Issue và cuộn tới dòng
     var nb = document.querySelector('#nav button[data-tab="contract"]'); if (nb) nb.click();
-    var lan = 0, t = setInterval(function () { lan++; var f = document.getElementById('cl-filter-search');
-      if (f || lan > 20) { clearInterval(t); if (!f) return; f.value = id; f.dispatchEvent(new Event('input', { bubbles: true })); f.dispatchEvent(new Event('change', { bubbles: true }));
-        var g = document.getElementById('g5n-tim'); if (g) { g.value = id; g.dispatchEvent(new Event('input', { bubbles: true })); }
-        f.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }, 300); }
+    var C = window.GS6ClosedLoop;
+    function loc() {
+      if (C && C.setView) { try { C.setView('register'); } catch (e) {} }
+      ['cl-filter-status', 'cl-filter-segment', 'cl-filter-owner', 'cl-filter-holder', 'cl-filter-severity', 'cl-filter-alert'].forEach(function (k) { var e = document.getElementById(k); if (e) e.value = ''; });
+      var f = document.getElementById('cl-filter-search');
+      if (f) { f.value = id; f.dispatchEvent(new Event('input', { bubbles: true })); }
+      var g = document.getElementById('g5n-tim'); if (g) { g.value = id; g.dispatchEvent(new Event('input', { bubbles: true })); }
+      setTimeout(function () {
+        var row = Array.prototype.filter.call(document.querySelectorAll('[data-issue-row]'), function (x) { return x.getAttribute('data-issue-row') === id; })[0];
+        (row || f || document.body).scrollIntoView({ behavior: 'smooth', block: row ? 'center' : 'start' });
+        if (row) { row.classList.add('w9-nhay'); setTimeout(function () { row.classList.remove('w9-nhay'); }, 2500); }
+        else if (f) { var m = document.getElementById('w9-g05-bao') || document.createElement('div'); m.id = 'w9-g05-bao'; m.style.cssText = 'margin:6px 0;padding:6px 10px;border-radius:8px;background:#FFF8E1;border:1px solid #FFC107;font-weight:700;color:#8A6D00';
+          m.textContent = 'Chưa thấy ' + id + ' trong danh sách – bấm "Kết nối LIVE" (hoặc tải lại trang) để nạp Issue mới nhất.'; f.parentNode.insertBefore(m, f.nextSibling); setTimeout(function () { if (m.parentNode) m.parentNode.removeChild(m); }, 8000); }
+      }, 400);
+    }
+    setTimeout(loc, 300);   // lọc ngay trên dữ liệu đang có
+    g05NapLai().then(function () { setTimeout(loc, 200); });   // lọc lại sau khi nạp xong (có Issue vừa giao)
+  }
   function hgvDoi(ev) { var t = ev.target, k = t && t.getAttribute && t.getAttribute('data-hgv'); if (!k) return; var d = W.hgv[t.getAttribute('data-ref')]; if (!d) return;
     if (k === 'them') { if (t.value && d.ho.indexOf(t.value) < 0 && d.ho.length < 3) { d.ho.push(t.value); veHcd(); } return; }
     d[k] = t.value; if (k === 'pic' && ev.type === 'change') { d.ho = d.ho.filter(function (e) { return e !== t.value; }); veHcd(); } }
